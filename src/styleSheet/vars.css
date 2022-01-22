@@ -1,9 +1,9 @@
 :root {
-    --greenAccentColor: #24CCA7;
-    --redAccentColor: #FF6596;
-    --hoveredTextColor: #4A56E2;
-    --secondaryTextColor: #BDBDBD;
-    --secondaryButtonColor: #4A56E2;
-    --textOnDarkBackgroundColor: #FFF;
-    --iconShadow: drop-shadow(0px 3px 10px rgba(74, 86, 226, 0.5));
+  --greenAccentColor: #24cca7;
+  --redAccentColor: #ff6596;
+  --hoveredTextColor: #4a56e2;
+  --secondaryTextColor: #bdbdbd;
+  --secondaryButtonColor: #4a56e2;
+  --textOnDarkBackgroundColor: #fff;
+  --iconShadow: drop-shadow(0px 3px 10px rgba(74, 86, 226, 0.5));
 }
