@@ -73,6 +73,11 @@
 }
 
 @media (max-width: 425px) {
+  .Header {
+    padding: 15px 0;
+    min-height: 60px;
+  }
+
   .LogoImage {
     margin-right: 15px;
     width: 30px;
