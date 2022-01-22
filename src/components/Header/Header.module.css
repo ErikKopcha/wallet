@@ -2,7 +2,7 @@
   padding: 20px 0;
   width: 100%;
   min-height: 80px;
-  background: #FFFFFF;
+  background: #ffffff;
 }
 
 .HeaderContainer {
@@ -32,7 +32,7 @@
 .HeaderInfo {
   display: flex;
   align-items: center;
-  font-family: "Abel", sans-serif;
+  font-family: 'Abel', sans-serif;
   font-weight: normal;
   font-size: 18px;
   color: var(--secondaryTextColor);
@@ -87,6 +87,16 @@
   }
 
   .BtnExit span {
+    display: none;
+  }
+
+  .AfterVerticalLine {
+    position: relative;
+    margin-right: 10px;
+    padding-right: 0;
+  }
+
+  .AfterVerticalLine::after {
     display: none;
   }
 }
