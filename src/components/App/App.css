@@ -31,10 +31,13 @@ dd {
 
 /* Выставляем основные настройки по-умолчанию для body */
 body {
+  font-family: "Poppins", "Abel", sans-serif;
+  font-size: 18px;
   min-height: 100vh;
   scroll-behavior: smooth;
   text-rendering: optimizeSpeed;
   line-height: 1.5;
+  background-color: var(--globalBgColor);
 }
 
 /* Удаляем стандартную стилизацию для всех ul и il, у которых есть атрибут class*/
@@ -44,8 +47,9 @@ ol[class] {
 }
 
 /* Элементы a, у которых нет класса, сбрасываем до дефолтных стилей */
-a:not([class]) {
-  text-decoration-skip-ink: auto;
+a {
+  color: inherit;
+  text-decoration: none;
 }
 
 /* Упрощаем работу с изображениями */
@@ -74,5 +78,25 @@ select {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+.container {
+  margin: 0 auto;
+  padding: 0 85px;
+  width: 100%;
+  height: 100%;
+  max-width: 1280px;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 40px;
+  }
+}
+
+@media (max-width: 425px) {
+  .container {
+    padding: 0 20px;
   }
 }

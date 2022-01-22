@@ -1,0 +1,13 @@
+.DashboardWrap {
+  min-height: 100vh;
+  min-width: 100vw;
+  background: url("../../assets/images/bashboard-bg.jpg") no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+@media (max-width: 425px) {
+  .DashboardWrap {
+    background: unset;
+  }
+}
