@@ -1,0 +1,102 @@
+.Header {
+  padding: 20px 0;
+  width: 100%;
+  min-height: 80px;
+  background: #ffffff;
+}
+
+.HeaderContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.LogoWrap {
+  display: flex;
+  align-items: center;
+}
+
+.LogoImage {
+  margin-right: 20px;
+  width: 40px;
+  height: 40px;
+}
+
+.LogoText {
+  padding-top: 4px;
+  font-size: 30px;
+  line-height: 1;
+  font-weight: bold;
+}
+
+.HeaderInfo {
+  display: flex;
+  align-items: center;
+  font-family: 'Abel', sans-serif;
+  font-weight: normal;
+  font-size: 18px;
+  color: var(--secondaryTextColor);
+}
+
+.AfterVerticalLine {
+  position: relative;
+  margin-right: 15px;
+  padding-right: 15px;
+}
+
+.AfterVerticalLine::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  display: block;
+  width: 1px;
+  min-height: 30px;
+  height: 100%;
+  background-color: var(--secondaryTextColor);
+}
+
+.BtnExit {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.BtnExit img {
+  margin-right: 10px;
+}
+
+@media (max-width: 425px) {
+  .LogoImage {
+    margin-right: 15px;
+    width: 30px;
+    height: 30px;
+  }
+
+  .LogoText {
+    padding-top: 4px;
+    font-size: 24px;
+    line-height: 1;
+    font-weight: bold;
+  }
+
+  .BtnExit span {
+    display: none;
+  }
+
+  .AfterVerticalLine {
+    position: relative;
+    margin-right: 10px;
+    padding-right: 0;
+  }
+
+  .AfterVerticalLine::after {
+    display: none;
+  }
+}
