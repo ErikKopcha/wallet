@@ -8,7 +8,7 @@ function Header() {
   return (
     <div className={style.Header}>
       <div className={`${style.HeaderContainer} container`}>
-        <a href="" className={style.LogoWrap}>
+        <a href="/" className={style.LogoWrap}>
           <img width="40" height="40" className={style.LogoImage} src={logo} alt="wallet logo" />
           <span className={style.LogoText}>Wallet</span>
         </a>
