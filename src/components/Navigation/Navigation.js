@@ -5,25 +5,28 @@ const navigationData = [
     name: 'Main',
     linkClass: `${style.NavigationLink} ${style.Active}`,
     iconClass: style.MainLink,
-    path: '/'
+    path: '/',
+    id: 1
   },
   {
     name: 'Statistic',
     linkClass: style.NavigationLink,
     iconClass: style.StatisticLink,
-    path: '/'
+    path: '/',
+    id: 2
   },
   {
     name: 'Currency',
     linkClass: `${style.NavigationLink} ${style.CurrencyLinkWrap}`,
     iconClass: style.CurrencyLink,
-    path: '/'
+    path: '/',
+    id: 3
   },
 ];
 
-function getLink({ name, linkClass, iconClass, path }) {
+function getLink({ name, linkClass, iconClass, path, id }) {
   return (
-    <a className={linkClass} href={path}>
+    <a key={id} className={linkClass} href={path}>
       <i className={iconClass} />
       <span>{name}</span>
     </a>
