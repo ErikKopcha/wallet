@@ -52,6 +52,12 @@ a {
   text-decoration: none;
 }
 
+i {
+  display: block;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
 /* Упрощаем работу с изображениями */
 img {
   max-width: 100%;
