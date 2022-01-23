@@ -1,3 +1,7 @@
+.Navigation {
+  margin-bottom: 34px;
+}
+
 .NavigationLink {
   display: flex;
   align-items: center;
@@ -48,6 +52,12 @@
   display: none;
 }
 
+@media (max-width: 768px)  {
+  .Navigation {
+    margin-bottom: 24px;
+  }
+}
+
 @media (max-width: 425px) {
   .Navigation {
     display: flex;
@@ -57,7 +67,7 @@
     margin: 0 auto 14px auto;
   }
 
-  .NavigationLink {
+  .NavigationLink:not(:last-of-type) {
     margin-bottom: 0;
   }
 
