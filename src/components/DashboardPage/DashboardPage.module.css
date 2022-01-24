@@ -25,10 +25,6 @@
   box-shadow: -1px 0 0 rgba(0, 0, 0, 0.05), 1px 0 0 rgba(255, 255, 255, 0.6);
 }
 
-.LeftHeadContainer {
-  display: flex;
-}
-
 .RightContainer {
   position: relative;
   padding: 40px 0 0 30px;
@@ -49,6 +45,20 @@
     flex-direction: column;
   }
 
+  .LeftHeadContainer {
+    display: flex;
+  }
+
+  .LeftContainer {
+    display: flex;
+    gap: 20px;
+  }
+
+  .LeftContainer,
+  .RightContainer {
+    max-width: 100%;
+  }
+
   .LeftContainer::after {
     display: none;
   }
@@ -60,6 +70,10 @@
 }
 
 @media (max-width: 600px) {
+  .LeftContainer {
+    flex-direction: column;
+  }
+
   .LeftContainer,
   .RightContainer {
     max-width: 100%;

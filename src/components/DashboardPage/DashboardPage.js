@@ -2,6 +2,7 @@ import style from './DashboardPage.module.css';
 import Header from '../Header/Header';
 import Navigation from '../Navigation/Navigation';
 import Balance from '../Balance/Balance';
+import Currency from '../Currency/Currency';
 
 function DashboardPage() {
   return (
@@ -9,8 +10,11 @@ function DashboardPage() {
       <Header />
       <div className={`${style.LeftHeadContainer} container`}>
         <div className={style.LeftContainer}>
-          <Navigation />
-          <Balance />
+         <div>
+           <Navigation />
+           <Balance />
+         </div>
+          <Currency />
         </div>
         <div className={style.RightContainer}></div>
       </div>
