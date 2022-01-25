@@ -5,7 +5,6 @@ import Balance from '../Balance/Balance';
 import ButtonAddTransaction from '../ButtonAddTransaction/ButtonAddTransaction';
 import ModalAddTransaction from '../ModalAddTransaction/ModalAddTransaction';
 import Currency from '../Currency/Currency';
-
 import { Routes, Route } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive'
 import { useState } from 'react';

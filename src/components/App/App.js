@@ -1,9 +1,7 @@
 import './App.css';
-
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import DashboardPage from '../DashboardPage/DashboardPage';
 import RegistrationPage from '../RegistrationPage/RegistrationPage';
-
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import PoppinsBoldWoff from '../../assets/fonts/Poppins-Bold.woff';
 import PoppinsRegularWoff from '../../assets/fonts/Poppins-Regular.woff';
@@ -82,13 +80,21 @@ const theme = createTheme({
 });
 
 function App() {
+  const isUserAuthenticated = false; // for test
+  const getRedirectUrl = () => isUserAuthenticated ? "/home" : "/register"; // wait login component
+
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
         <BrowserRouter>
           <Routes>
+            <Route
+              exact
+              path="/"
+              element={ <Navigate to={getRedirectUrl()} /> } />
+            <Route path="*" element={ <Navigate to={getRedirectUrl()} /> } />
             <Route path="/home/*" element={ <DashboardPage /> } />
-            <Route path="/" element={ <RegistrationPage /> } />
+            <Route path="/register" element={ <RegistrationPage /> } />
           </Routes>
         </BrowserRouter>
       </div>
