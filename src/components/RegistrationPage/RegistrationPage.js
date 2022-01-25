@@ -8,15 +8,15 @@ export default function RegistrationPage() {
   return (
     <div className={style.RegPage}>
       <div className={style.Ellipse1}>
-        <img src={ellipse1}></img>
+        <img src={ellipse1} alt="ellipse" />
       </div>
       <div className={style.Ellipse2}>
-        <img src={ellipse2}></img>
+        <img src={ellipse2} alt="ellipse" />
       </div>
 
       <div className={style.RegPageWrapper}>
         <div className={style.ImgSide}>
-          <img src={regpageimg} className={style.RegImage}></img>
+          <img src={regpageimg} className={style.RegImage} alt="phone" />
           <h1>Finance App</h1>
         </div>
 
