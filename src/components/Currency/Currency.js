@@ -50,7 +50,7 @@ function getRow({ currCode, buy, sale, precision, id }) {
 
 function Currency() {
   return (
-    <div className={style.Currency}>
+    <div className={style.currency}>
       <table>
         <thead>
           <tr>

@@ -6,15 +6,15 @@ const name = 'Name';
 
 function Header() {
   return (
-    <div className={style.Header}>
-      <div className={`${style.HeaderContainer} container`}>
-        <a href="/" className={style.LogoWrap}>
-          <img width="40" height="40" className={style.LogoImage} src={logo} alt="wallet logo" />
-          <span className={style.LogoText}>Wallet</span>
+    <div className={style.header}>
+      <div className={`${style.headerContainer} container`}>
+        <a href="/" className={style.logoWrap}>
+          <img width="40" height="40" className={style.logoImage} src={logo} alt="wallet logo" />
+          <span className={style.logoText}>Wallet</span>
         </a>
-        <div className={style.HeaderInfo}>
-          <p className={style.AfterVerticalLine}>{name}</p>
-          <button className={style.BtnExit}>
+        <div className={style.headerInfo}>
+          <p className={style.afterVerticalLine}>{name}</p>
+          <button className={style.btnExit}>
             <img src={exitIcon} alt='logout' />
             <span>Exit</span>
           </button>

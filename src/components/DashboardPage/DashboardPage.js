@@ -6,17 +6,17 @@ import Currency from '../Currency/Currency';
 
 function DashboardPage() {
   return (
-    <div className={style.DashboardWrap}>
+    <div className={style.dashboardWrap}>
       <Header />
-      <div className={`${style.LeftHeadContainer} container`}>
-        <div className={style.LeftContainer}>
+      <div className={`${style.leftHeadContainer} container`}>
+        <div className={style.leftContainer}>
          <div>
            <Navigation />
            <Balance />
          </div>
           <Currency />
         </div>
-        <div className={style.RightContainer}></div>
+        <div className={style.rightContainer}></div>
       </div>
     </div>
   );

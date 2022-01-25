@@ -1,4 +1,4 @@
-.Header {
+.header {
   position: sticky;
   top: 0;
   padding: 20px 0;
@@ -8,31 +8,31 @@
   z-index: 1;
 }
 
-.HeaderContainer {
+.headerContainer {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.LogoWrap {
+.logoWrap {
   display: flex;
   align-items: center;
 }
 
-.LogoImage {
+.logoImage {
   margin-right: 20px;
   width: 40px;
   height: 40px;
 }
 
-.LogoText {
+.logoText {
   padding-top: 4px;
   font-size: 30px;
   line-height: 1;
   font-weight: bold;
 }
 
-.HeaderInfo {
+.headerInfo {
   display: flex;
   align-items: center;
   font-family: 'Abel', sans-serif;
@@ -41,13 +41,13 @@
   color: var(--secondaryTextColor);
 }
 
-.AfterVerticalLine {
+.afterVerticalLine {
   position: relative;
   margin-right: 15px;
   padding-right: 15px;
 }
 
-.AfterVerticalLine::after {
+.afterVerticalLine::after {
   content: '';
   position: absolute;
   top: 50%;
@@ -60,7 +60,7 @@
   background-color: var(--secondaryTextColor);
 }
 
-.BtnExit {
+.btnExit {
   display: flex;
   align-items: center;
   padding: 0;
@@ -71,40 +71,40 @@
   cursor: pointer;
 }
 
-.BtnExit img {
+.btnExit img {
   margin-right: 10px;
 }
 
 @media (max-width: 425px) {
-  .Header {
+  .header {
     padding: 15px 0;
     min-height: 60px;
   }
 
-  .LogoImage {
+  .logoImage {
     margin-right: 15px;
     width: 30px;
     height: 30px;
   }
 
-  .LogoText {
+  .logoText {
     padding-top: 4px;
     font-size: 24px;
     line-height: 1;
     font-weight: bold;
   }
 
-  .BtnExit span {
+  .btnExit span {
     display: none;
   }
 
-  .AfterVerticalLine {
+  .afterVerticalLine {
     position: relative;
     margin-right: 10px;
     padding-right: 0;
   }
 
-  .AfterVerticalLine::after {
+  .afterVerticalLine::after {
     display: none;
   }
 }

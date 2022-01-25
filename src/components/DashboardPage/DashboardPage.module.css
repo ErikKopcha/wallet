@@ -1,4 +1,4 @@
-.DashboardWrap {
+.dashboardWrap {
   min-height: 100vh;
   min-width: 100vw;
   background: url("../../assets/images/bashboard-bg.jpg") no-repeat;
@@ -6,7 +6,7 @@
   background-size: cover;
 }
 
-.LeftContainer {
+.leftContainer {
   position: relative;
   padding: 40px 30px 0 0;
   width: 100%;
@@ -14,7 +14,7 @@
   max-width: 35%;
 }
 
-.LeftContainer::after {
+.leftContainer::after {
   content: '';
   position: absolute;
   top: 0;
@@ -25,7 +25,7 @@
   box-shadow: -1px 0 0 rgba(0, 0, 0, 0.05), 1px 0 0 rgba(255, 255, 255, 0.6);
 }
 
-.RightContainer {
+.rightContainer {
   position: relative;
   padding: 40px 0 0 30px;
   width: 100%;
@@ -34,60 +34,60 @@
 }
 
 @media (max-width: 1000px) {
-  .LeftContainer,
-  .RightContainer {
+  .leftContainer,
+  .rightContainer {
     max-width: 50%;
   }
 }
 
 @media (max-width: 768px) {
-  .LeftHeadContainer {
+  .leftHeadContainer {
     flex-direction: column;
   }
 
-  .LeftHeadContainer {
+  .leftHeadContainer {
     display: flex;
   }
 
-  .LeftContainer {
+  .leftContainer {
     display: flex;
     gap: 20px;
   }
 
-  .LeftContainer,
-  .RightContainer {
+  .leftContainer,
+  .rightContainer {
     max-width: 100%;
   }
 
-  .LeftContainer::after {
+  .leftContainer::after {
     display: none;
   }
 
-  .LeftContainer,
-  .RightContainer {
+  .leftContainer,
+  .rightContainer {
     padding: 30px 0 0 0;
   }
 }
 
 @media (max-width: 600px) {
-  .LeftContainer {
+  .leftContainer {
     flex-direction: column;
   }
 
-  .LeftContainer,
-  .RightContainer {
+  .leftContainer,
+  .rightContainer {
     max-width: 100%;
     padding: 30px 0 0 0;
   }
 }
 
 @media (max-width: 425px) {
-  .LeftContainer,
-  .RightContainer {
+  .leftContainer,
+  .rightContainer {
     padding: 14px 0 0 0;
   }
 
-  .DashboardWrap {
+  .dashboardWrap {
     background: unset;
   }
 }

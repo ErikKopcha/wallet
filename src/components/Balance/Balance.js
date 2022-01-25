@@ -7,10 +7,10 @@ const balanceInfo = {
 
 function Balance() {
   return (
-    <div className={style.Balance}>
-      <p className={style.BalanceTitle}>Your balance</p>
-      <p className={style.BalanceSum}>
-        <span className={style.BalanceCurrCode}>{balanceInfo.currCode}</span>&nbsp;{balanceInfo.sum}
+    <div className={style.balance}>
+      <p className={style.balanceTitle}>Your balance</p>
+      <p className={style.balanceSum}>
+        <span className={style.balanceCurrCode}>{balanceInfo.currCode}</span>&nbsp;{balanceInfo.sum}
       </p>
     </div>
   );

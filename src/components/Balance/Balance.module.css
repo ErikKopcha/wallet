@@ -1,4 +1,4 @@
-.Balance {
+.balance {
   margin-bottom: 30px;
   padding: 10px 40px;
   width: 100%;
@@ -6,7 +6,7 @@
   border-radius: 30px;
 }
 
-.BalanceTitle {
+.balanceTitle {
   margin-bottom: 8px;
   font-family: "Abel", sans-serif;
   font-size: 12px;
@@ -14,8 +14,8 @@
   text-transform: uppercase;
 }
 
-.BalanceSum,
-.BalanceCurrCode {
+.balanceSum,
+.balanceCurrCode {
   font-weight: bold;
   font-family: "Poppins", sans-serif;
   font-size: 30px;
@@ -24,12 +24,12 @@
   overflow-x: auto;
 }
 
-.BalanceCurrCode {
+.balanceCurrCode {
   font-weight: normal;
 }
 
 @media (max-width: 768px) {
-  .Balance {
+  .balance {
     margin-bottom: 0;
   }
 }
