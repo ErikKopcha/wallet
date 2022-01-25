@@ -11,7 +11,7 @@ function DashboardPage() {
   const [modalAdd, setModalAdd] = useState(false)
 
   const handleOpenModalAdd = () => setModalAdd(true)
-  // const handleCloseModalAdd = () => setModalAdd(false)
+  const handleCloseModalAdd = () => setModalAdd(false)
 
   return (
     <div className={style.DashboardWrap}>
@@ -23,9 +23,9 @@ function DashboardPage() {
         </div>
         <div className={style.RightContainer}></div>
       </div>
-      <AddTransaction onClick={handleOpenModalAdd} />
+      <AddTransaction open={handleOpenModalAdd} />
       {
-        modalAdd && <ModalAddTransaction />
+        modalAdd && <ModalAddTransaction close={handleCloseModalAdd} />
       }
     </div>
   );
