@@ -2,8 +2,17 @@ import style from './DashboardPage.module.css';
 import Header from '../Header/Header';
 import Navigation from '../Navigation/Navigation';
 import Balance from '../Balance/Balance';
+import AddTransaction from '../AddTransaction/AddTransaction';
+import { useState } from 'react';
+import ModalAddTransaction from '../ModalAddTransaction/ModalAddTransaction';
 
 function DashboardPage() {
+
+  const [modalAdd, setModalAdd] = useState(false)
+
+  const handleOpenModalAdd = () => setModalAdd(true)
+  // const handleCloseModalAdd = () => setModalAdd(false)
+
   return (
     <div className={style.DashboardWrap}>
       <Header />
@@ -14,6 +23,10 @@ function DashboardPage() {
         </div>
         <div className={style.RightContainer}></div>
       </div>
+      <AddTransaction onClick={handleOpenModalAdd} />
+      {
+        modalAdd && <ModalAddTransaction />
+      }
     </div>
   );
 }

@@ -8,6 +8,7 @@ import AbelRegularWoff from '../../assets/fonts/Abel-Regular.woff';
 import PoppinsBoldWoff2 from '../../assets/fonts/Poppins-Bold.woff2';
 import PoppinsRegularWoff2 from '../../assets/fonts/Poppins-Regular.woff2';
 import AbelRegularWoff2 from '../../assets/fonts/Abel-Regular.woff2';
+import AddTransaction from '../AddTransaction/AddTransaction';
 
 const theme = createTheme({
   palette: {
@@ -20,7 +21,7 @@ const theme = createTheme({
   },
   typography: {
     fontFamily: 'Abel, Poppins, sans-serif',
-    fontSize: '16px',
+    fontSize: 16,
   },
   components: {
     MuiCssBaseline: {
@@ -69,7 +70,7 @@ const theme = createTheme({
           props: { variant: 'h1' },
           style: {
             fontFamily: 'Poppins',
-            fontSize: '30px',
+            fontSize: 30,
             lineHeight: 1.5,
           },
         },
@@ -83,8 +84,9 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
-        {/*<DashboardPage />*/}
-        <ModalAddTransaction/>
+        <DashboardPage />
+        {/*<ModalAddTransaction/>*/}
+        {/*<AddTransaction/>*/}
       </div>
     </ThemeProvider>
   );
