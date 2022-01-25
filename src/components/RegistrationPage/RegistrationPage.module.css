@@ -1,0 +1,118 @@
+.RegPage {
+  padding: 0;
+  height: 10vh;
+}
+
+.Ellipse1 {
+  display: none;
+  position: absolute;
+  transform: rotate(-16.86deg);
+  width: 618px;
+  height: 547px;
+  left: -53.33px;
+  top: 585px;
+  background: #c5baff;
+  border-radius: 50%;
+  z-index: 2;
+}
+
+.Ellipse2 {
+  display: none;
+  position: absolute;
+  width: 618px;
+  height: 547px;
+  right: -300px;
+  top: -253px;
+  background: #ffd8d0;
+  transform: rotate(21.94deg);
+  border-radius: 50%;
+  z-index: 2;
+}
+
+.ImgSide {
+  display: none;
+}
+
+@media (min-width: 426px) {
+  .RegPage {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 60px 14% 48px;
+    overflow: hidden;
+  }
+
+  .Ellipse1 {
+    display: block;
+  }
+
+  .Ellipse2 {
+    display: block;
+  }
+
+  .RegPageWrapper {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ImgSide {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-bottom: 50px;
+    z-index: 2;
+  }
+
+  .RegImage {
+    max-width: 45%;
+  }
+
+  h1 {
+    margin-left: 7%;
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 30px;
+    line-height: 1.5;
+  }
+
+  .FormSide {
+    z-index: 10;
+  }
+}
+
+@media (min-width: 769px) {
+  .RegPage {
+    padding: 0;
+  }
+
+  .RegPageWrapper {
+    flex-direction: row;
+  }
+
+  .ImgSide {
+    width: 40%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 0px;
+    z-index: 2;
+  }
+
+  .RegImage {
+    max-width: 100%;
+  }
+
+  h1 {
+    margin-top: 32px;
+  }
+
+  .FormSide {
+    width: 60%;
+    min-height: 100vh;
+    padding: 52px 95px;
+    background: var(--lightBgFormColor);
+    backdrop-filter: blur(50px);
+  }
+}
