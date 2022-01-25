@@ -1,6 +1,5 @@
 import './App.css';
 import DashboardPage from '../DashboardPage/DashboardPage';
-import ModalAddTransaction from '../ModalAddTransaction/ModalAddTransaction';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import PoppinsBoldWoff from '../../assets/fonts/Poppins-Bold.woff';
 import PoppinsRegularWoff from '../../assets/fonts/Poppins-Regular.woff';
@@ -8,7 +7,6 @@ import AbelRegularWoff from '../../assets/fonts/Abel-Regular.woff';
 import PoppinsBoldWoff2 from '../../assets/fonts/Poppins-Bold.woff2';
 import PoppinsRegularWoff2 from '../../assets/fonts/Poppins-Regular.woff2';
 import AbelRegularWoff2 from '../../assets/fonts/Abel-Regular.woff2';
-import ButtonAddTransaction from '../ButtonAddTransaction/ButtonAddTransaction';
 
 const theme = createTheme({
   palette: {
@@ -27,13 +25,13 @@ const theme = createTheme({
     MuiCssBaseline: {
       styleOverrides: `
         @font-face {
-        font-family: 'Poppins';
-        src: url(${PoppinsBoldWoff2}) format('woff2'),
-          url(${PoppinsBoldWoff}) format('woff');
-        font-weight: bold;
-        font-style: normal;
-        font-display: swap;
-      }
+          font-family: 'Poppins';
+          src: url(${PoppinsBoldWoff2}) format('woff2'),
+            url(${PoppinsBoldWoff}) format('woff');
+          font-weight: bold;
+          font-style: normal;
+          font-display: swap;
+        }
 
         @font-face {
           font-family: 'Poppins';
@@ -84,8 +82,6 @@ function App() {
     <ThemeProvider theme={theme}>
       <div className="App">
         <DashboardPage />
-        {/*<ModalAddTransaction/>*/}
-        {/*<ButtonAddTransaction/>*/}
       </div>
     </ThemeProvider>
   );
