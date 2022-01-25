@@ -1,5 +1,9 @@
 import './App.css';
+
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import DashboardPage from '../DashboardPage/DashboardPage';
+import RegistrationPage from '../RegistrationPage/RegistrationPage';
+
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import PoppinsBoldWoff from '../../assets/fonts/Poppins-Bold.woff';
 import PoppinsRegularWoff from '../../assets/fonts/Poppins-Regular.woff';
@@ -81,7 +85,12 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
-        <DashboardPage />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/home/*" element={ <DashboardPage /> } />
+            <Route path="/" element={ <RegistrationPage /> } />
+          </Routes>
+        </BrowserRouter>
       </div>
     </ThemeProvider>
   );

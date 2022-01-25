@@ -33,6 +33,10 @@
   max-width: 65%;
 }
 
+.leftHeadContainer {
+  display: flex;
+}
+
 @media (max-width: 1000px) {
   .leftContainer,
   .rightContainer {

@@ -1,42 +1,51 @@
 import style from './Navigation.module.css';
+import { Link, useLocation } from 'react-router-dom';
 
 const navigationData = [
   {
     name: 'Main',
-    linkClass: `${style.navigationLink} ${style.active}`,
+    linkClass: `${style.navigationLink}`,
     iconClass: style.mainLink,
-    path: '/',
+    path: '/home',
     id: 1
   },
   {
     name: 'Statistic',
     linkClass: style.navigationLink,
     iconClass: style.statisticLink,
-    path: '/',
+    path: '/home/statistic',
     id: 2
   },
   {
     name: 'Currency',
     linkClass: `${style.navigationLink} ${style.currencyLinkWrap}`,
     iconClass: style.currencyLink,
-    path: '/',
+    path: '/home/currency',
     id: 3
   },
 ];
 
-function getLink({ name, linkClass, iconClass, path, id }) {
+function getLink({ name, linkClass, iconClass, path, id }, checkLink) {
   return (
-    <a key={id} className={linkClass} href={path}>
+    <Link to={path} key={id} className={`${linkClass} ${checkLink(path) ? style.active : ``}`}>
       <i className={iconClass} />
       <span>{name}</span>
-    </a>
+    </Link>
   );
 }
 
 function Navigation() {
+  const location = useLocation();
+
+  const isActive = (path) => {
+    return location.pathname === path;
+  };
+
   return (
     <nav className={style.navigation}>
-      {navigationData.map(getLink)}
+      {navigationData.map(el => {
+        return getLink(el, isActive)
+      })}
     </nav>
   );
 }

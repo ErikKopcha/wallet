@@ -1,5 +1,7 @@
 import style from './RegistrationForm.module.css';
 import logo from '../../assets/icons/wallet-logo.svg';
+import { Link } from "react-router-dom";
+
 
 export default function RegistrationForm() {
   return (
@@ -32,12 +34,8 @@ export default function RegistrationForm() {
           type='text'>
         </input>
 
-        <button className={`${style.RegBtn} ${style.Btn}`}>
-          Registration
-        </button>
-        <a className={`${style.LogInBtn} ${style.Btn}`}>
-          Log in
-        </a>
+        <Link className={`${style.RegBtn} ${style.Btn}`} to="/home">Registration</Link>
+        <Link className={`${style.LogInBtn} ${style.Btn}`} to="/home">Log in</Link>
       </form>
     </div>
   )
