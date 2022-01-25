@@ -1,0 +1,79 @@
+.currency {
+  width: 100%;
+  min-height: 350px;
+  max-height: 50vh;
+  background-color: var(--secondaryButtonColor);
+  background-image: url('../../assets/images/currency-bg.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: bottom;
+  border-radius: 30px;
+  overflow: auto;
+}
+
+.currency::-webkit-scrollbar {
+  width: 0;
+}
+
+.currency table {
+  font-family: "Abel", sans-serif;
+  width: 100%;
+  font-size: 18px;
+  color: #FFFFFF;
+  border-collapse: collapse;
+}
+
+.currency table thead {
+  position: sticky;
+  top: 0;
+  left: 0;
+  background: var(--lightBlueColor);
+}
+
+.currency table tr td:first-child,
+.currency table tr th:first-child {
+  padding-left: 30px;
+}
+
+.currency table tr td:last-child,
+.currency table tr th:last-child {
+  padding-right: 30px;
+}
+
+.currency table tr th {
+  padding: 18px 0;
+}
+
+.currency table tr td {
+  padding: 10px 0;
+}
+
+@media (max-width: 768px) {
+  .currency {
+    min-height: unset;
+  }
+
+  .currency table tr td:first-child,
+  .currency table tr th:first-child {
+    padding-left: 20px;
+  }
+
+  .currency table tr td:last-child,
+  .currency table tr th:last-child {
+    padding-right: 20px;
+  }
+
+  .currency table tr th {
+    padding: 14px 0;
+  }
+
+  .currency table tr td {
+    padding: 8px 0;
+  }
+}
+
+@media (max-width: 425px) {
+  .currency {
+    display: none;
+  }
+}

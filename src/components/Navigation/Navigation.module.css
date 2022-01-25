@@ -1,4 +1,8 @@
-.NavigationLink {
+.navigation {
+  margin-bottom: 34px;
+}
+
+.navigationLink {
   display: flex;
   align-items: center;
   font-size: 18px;
@@ -9,47 +13,53 @@
   will-change: color, transition;
 }
 
-.NavigationLink:not(:last-of-type) {
+.navigationLink:not(:last-of-type) {
   margin-bottom: 20px;
 }
 
-.NavigationLink span {
+.navigationLink span {
   color: #000000;
 }
 
-.NavigationLink i {
+.navigationLink i {
   width: 18px;
   height: 18px;
   margin-right: 20px;
 }
 
-.Active i {
+.active i {
   filter: var(--iconShadow);
 }
 
-.Active span {
+.active span {
   font-weight: bold;
   color: var(--activeNavTextColor);
 }
 
-.MainLink {
+.mainLink {
   background-image: url('../../assets/icons/home.svg');
 }
 
-.StatisticLink {
+.statisticLink {
   background-image: url('../../assets/icons/statistic.svg');
 }
 
-.CurrencyLink {
+.currencyLink {
   background-image: url('../../assets/icons/currency.svg');
 }
 
-.CurrencyLinkWrap {
+.currencyLinkWrap {
   display: none;
 }
 
+@media (max-width: 768px)  {
+  .navigation {
+    margin-bottom: 24px;
+  }
+}
+
 @media (max-width: 425px) {
-  .Navigation {
+  .navigation {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
@@ -57,21 +67,21 @@
     margin: 0 auto 14px auto;
   }
 
-  .NavigationLink {
+  .navigationLink:not(:last-of-type) {
     margin-bottom: 0;
   }
 
-  .NavigationLink span {
+  .navigationLink span {
     display: none;
   }
 
-  .NavigationLink i {
+  .navigationLink i {
     width: 38px;
     height: 38px;
     margin-right: 0;
   }
 
-  .CurrencyLinkWrap {
+  .currencyLinkWrap {
     display: block;
   }
 }

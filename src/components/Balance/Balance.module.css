@@ -1,0 +1,42 @@
+.balance {
+  margin-bottom: 30px;
+  padding: 10px 40px;
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 30px;
+}
+
+.balanceTitle {
+  margin-bottom: 8px;
+  font-family: "Abel", sans-serif;
+  font-size: 12px;
+  color: var(--grayColor);
+  text-transform: uppercase;
+}
+
+.balanceSum,
+.balanceCurrCode {
+  font-weight: bold;
+  font-family: "Poppins", sans-serif;
+  font-size: 30px;
+  color: #000000;
+  white-space: nowrap;
+  overflow-x: auto;
+}
+
+.balanceCurrCode {
+  font-weight: normal;
+}
+
+@media (max-width: 768px) {
+  .balance {
+    margin-bottom: 0;
+  }
+}
+
+@media (max-width: 425px) {
+  .Balance {
+    padding: 10px 30px;
+    margin-bottom: 30px;
+  }
+}

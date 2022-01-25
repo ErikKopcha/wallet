@@ -3,22 +3,22 @@ import style from './Navigation.module.css';
 const navigationData = [
   {
     name: 'Main',
-    linkClass: `${style.NavigationLink} ${style.Active}`,
-    iconClass: style.MainLink,
+    linkClass: `${style.navigationLink} ${style.active}`,
+    iconClass: style.mainLink,
     path: '/',
     id: 1
   },
   {
     name: 'Statistic',
-    linkClass: style.NavigationLink,
-    iconClass: style.StatisticLink,
+    linkClass: style.navigationLink,
+    iconClass: style.statisticLink,
     path: '/',
     id: 2
   },
   {
     name: 'Currency',
-    linkClass: `${style.NavigationLink} ${style.CurrencyLinkWrap}`,
-    iconClass: style.CurrencyLink,
+    linkClass: `${style.navigationLink} ${style.currencyLinkWrap}`,
+    iconClass: style.currencyLink,
     path: '/',
     id: 3
   },
@@ -35,7 +35,7 @@ function getLink({ name, linkClass, iconClass, path, id }) {
 
 function Navigation() {
   return (
-    <nav className={style.Navigation}>
+    <nav className={style.navigation}>
       {navigationData.map(getLink)}
     </nav>
   );
