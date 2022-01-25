@@ -1,7 +1,7 @@
 import { Fab } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 
-function AddTransaction({open}) {
+function ButtonAddTransaction({open}) {
   return (
     <Fab onClick={open} size='44px' color='primary' aria-label='add'
          sx={{ position: 'absolute', right: '85px', bottom: '50px' }}>
@@ -9,4 +9,4 @@ function AddTransaction({open}) {
     </Fab>
 )}
 
-export default AddTransaction;
+export default ButtonAddTransaction;

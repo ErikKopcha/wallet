@@ -2,7 +2,7 @@ import style from './DashboardPage.module.css';
 import Header from '../Header/Header';
 import Navigation from '../Navigation/Navigation';
 import Balance from '../Balance/Balance';
-import AddTransaction from '../AddTransaction/AddTransaction';
+import ButtonAddTransaction from '../ButtonAddTransaction/ButtonAddTransaction';
 import { useState } from 'react';
 import ModalAddTransaction from '../ModalAddTransaction/ModalAddTransaction';
 
@@ -23,7 +23,7 @@ function DashboardPage() {
         </div>
         <div className={style.RightContainer}></div>
       </div>
-      <AddTransaction open={handleOpenModalAdd} />
+      <ButtonAddTransaction open={handleOpenModalAdd} />
       {
         modalAdd && <ModalAddTransaction close={handleCloseModalAdd} />
       }

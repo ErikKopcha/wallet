@@ -8,7 +8,7 @@ import AbelRegularWoff from '../../assets/fonts/Abel-Regular.woff';
 import PoppinsBoldWoff2 from '../../assets/fonts/Poppins-Bold.woff2';
 import PoppinsRegularWoff2 from '../../assets/fonts/Poppins-Regular.woff2';
 import AbelRegularWoff2 from '../../assets/fonts/Abel-Regular.woff2';
-import AddTransaction from '../AddTransaction/AddTransaction';
+import ButtonAddTransaction from '../ButtonAddTransaction/ButtonAddTransaction';
 
 const theme = createTheme({
   palette: {
@@ -85,7 +85,7 @@ function App() {
       <div className="App">
         <DashboardPage />
         {/*<ModalAddTransaction/>*/}
-        {/*<AddTransaction/>*/}
+        {/*<ButtonAddTransaction/>*/}
       </div>
     </ThemeProvider>
   );
