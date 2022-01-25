@@ -34,8 +34,8 @@ export default function RegistrationForm() {
           type='text'>
         </input>
 
-        <Link className={`${style.RegBtn} ${style.Btn}`} to="/home">Registration</Link>
-        <Link className={`${style.LogInBtn} ${style.Btn}`} to="/home">Log in</Link>
+        <Link className={`${style.RegBtn} ${style.Btn}`} to="/home/">Registration</Link>
+        <Link className={`${style.LogInBtn} ${style.Btn}`} to="/home/">Log in</Link>
       </form>
     </div>
   )

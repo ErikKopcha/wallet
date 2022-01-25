@@ -81,7 +81,7 @@ const theme = createTheme({
 
 function App() {
   const isUserAuthenticated = false; // for test
-  const getRedirectUrl = () => isUserAuthenticated ? "/home" : "/register"; // wait login component
+  const getRedirectUrl = () => isUserAuthenticated ? "/home/" : "/register"; // wait login component
 
   return (
     <ThemeProvider theme={theme}>

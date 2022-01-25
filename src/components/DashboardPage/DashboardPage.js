@@ -29,7 +29,7 @@ function DashboardPage() {
         <div className={style.rightContainer}>
           <Routes>
             <Route path="/" element={ <h1>Transaction table</h1> } />
-            <Route path="statistic" element={ <h1>Char table</h1> } />
+            <Route path="diagram" element={ <h1>Char table</h1> } />
             { isMobile && <Route path="currency" element={ <Currency /> } /> }
           </Routes>
         </div>
