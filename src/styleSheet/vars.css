@@ -6,8 +6,12 @@
   --secondaryButtonColor: #4a56e2;
   --textOnDarkBackgroundColor: #fff;
   --activeNavTextColor: #4a56e2;
-  --secondaryNavIconColor: #6E78E8;
-  --globalBgColor: #F1F2F7;
+  --secondaryNavIconColor: #6e78e8;
+  --globalBgColor: #f1f2f7;
+  --whiteBgColor: #fff;
+  --darkBgFormColor: #e5e5e5;
+  --lightBgFormColor: rgba(255, 255, 255, 0.4);
+  --placeholderTextColor: #bdbdbd;
   --grayColor: #A6A6A6;
   --lightBlueColor: #6e78e8;
   --iconShadow: drop-shadow(0px 3px 10px rgba(74, 86, 226, 0.5));

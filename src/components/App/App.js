@@ -1,6 +1,7 @@
 import './App.css';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import DashboardPage from '../DashboardPage/DashboardPage';
-import ModalAddTransaction from '../ModalAddTransaction/ModalAddTransaction';
+import RegistrationPage from '../RegistrationPage/RegistrationPage';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import PoppinsBoldWoff from '../../assets/fonts/Poppins-Bold.woff';
 import PoppinsRegularWoff from '../../assets/fonts/Poppins-Regular.woff';
@@ -8,7 +9,6 @@ import AbelRegularWoff from '../../assets/fonts/Abel-Regular.woff';
 import PoppinsBoldWoff2 from '../../assets/fonts/Poppins-Bold.woff2';
 import PoppinsRegularWoff2 from '../../assets/fonts/Poppins-Regular.woff2';
 import AbelRegularWoff2 from '../../assets/fonts/Abel-Regular.woff2';
-import ButtonAddTransaction from '../ButtonAddTransaction/ButtonAddTransaction';
 
 const theme = createTheme({
   palette: {
@@ -27,13 +27,13 @@ const theme = createTheme({
     MuiCssBaseline: {
       styleOverrides: `
         @font-face {
-        font-family: 'Poppins';
-        src: url(${PoppinsBoldWoff2}) format('woff2'),
-          url(${PoppinsBoldWoff}) format('woff');
-        font-weight: bold;
-        font-style: normal;
-        font-display: swap;
-      }
+          font-family: 'Poppins';
+          src: url(${PoppinsBoldWoff2}) format('woff2'),
+            url(${PoppinsBoldWoff}) format('woff');
+          font-weight: bold;
+          font-style: normal;
+          font-display: swap;
+        }
 
         @font-face {
           font-family: 'Poppins';
@@ -80,12 +80,23 @@ const theme = createTheme({
 });
 
 function App() {
+  const isUserAuthenticated = false; // for test
+  const getRedirectUrl = () => isUserAuthenticated ? "/home/" : "/register"; // wait login component
+
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
-        <DashboardPage />
-        {/*<ModalAddTransaction/>*/}
-        {/*<ButtonAddTransaction/>*/}
+        <BrowserRouter>
+          <Routes>
+            <Route
+              exact
+              path="/"
+              element={ <Navigate to={getRedirectUrl()} /> } />
+            <Route path="*" element={ <Navigate to={getRedirectUrl()} /> } />
+            <Route path="/home/*" element={ <DashboardPage /> } />
+            <Route path="/register" element={ <RegistrationPage /> } />
+          </Routes>
+        </BrowserRouter>
       </div>
     </ThemeProvider>
   );

@@ -1,35 +1,42 @@
 import style from './Navigation.module.css';
+import { NavLink } from 'react-router-dom';
 
 const navigationData = [
   {
     name: 'Main',
-    linkClass: `${style.navigationLink} ${style.active}`,
+    linkClass: `${style.navigationLink}`,
     iconClass: style.mainLink,
-    path: '/',
+    path: '/home/',
     id: 1
   },
   {
     name: 'Statistic',
     linkClass: style.navigationLink,
     iconClass: style.statisticLink,
-    path: '/',
+    path: 'diagram',
     id: 2
   },
   {
     name: 'Currency',
     linkClass: `${style.navigationLink} ${style.currencyLinkWrap}`,
     iconClass: style.currencyLink,
-    path: '/',
+    path: 'currency',
     id: 3
   },
 ];
-
+//
 function getLink({ name, linkClass, iconClass, path, id }) {
+  const setActive = ({ isActive }) => (isActive ? `${linkClass} ${style.active}` : linkClass);
+
   return (
-    <a key={id} className={linkClass} href={path}>
+    <NavLink
+      to={path}
+      key={id}
+      className={setActive}
+    >
       <i className={iconClass} />
       <span>{name}</span>
-    </a>
+    </NavLink>
   );
 }
 

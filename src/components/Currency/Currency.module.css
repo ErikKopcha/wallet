@@ -72,8 +72,8 @@
   }
 }
 
-@media (max-width: 425px) {
-  .currency {
-    display: none;
-  }
-}
+/*@media (max-width: 425px) {*/
+/*  .currency {*/
+/*    display: none;*/
+/*  }*/
+/*}*/
