@@ -9,9 +9,9 @@ import Currency from '../Currency/Currency';
 import { useState } from 'react';
 
 function DashboardPage() {
-  const [modalAdd, setModalAdd] = useState(false)
-  const handleOpenModalAdd = () => setModalAdd(true)
-  const handleCloseModalAdd = () => setModalAdd(false)
+  const [isOpenModalTransaction, setModalTransaction] = useState(false)
+  const handleOpenModalTransaction = () => setModalTransaction(true)
+  const handleCloseModalTransaction = () => setModalTransaction(false)
 
   return (
     <div className={style.dashboardWrap}>
@@ -26,8 +26,8 @@ function DashboardPage() {
         </div>
         <div className={style.rightContainer}></div>
       </div>
-      <ButtonAddTransaction open={handleOpenModalAdd} />
-      { modalAdd && <ModalAddTransaction close={handleCloseModalAdd} /> }
+      <ButtonAddTransaction open={handleOpenModalTransaction} />
+      <ModalAddTransaction isOpen={isOpenModalTransaction} onClose={handleCloseModalTransaction} />
     </div>
   );
 }

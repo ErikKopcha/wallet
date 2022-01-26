@@ -7,14 +7,12 @@ import style from './ModalAddTransaction.module.css';
 import StyledSwitch from '../StyledSwitch/StyledSwitch';
 import { useState } from 'react';
 
-const ModalAddTransaction = ({close}) => {
-
+const ModalAddTransaction = ({isOpen, onClose}) => {
   let categories = ['Main', 'Food', 'Car', 'Development', 'Kids', 'House', 'Education', 'Others'];
 
   const [value, setValue] = useState(new Date());
   const [category, setCategory] = useState('');
   const [income, setIncome] = useState(true);
-
 
   const changeCategory = (event) => {
     setCategory(event.target.value);
@@ -26,8 +24,8 @@ const ModalAddTransaction = ({close}) => {
 
   return (
     <Modal
-      open={true}
-      onClose={close}
+      open={isOpen}
+      onClose={onClose}
       aria-labelledby='modal-modal-title'
       aria-describedby='modal-modal-description'
     >
@@ -87,8 +85,8 @@ const ModalAddTransaction = ({close}) => {
           </Grid>
         </Grid>
         <Stack sx={{ mt: '50px' }}>
-          <Button variant='contained' sx={{ color: '#fff', mb: '20px' }} onClick={close} >Add</Button>
-          <Button variant='outlined'  onClick={close}>Cancel</Button>
+          <Button variant='contained' sx={{ color: '#fff', mb: '20px' }} onClick={onClose} >Add</Button>
+          <Button variant='outlined'  onClick={onClose}>Cancel</Button>
         </Stack>
       </div>
     </Modal>
