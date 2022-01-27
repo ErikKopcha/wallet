@@ -5,7 +5,7 @@ const balanceInfo = {
   currCode: `₴`
 };
 
-function Balance() {
+const Balance = () => {
   return (
     <div className={style.balance}>
       <p className={style.balanceTitle}>Your balance</p>

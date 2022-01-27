@@ -3,7 +3,6 @@ import { Button, Modal, Paper, Stack, Typography } from '@mui/material';
 import RegistrationPage from '../RegistrationPage/RegistrationPage';
 
 const ModalLogout = ({isOpen, onClose}) => {
-
   return (
     <Modal
       open={isOpen}

@@ -10,7 +10,7 @@ import { useMediaQuery } from 'react-responsive';
 import { useState } from 'react';
 import DashTable from '../DashTable/DashTable';
 
-function DashboardPage() {
+const DashboardPage = () => {
   const [isOpenModalTransaction, setModalTransaction] = useState(false);
   const handleOpenModalTransaction = () => setModalTransaction(true);
   const handleCloseModalTransaction = () => setModalTransaction(false);

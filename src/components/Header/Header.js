@@ -7,10 +7,8 @@ import ModalLogout from '../ModalLogout/ModalLogout';
 
 const name = 'Name';
 
-function Header() {
-
+const Header = () => {
   const [isModalLogoutOpen, setModalLogoutOpen] = useState(false);
-
   const handleOpenModalLogout = () => setModalLogoutOpen(true);
   const handleCloseModalLogout = () => setModalLogoutOpen(false);
 
@@ -23,10 +21,6 @@ function Header() {
         </Link>
         <div className={style.headerInfo}>
           <p className={style.afterVerticalLine}>{name}</p>
-          {/*<Link to="/" className={style.btnExit}>*/}
-          {/*  <img src={exitIcon} alt='logout' />*/}
-          {/*  <span>Exit</span>*/}
-          {/*</Link>*/}
           <button className={style.btnExit} onClick={handleOpenModalLogout}>
             <img src={exitIcon} alt='logout' />
             <span>Exit</span>
