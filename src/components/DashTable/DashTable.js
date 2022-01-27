@@ -134,7 +134,10 @@ const DashTable = () => {
                 columns.map((column) => {
                   return column.id === 'date' || column.id === 'amount' ?
                     <TableCell key={column.id} style={{ minWidth: column.minWidth, maxWidth: column.maxWidth }}
-                               component='div' classes={{ root: `column-${column.id}` }}>{column.label}</TableCell>
+                               classes={{ root: `column-${column.id}` }}
+                    >
+                      {column.label}
+                    </TableCell>
                     : <TableCell key={column.id} style={{ minWidth: column.minWidth, maxWidth: column.maxWidth }}
                                  classes={{ root: `column-${column.id}` }}>{column.label}</TableCell>;
                 })

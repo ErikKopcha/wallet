@@ -1,4 +1,14 @@
-import { Modal, Typography, Stack, Button, Grid, TextField, Select, MenuItem, InputLabel } from '@mui/material';
+import {
+  Modal,
+  Typography,
+  Stack,
+  Button,
+  Grid,
+  TextField,
+  Select,
+  MenuItem,
+  InputLabel,
+} from '@mui/material';
 import DatePicker from '@mui/lab/DatePicker';
 import ruLocale from 'date-fns/locale/ru';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
@@ -7,7 +17,7 @@ import style from './ModalAddTransaction.module.css';
 import StyledSwitch from '../StyledSwitch/StyledSwitch';
 import { useState } from 'react';
 
-const ModalAddTransaction = ({isOpen, onClose}) => {
+const ModalAddTransaction = ({ isOpen, onClose }) => {
   let categories = ['Main', 'Food', 'Car', 'Development', 'Kids', 'House', 'Education', 'Others'];
 
   const [value, setValue] = useState(new Date());
@@ -28,6 +38,7 @@ const ModalAddTransaction = ({isOpen, onClose}) => {
       onClose={onClose}
       aria-labelledby='modal-modal-title'
       aria-describedby='modal-modal-description'
+      sx={{ overflowY: 'scroll' }}
     >
       <div className={style.box}>
         <Typography id='modal-modal-title' variant='h1' component='h1' sx={{ mb: '40px' }}>
@@ -44,7 +55,14 @@ const ModalAddTransaction = ({isOpen, onClose}) => {
             Expenses
           </Typography>
         </Stack>
-        <Grid container columnSpacing='30px' rowSpacing='40px' sx={{ width: '100%' }}>
+        <Grid container columnSpacing='30px' rowSpacing='40px' sx={{ width: '100%',
+          '& .MuiList-root': {
+            backgroundColor: 'red'
+          },
+          '& .MuiPaper-root': {
+            backgroundColor: 'red'
+          },
+        }}>
           {income || <Grid item sm={12} xs={12} md={12}>
             <InputLabel id='selectCategoryLabel'>Select a category</InputLabel>
             <Select
@@ -54,11 +72,14 @@ const ModalAddTransaction = ({isOpen, onClose}) => {
               variant='standard'
               label='Select a category'
               onChange={changeCategory}
-              sx={{ width: '100%' }}
+              sx={{
+                width: '100%',
+
+              }}
             >
               {categories.map((category) => {
                 return (
-                  <MenuItem value={category}>{category}</MenuItem>
+                  <MenuItem value={category} sx={{ background: 'transparent' }}>{category}</MenuItem>
                 );
               })}
             </Select>
@@ -73,6 +94,7 @@ const ModalAddTransaction = ({isOpen, onClose}) => {
                 mask='__.__.____'
                 value={value}
                 views={['year', 'month', 'day']}
+                OpenPickerButtonProps={{ sx: { color: theme => theme.palette.secondary.dark } }}
                 onChange={(newValue) => {
                   setValue(newValue);
                 }}
@@ -85,8 +107,8 @@ const ModalAddTransaction = ({isOpen, onClose}) => {
           </Grid>
         </Grid>
         <Stack sx={{ mt: '50px' }}>
-          <Button variant='contained' sx={{ color: '#fff', mb: '20px' }} onClick={onClose} >Add</Button>
-          <Button variant='outlined'  onClick={onClose}>Cancel</Button>
+          <Button variant='contained' sx={{ color: '#fff', mb: '20px' }} onClick={onClose}>Add</Button>
+          <Button variant='outlined' onClick={onClose}>Cancel</Button>
         </Stack>
       </div>
     </Modal>
