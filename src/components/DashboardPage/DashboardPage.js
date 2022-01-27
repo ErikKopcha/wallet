@@ -34,7 +34,7 @@ function DashboardPage() {
             {isMobile && <Route path='currency' element={<Currency />} />}
           </Routes>
         </div>
-        <ButtonAddTransaction open={handleOpenModalTransaction} />
+        <ButtonAddTransaction open={handleOpenModalTransaction} right='80px' bottom='60px' />
         <ModalAddTransaction isOpen={isOpenModalTransaction} onClose={handleCloseModalTransaction} />
       </div>
     </div>

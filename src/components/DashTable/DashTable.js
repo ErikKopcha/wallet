@@ -9,7 +9,6 @@ import {
   TableBody,
   TablePagination,
 } from '@mui/material';
-import style from './DashTable.module.css';
 
 const DashTable = () => {
 
@@ -81,32 +80,32 @@ const DashTable = () => {
     {
       id: 'date',
       label: 'Date',
-      minWidht: '100px',
-      maxWidth: '200px',
+      minWidth: '80px',
+      maxWidth: '150px',
     },
     {
       id: 'type',
       label: 'Type',
-      minWidht: '100px',
-      maxWidth: '200px',
+      minWidth: '80px',
+      maxWidth: '150px',
     },
     {
       id: 'category',
       label: 'Category',
-      minWidht: '100px',
-      maxWidth: '200px',
+      minWidth: '80px',
+      maxWidth: '150px',
     },
     {
       id: 'comments',
       label: 'Comments',
-      minWidht: '100px',
-      maxWidth: '270px',
+      minWidth: '80px',
+      maxWidth: '150px',
     },
     {
       id: 'amount',
       label: 'Amount',
-      minWidht: '100px',
-      maxWidth: '200px',
+      minWidth: '100px',
+      maxWidth: '150px',
     },
   ];
 
@@ -122,21 +121,27 @@ const DashTable = () => {
       <h1>Transaction table</h1>
       <TableContainer component={Paper}
                       sx={{ mt: '20px', maxHeight: '400px', background: 'transparent', boxShadow: 'none' }}>
-        <Table sx={{ minWidth: 650, boxShadow: 'none', '& .MuiTableCell': { borderLeft: 'none', borderRight: 'none' } }}
+        <Table stickyHeader sx={{ boxShadow: 'none', '& .MuiTableCell': { borderLeft: 'none', borderRight: 'none' } }}
                aria-label='simple table'>
           <TableHead>
             <TableRow sx={{
               '& > *': { background: '#fff', fontSize: 18, textAlign: 'center' },
-              '& .column-date': { display: 'block', borderTopLeftRadius: '100px', borderBottomLeftRadius: '100px' },
-              '& .column-amount': { display: 'block', borderTopRightRadius: '100px', borderBottomRightRadius: '100px' },
+              '& .column-date': { borderTopLeftRadius: '100px', borderBottomLeftRadius: '100px' },
+              '& .column-amount': { borderTopRightRadius: '100px', borderBottomRightRadius: '100px' },
             }}>
               {
-                //TODO: change name of classes (.column-0 .column-4) - it should be flexible!!!
-                columns.map((column) => <TableCell style={{minWidth: column.minWidht, maxWidth: column.maxWidth}} classes={{ root: `column-${column.id}`}}>{column.label}</TableCell>)
+                //TODO: change name of classes (.column-date .column-amount) - it should be flexible!!!
+                columns.map((column) => {
+                  return column.id === 'date' || column.id === 'amount' ?
+                    <TableCell key={column.id} style={{ minWidth: column.minWidth, maxWidth: column.maxWidth }}
+                               component='div' classes={{ root: `column-${column.id}` }}>{column.label}</TableCell>
+                    : <TableCell key={column.id} style={{ minWidth: column.minWidth, maxWidth: column.maxWidth }}
+                                 classes={{ root: `column-${column.id}` }}>{column.label}</TableCell>;
+                })
               }
             </TableRow>
           </TableHead>
-          <TableBody className={style.tableBody}>
+          <TableBody>
             {operations
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((operation) => (
@@ -150,8 +155,9 @@ const DashTable = () => {
                     columns.map((column) => {
                       const value = operation[column.id];
                       return (
-                        <TableCell key={column.id} style={{minWidth: column.minWidht, maxWidth: column.maxWidth}}>{value}</TableCell>
-                      )
+                        <TableCell key={column.id}
+                                   style={{ minWidth: column.minWidth, maxWidth: column.maxWidth }}>{value}</TableCell>
+                      );
                     })
                   }
                 </TableRow>
@@ -160,12 +166,14 @@ const DashTable = () => {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={false}
+        rowsPerPageOptions={[]}
         rowsPerPage={rowsPerPage}
         component='div'
         count={operations.length}
         page={page}
-        onPageChange={handleChangePage} />
+        onPageChange={handleChangePage}
+        style={{display: 'flex', justifyContent: 'space-around'}}
+      />
     </>
   );
 };
