@@ -39,14 +39,83 @@ const DashTable = () => {
       comments: 'ghjv dnljsdvjvdljbvbjlv dsbjldvsjbldsvbjldsbj ldsvvsdjbdvsjb ldsvbvdsblj vdsghjgh',
       amount: '123',
     },
+    {
+      date: '11.01.2022',
+      type: '-',
+      category: 'Products',
+      comments: 'ghjv dnljsdvjvdljbvbjlv dsbjldvsjbldsvbjldsbj ldsvvsdjbdvsjb ldsvbvdsblj vdsghjgh',
+      amount: '123',
+    },
+    {
+      date: '11.01.2022',
+      type: '-',
+      category: 'Products',
+      comments: 'ghjv dnljsdvjvdljbvbjlv dsbjldvsjbldsvbjldsbj ldsvvsdjbdvsjb ldsvbvdsblj vdsghjgh',
+      amount: '123',
+    },
+    {
+      date: '11.01.2022',
+      type: '-',
+      category: 'Products',
+      comments: 'ghjv dnljsdvjvdljbvbjlv dsbjldvsjbldsvbjldsbj ldsvvsdjbdvsjb ldsvbvdsblj vdsghjgh',
+      amount: '123',
+    },
+    {
+      date: '11.01.2022',
+      type: '-',
+      category: 'Products',
+      comments: 'ghjv dnljsdvjvdljbvbjlv dsbjldvsjbldsvbjldsbj ldsvvsdjbdvsjb ldsvbvdsblj vdsghjgh',
+      amount: '123',
+    },
+    {
+      date: '11.01.2022',
+      type: '-',
+      category: 'Products',
+      comments: 'ghjv dnljsdvjvdljbvbjlv dsbjldvsjbldsvbjldsbj ldsvvsdjbdvsjb ldsvbvdsblj vdsghjgh',
+      amount: '123',
+    },
     { date: '22.01.2022', type: '+', category: 'Car', comments: 'ghjghjgh', amount: '565656' },
   ];
 
-  let columns = ['Date', 'Type', 'Category', 'Comments', 'Amount'];
+  let columns = [
+    {
+      id: 'date',
+      label: 'Date',
+      minWidht: '100px',
+      maxWidth: '200px',
+    },
+    {
+      id: 'type',
+      label: 'Type',
+      minWidht: '100px',
+      maxWidth: '200px',
+    },
+    {
+      id: 'category',
+      label: 'Category',
+      minWidht: '100px',
+      maxWidth: '200px',
+    },
+    {
+      id: 'comments',
+      label: 'Comments',
+      minWidht: '100px',
+      maxWidth: '270px',
+    },
+    {
+      id: 'amount',
+      label: 'Amount',
+      minWidht: '100px',
+      maxWidth: '200px',
+    },
+  ];
 
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
+  const rowsPerPage = 5;
 
-  const handleChangePage = (newPage) => setPage(newPage);
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
 
   return (
     <>
@@ -56,32 +125,43 @@ const DashTable = () => {
         <Table sx={{ minWidth: 650, boxShadow: 'none', '& .MuiTableCell': { borderLeft: 'none', borderRight: 'none' } }}
                aria-label='simple table'>
           <TableHead>
-            <TableRow sx={{ '& > *': { background: '#fff', fontSize: 18, textAlign: 'center' }, '& .Date' : {display: 'block', borderTopLeftRadius: '100px', borderBottomLeftRadius: '100px'}, '& .Amount': {display: 'block', borderTopRightRadius: '100px', borderBottomRightRadius: '100px'}}}>
+            <TableRow sx={{
+              '& > *': { background: '#fff', fontSize: 18, textAlign: 'center' },
+              '& .column-date': { display: 'block', borderTopLeftRadius: '100px', borderBottomLeftRadius: '100px' },
+              '& .column-amount': { display: 'block', borderTopRightRadius: '100px', borderBottomRightRadius: '100px' },
+            }}>
               {
-                //TODO: change name of classes (.Amount .Date) - it should be flexible!!!
-                columns.map((column) => <TableCell classes={{root: column}}>{column}</TableCell>)
+                //TODO: change name of classes (.column-0 .column-4) - it should be flexible!!!
+                columns.map((column) => <TableCell style={{minWidth: column.minWidht, maxWidth: column.maxWidth}} classes={{ root: `column-${column.id}`}}>{column.label}</TableCell>)
               }
             </TableRow>
           </TableHead>
           <TableBody className={style.tableBody}>
-            {operations.map((operation) => (
-              <TableRow
-                key={Math.random()}
-                sx={{'& > *': { textAlign: 'center' } }}
-              >
-                <TableCell>{operation.date}</TableCell>
-                <TableCell>{operation.type}</TableCell>
-                <TableCell>{operation.category}</TableCell>
-                <TableCell
-                  sx={{ maxWidth: '200px', wordWrap: 'wrap', padding: '0px 50px' }}>{operation.comments}</TableCell>
-                <TableCell>{operation.amount}</TableCell>
-              </TableRow>
-            ))}
+            {operations
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((operation) => (
+                <TableRow
+                  hover
+                  role='checkbox'
+                  key={Math.random()}
+                  sx={{ '& > *': { textAlign: 'center' } }}
+                >
+                  {
+                    columns.map((column) => {
+                      const value = operation[column.id];
+                      return (
+                        <TableCell key={column.id} style={{minWidth: column.minWidht, maxWidth: column.maxWidth}}>{value}</TableCell>
+                      )
+                    })
+                  }
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPage={10}
+        rowsPerPageOptions={false}
+        rowsPerPage={rowsPerPage}
         component='div'
         count={operations.length}
         page={page}
