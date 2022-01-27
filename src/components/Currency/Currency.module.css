@@ -9,6 +9,7 @@
   background-position: bottom;
   border-radius: 30px;
   overflow: auto;
+  position: relative;
 }
 
 .currency::-webkit-scrollbar {
@@ -72,8 +73,13 @@
   }
 }
 
-/*@media (max-width: 425px) {*/
-/*  .currency {*/
-/*    display: none;*/
-/*  }*/
-/*}*/
+.spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.spinner svg {
+  stroke: #ffffff;
+}
