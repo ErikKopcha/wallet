@@ -56,7 +56,7 @@ const Currency = () => {
 
   useEffect(() => {
     getCurrency().then(onDataLoaded);
-  }, []);
+  });
 
   const onDataLoaded = (currData) => {
     console.log('Currency => onDataLoaded: ', currData);
