@@ -10,9 +10,9 @@ import { useMediaQuery } from 'react-responsive'
 import { useState } from 'react';
 
 function DashboardPage() {
-  const [modalAdd, setModalAdd] = useState(false)
-  const handleOpenModalAdd = () => setModalAdd(true)
-  const handleCloseModalAdd = () => setModalAdd(false)
+  const [isOpenModalTransaction, setModalTransaction] = useState(false)
+  const handleOpenModalTransaction = () => setModalTransaction(true)
+  const handleCloseModalTransaction = () => setModalTransaction(false)
   const isMobile = useMediaQuery({ query: '(max-width: 425px)' })
 
   return (
@@ -34,8 +34,8 @@ function DashboardPage() {
           </Routes>
         </div>
       </div>
-      <ButtonAddTransaction open={handleOpenModalAdd} />
-      { modalAdd && <ModalAddTransaction close={handleCloseModalAdd} /> }
+      <ButtonAddTransaction open={handleOpenModalTransaction} />
+      <ModalAddTransaction isOpen={isOpenModalTransaction} onClose={handleCloseModalTransaction} />
     </div>
   );
 }
