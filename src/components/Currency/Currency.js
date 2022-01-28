@@ -1,6 +1,6 @@
 import style from './Currency.module.css';
 import React, { useState, useEffect } from 'react';
-import useWalletService from '../../services/walletService';
+// import useWalletService from '../../services/walletService';
 import { Rings } from 'react-loader-spinner';
 
 /**
@@ -52,60 +52,64 @@ const Currency = () => {
   const [currData, setCurrData] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const {getCurrency} = useWalletService();
+  // const {getCurrency} = useWalletService();
 
   useEffect(() => {
-    getCurrency().then(onDataLoaded);
+    // getCurrency().then(onDataLoaded);
+
+    const timeout = setTimeout(() => {
+      setCurrData([
+        {
+          currCode: 'USD',
+          buy: 27.55,
+          sale: 27.6,
+          precision: 2,
+          id: 1
+        },
+        {
+          currCode: 'EUR',
+          buy: 31.5,
+          sale: 32.35,
+          precision: 2,
+          id: 2
+        },
+        {
+          currCode: 'PLN',
+          buy: 0,
+          sale: 0,
+          precision: 2,
+          id: 3
+        },
+        {
+          currCode: 'CAD',
+          buy: 0,
+          sale: 0,
+          precision: 2,
+          id: 4
+        },
+        {
+          currCode: 'GBP',
+          buy: 0,
+          sale: 0,
+          precision: 2,
+          id: 5
+        },
+      ]);
+
+      setLoading(false)
+
+      clearTimeout(timeout)
+    }, 4000)
   });
 
-  const onDataLoaded = (currData) => {
-    console.log('Currency => onDataLoaded: ', currData);
-    if (currData) {
-      setCurrData(currData);
-    } else {
-      // for test
-      setTimeout(() => {
-        setCurrData([
-          {
-            currCode: 'USD',
-            buy: 27.55,
-            sale: 27.6,
-            precision: 2,
-            id: 1
-          },
-          {
-            currCode: 'EUR',
-            buy: 31.5,
-            sale: 32.35,
-            precision: 2,
-            id: 2
-          },
-          {
-            currCode: 'PLN',
-            buy: 0,
-            sale: 0,
-            precision: 2,
-            id: 3
-          },
-          {
-            currCode: 'CAD',
-            buy: 0,
-            sale: 0,
-            precision: 2,
-            id: 4
-          },
-          {
-            currCode: 'GBP',
-            buy: 0,
-            sale: 0,
-            precision: 2,
-            id: 5
-          },
-        ]);
-        setLoading(false)
-      }, 4000)
-    }
-  }
+  // const onDataLoaded = (currData) => {
+  //   console.log('Currency => onDataLoaded: ', currData);
+  //   if (currData) {
+  //     setCurrData(currData);
+  //   } else {
+  //
+  //   }
+  // }
 
   const isLoading = loading ? <Rings wrapperClass={style.spinner} ariaLabel="loading-indicator" /> : null;
   const isRender = currData !== null ? <Table currData={currData} /> : null;
