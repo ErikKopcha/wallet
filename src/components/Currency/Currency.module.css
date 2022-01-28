@@ -51,7 +51,7 @@
 
 @media (max-width: 768px) {
   .currency {
-    min-height: unset;
+    min-height: 200px;
   }
 
   .currency table tr td:first-child,
