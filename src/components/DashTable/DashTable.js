@@ -10,15 +10,8 @@ import {
   TablePagination, Stack, Card, CardContent, Box, Typography, Tooltip,
 } from '@mui/material';
 import Media from 'react-media';
-import theme from '../../styleSheet/MaterialUITheme';
 
 const DashTable = () => {
-
-  const GLOBAL_MEDIA_QUERIES = {
-    small: '(max-width: 599px)',
-    medium: '(min-width: 600px) and (max-width: 1199px)',
-    large: '(min-width: 1200px)',
-  };
 
   let operations = [
     { date: '22.01.2022', type: '+', category: 'Car', comments: 'ghjghjgh', amount: '123' },
@@ -146,7 +139,7 @@ const DashTable = () => {
                         //TODO: change name of classes (.column-date .column-amount) - it should be flexible!!!
                         columns.map((column) => {
                           return column.id === 'date' || column.id === 'amount' ?
-                            <TableCell key={column.id}
+                            <TableCell key={`column-${column.id}`}
                                        style={{ minWidth: column.minWidth, maxWidth: column.maxWidth }}
                                        classes={{ root: `column-${column.id}` }}
                             >
@@ -167,15 +160,15 @@ const DashTable = () => {
                         <TableRow
                           hover
                           role='checkbox'
-                          key={Math.random()}
+                          key={`row-${new Date().getTime()}-${Math.random()}`}
                           sx={{ '& > *': { textAlign: 'center' } }}
                         >
                           {
                             columns.map((column) => {
                               const value = operation[column.id];
                               return value.length >= 30 ? (
-                                <Tooltip title={operation[column.id]}>
-                                  <TableCell style={{
+                                <Tooltip key={`tooltip-${new Date().getTime()}`} title={operation[column.id]}>
+                                  <TableCell key={`cell-${new Date().getTime()}`} style={{
                                     maxWidth: column.maxWidth,
                                     minWidth: column.minWidth,
                                     width: '99%',
@@ -216,7 +209,7 @@ const DashTable = () => {
             <Stack direction={'column'} sx={{ pb: '25px' }}>
               {
                 operations.map(operation => (
-                  <Card style={{
+                  <Card key={`card-${new Date().getTime()}`} style={{
                     borderRadius: '10px',
                     borderLeftWidth: '5px',
                     borderLeftStyle: 'solid',
@@ -232,7 +225,7 @@ const DashTable = () => {
                     <CardContent sx={{ padding: 0 }}>
                       {
                         columns.map(column => (
-                          <Box sx={{
+                          <Box key={`box-${new Date().getTime()}`} sx={{
                             display: 'flex',
                             justifyContent: 'space-between',
                             borderBottom: '1px solid #DCDCDF',
@@ -240,13 +233,13 @@ const DashTable = () => {
                             alignItems: 'center',
                             paddingX: '20px',
                           }}>
-                            <Typography>
+                            <Typography key={`column-label-${new Date().getTime()}`}>
                               {column.label}
                             </Typography>
                             {
                               operation[column.id].length >= 30 ? (
-                                <Tooltip title={operation[column.id]}>
-                                  <Typography sx={{
+                                <Tooltip key={`toolTip--${new Date().getTime()}`} title={operation[column.id]}>
+                                  <Typography key={`oper-${new Date().getTime()}`} sx={{
                                     maxWidth: '49%',
                                     width: '50%',
                                     display: 'block',
@@ -258,12 +251,11 @@ const DashTable = () => {
                                   </Typography>
                                 </Tooltip>
                               ) : (
-                                <Typography sx={{ maxWidth: '200px' }}>
+                                <Typography key={`operation-${new Date().getTime()}`} sx={{ maxWidth: '200px' }}>
                                   {operation[column.id]}
                                 </Typography>
                               )
                             }
-
                           </Box>
                         ))
                       }

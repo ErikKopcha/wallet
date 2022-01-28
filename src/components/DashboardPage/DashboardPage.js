@@ -9,6 +9,7 @@ import { Routes, Route } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 import { useState } from 'react';
 import DashTable from '../DashTable/DashTable';
+import Media from 'react-media';
 
 function DashboardPage() {
   const [isOpenModalTransaction, setModalTransaction] = useState(false);
@@ -34,7 +35,15 @@ function DashboardPage() {
             {isMobile && <Route path='currency' element={<Currency />} />}
           </Routes>
         </div>
-        <ButtonAddTransaction open={handleOpenModalTransaction} right='80px' bottom='60px' />
+        <Media query='(min-width: 720px)'>
+          {
+            matches => matches ? (
+              <ButtonAddTransaction open={handleOpenModalTransaction} right='80px' bottom='60px' />
+            ) : (
+              <ButtonAddTransaction open={handleOpenModalTransaction} right='20px' bottom='20px' />
+            )
+          }
+        </Media>
         <ModalAddTransaction isOpen={isOpenModalTransaction} onClose={handleCloseModalTransaction} />
       </div>
     </div>
