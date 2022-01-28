@@ -3,7 +3,7 @@ import {useHttp} from '../hooks/http.hook';
 const useWalletService = () => {
   const {request} = useHttp();
 
-  const _apiPrivate = 'https://api.privatbank.ua/p24api/pubinfo';
+  const _apiPrivate = '/api.privatbank.ua/p24api/pubinfo';
   const _baseCurrencyId = 5;
 
   const getCurrency = async () => {
