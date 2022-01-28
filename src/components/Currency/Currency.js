@@ -55,7 +55,9 @@ const Currency = () => {
   const {getCurrency} = useWalletService();
 
   useEffect(() => {
-    getCurrency().then(onDataLoaded);
+    if (!currData.length) {
+      getCurrency().then(onDataLoaded);
+    }
   });
 
   const onDataLoaded = (currData) => {
