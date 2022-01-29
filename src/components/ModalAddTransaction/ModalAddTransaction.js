@@ -44,14 +44,18 @@ const ModalAddTransaction = ({ isOpen, onClose }) => {
   const formik = useFormik({
     initialValues: {
       category: '',
+      type: false,
       amount: '',
       date: new Date(),
       comments: '',
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      alert(values.date.toLocaleString());
-      dispatch(addTransaction(values, values.date.toLocaleString()));
+      // alert(values.date.toLocaleString());
+      const obj = {...values};
+      obj.date = '20.01.2022';
+      alert(JSON.stringify(obj))
+      dispatch(addTransaction({ date: '22.01.2022', type: false, category: 'Car', comments: 'mak', amount: '123' }));
       // alert(JSON.stringify(values, null, 2));
     },
   });

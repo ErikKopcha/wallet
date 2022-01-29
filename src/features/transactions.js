@@ -69,7 +69,7 @@ export const transactionsSlice = createSlice({
   initialState: initialState,
   reducers: {
     addTransaction: (state, action) => {
-      state.value = [...initialState, action.payload];
+      state.push(action.payload);
     }
   }
 })
