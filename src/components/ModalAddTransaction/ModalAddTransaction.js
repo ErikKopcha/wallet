@@ -6,6 +6,7 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import style from './ModalAddTransaction.module.css';
 import StyledSwitch from '../StyledSwitch/StyledSwitch';
 import { useState } from 'react';
+import {useDispatch} from 'react-redux';
 
 const ModalAddTransaction = ({isOpen, onClose}) => {
   let categories = ['Main', 'Food', 'Car', 'Development', 'Kids', 'House', 'Education', 'Others'];
@@ -13,6 +14,8 @@ const ModalAddTransaction = ({isOpen, onClose}) => {
   const [value, setValue] = useState(new Date());
   const [category, setCategory] = useState('');
   const [income, setIncome] = useState(true);
+
+  const dispatch = useDispatch();
 
   const changeCategory = (event) => {
     setCategory(event.target.value);
