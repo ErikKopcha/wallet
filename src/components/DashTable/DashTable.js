@@ -118,9 +118,8 @@ const DashTable = () => {
 
   return (
     <>
-      <h1>Transaction table</h1>
       <TableContainer component={Paper}
-                      sx={{ mt: '20px', maxHeight: '400px', background: 'transparent', boxShadow: 'none' }}>
+                      sx={{ mt: '0px', maxHeight: '400px', background: 'transparent', boxShadow: 'none' }}>
         <Table stickyHeader sx={{ boxShadow: 'none', '& .MuiTableCell': { borderLeft: 'none', borderRight: 'none' } }}
                aria-label='simple table'>
           <TableHead>
