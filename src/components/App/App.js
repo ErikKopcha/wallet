@@ -14,18 +14,16 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
-        <BrowserRouter>
-          <Routes>
-            <Route
-              exact
-              path="/"
-              element={ <Navigate to={getRedirectUrl()} /> } />
-            <Route path="*" element={ <Navigate to={getRedirectUrl()} /> } />
-            <Route path="/home/*" element={ <DashboardPage /> } />
-            <Route path="/login" element={ <LoginPage /> } />
-            <Route path="/register" element={ <RegistrationPage /> } />
-          </Routes>
-        </BrowserRouter>
+        <Routes>
+          <Route
+            exact
+            path="/"
+            element={ <Navigate to={getRedirectUrl()} /> } />
+          <Route path="*" element={ <Navigate to={getRedirectUrl()} /> } />
+          <Route path="/home/*" element={ <DashboardPage /> } />
+          <Route path="/login" element={ <LoginPage /> } />
+          <Route path="/register" element={ <RegistrationPage /> } />
+        </Routes>
       </div>
     </ThemeProvider>
   );
