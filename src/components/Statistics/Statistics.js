@@ -5,8 +5,7 @@ import transactions from './transact.js';
 import Chart from './Chart/Chart.js';
 import styled from './Statistics.module.css';
 import React, { useEffect, useState } from 'react';
-import TextField from '@material-ui/core/TextField';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, TextField } from '@mui/material';
 const monthName = [
   'January',
   'February',
