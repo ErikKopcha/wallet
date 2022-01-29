@@ -2,10 +2,17 @@ import './App.css';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import DashboardPage from '../DashboardPage/DashboardPage';
 import RegistrationPage from '../RegistrationPage/RegistrationPage';
+<<<<<<< HEAD
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '../../settings/themeSettings';
 
 const App = () => {
+=======
+import { ThemeProvider} from '@mui/material/styles';
+import theme from '../../styleSheet/MaterialUITheme';
+
+function App() {
+>>>>>>> modaladdtransaction
   const isUserAuthenticated = false; // for test
   const getRedirectUrl = () => isUserAuthenticated ? "/home/" : "/register"; // wait login component
 
