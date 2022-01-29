@@ -31,7 +31,7 @@ const DashboardPage = () => {
         </div>
         <div className={style.rightContainer}>
           <Routes>
-            <Route path="/" element={ <h1>Transaction table</h1> } />
+            <Route path="/" element={ <DashTable/> } />
             <Route path="diagram" element={ <Statistics/> } />
             { isMobile && <Route path="currency" element={ <Currency /> } /> }
           </Routes>

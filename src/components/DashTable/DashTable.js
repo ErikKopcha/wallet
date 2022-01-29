@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import {
   TableContainer,
   Table,
-  Paper,
   TableHead,
   TableRow,
   TableCell,
@@ -10,72 +9,9 @@ import {
   TablePagination, Stack, Card, CardContent, Box, Typography, Tooltip,
 } from '@mui/material';
 import Media from 'react-media';
+import {useSelector} from 'react-redux';
 
 const DashTable = () => {
-
-  let operations = [
-    { date: '22.01.2022', type: '+', category: 'Car', comments: 'ghjghjgh', amount: '123' },
-    {
-      date: '22.01.2022',
-      type: '+',
-      category: 'Car',
-      comments: 'ghjgfnsvs dvlbldvjsdv slbjdvsbjld svjlbsd vlbjhjgh',
-      amount: '123',
-    },
-    { date: '01.05.2020', type: '-', category: 'Car', comments: 'ghjghjgh', amount: '56' },
-    {
-      date: '10.01.2021',
-      type: '+',
-      category: 'Car',
-      comments: 'ghjghd fljdljdbldzjnlb djlz;zndljb fgndbfjgh',
-      amount: '123',
-    },
-    { date: '22.01.2022', type: '-', category: 'Other', comments: 'ghjghjgh', amount: '45656' },
-    { date: '22.01.2022', type: '+', category: 'Car', comments: 'ghjghjgh', amount: '123' },
-    {
-      date: '11.01.2022',
-      type: '-',
-      category: 'Products',
-      comments: 'ghjv dnljsdvjvdljbvbjlv dsbjldvsjbldsvbjldsbj ldsvvsdjbdvsjb ldsvbvdsblj vdsghjgh',
-      amount: '123',
-    },
-    {
-      date: '11.01.2022',
-      type: '-',
-      category: 'Products',
-      comments: 'ghjv dnljsdvjvdljbvbjlv dsbjldvsjbldsvbjldsbj ldsvvsdjbdvsjb ldsvbvdsblj vdsghjgh',
-      amount: '123',
-    },
-    {
-      date: '11.01.2022',
-      type: '-',
-      category: 'Products',
-      comments: 'ghjv dnljsdvjvdljbvbjlv dsbjldvsjbldsvbjldsbj ldsvvsdjbdvsjb ldsvbvdsblj vdsghjgh',
-      amount: '123',
-    },
-    {
-      date: '11.01.2022',
-      type: '-',
-      category: 'Products',
-      comments: 'ghjv dnljsdvjvdljbvbjlv dsbjldvsjbldsvbjldsbj ldsvvsdjbdvsjb ldsvbvdsblj vdsghjgh',
-      amount: '123',
-    },
-    {
-      date: '11.01.2022',
-      type: '-',
-      category: 'Products',
-      comments: 'ghjv dnljsdvjvdljbvbjlv dsbjldvsjbldsvbjldsbj ldsvvsdjbdvsjb ldsvbvdsblj vdsghjgh',
-      amount: '123',
-    },
-    {
-      date: '11.01.2022',
-      type: '-',
-      category: 'Products',
-      comments: 'ghjv dnljsdvjvdljbvbjlv dsbjldvsjbldsvbjldsbj ldsvvsdjbdvsjb ldsvbvdsblj vdsghjgh',
-      amount: '123',
-    },
-    { date: '22.01.2022', type: '+', category: 'Car', comments: 'ghjghjgh', amount: '565656' },
-  ];
 
   let columns = [
     {
@@ -110,6 +46,8 @@ const DashTable = () => {
     },
   ];
 
+  const transactions = useSelector((state) => state.transactions)
+
   const [page, setPage] = useState(0);
   const rowsPerPage = 5;
 
@@ -124,7 +62,7 @@ const DashTable = () => {
           matches => matches ? (
             <>
               <h1>Transaction table</h1>
-              <TableContainer component={Paper}
+              <TableContainer
                               sx={{ mt: '20px', maxHeight: '400px', background: 'transparent', boxShadow: 'none' }}>
                 <Table stickyHeader
                        sx={{ boxShadow: 'none', '& .MuiTableCell': { borderLeft: 'none', borderRight: 'none' } }}
@@ -139,14 +77,14 @@ const DashTable = () => {
                         //TODO: change name of classes (.column-date .column-amount) - it should be flexible!!!
                         columns.map((column) => {
                           return column.id === 'date' || column.id === 'amount' ?
-                            <TableCell key={`column-${column.id}`}
+                            <TableCell key={`column-${column.id}-${new Date().getTime()}-${Math.random()}`}
                                        style={{ minWidth: column.minWidth, maxWidth: column.maxWidth }}
                                        classes={{ root: `column-${column.id}` }}
                             >
                               {column.label}
                             </TableCell>
                             :
-                            <TableCell key={column.id}
+                            <TableCell key={`${column.id}-${Math.random()}`}
                                        style={{ minWidth: column.minWidth, maxWidth: column.maxWidth }}
                                        classes={{ root: `column-${column.id}` }}>{column.label}</TableCell>;
                         })
@@ -154,7 +92,7 @@ const DashTable = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {operations
+                    {transactions
                       .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                       .map((operation) => (
                         <TableRow
@@ -167,8 +105,8 @@ const DashTable = () => {
                             columns.map((column) => {
                               const value = operation[column.id];
                               return value.length >= 30 ? (
-                                <Tooltip key={`tooltip-${new Date().getTime()}`} title={operation[column.id]}>
-                                  <TableCell key={`cell-${new Date().getTime()}`} style={{
+                                <Tooltip key={`tooltip-${new Date().getTime()}-${Math.random()}`} title={operation[column.id]}>
+                                  <TableCell key={`cell-${new Date().getTime()}-${Math.random()}`} style={{
                                     maxWidth: column.maxWidth,
                                     minWidth: column.minWidth,
                                     width: '99%',
@@ -199,7 +137,7 @@ const DashTable = () => {
                 rowsPerPageOptions={[]}
                 rowsPerPage={rowsPerPage}
                 component='div'
-                count={operations.length}
+                count={transactions.length}
                 page={page}
                 onPageChange={handleChangePage}
                 style={{ display: 'flex', justifyContent: 'space-around' }}
@@ -208,8 +146,8 @@ const DashTable = () => {
           ) : (
             <Stack direction={'column'} sx={{ pb: '25px' }}>
               {
-                operations.map(operation => (
-                  <Card key={`card-${new Date().getTime()}`} style={{
+                transactions.map(operation => (
+                  <Card key={`card-${new Date().getTime()}-${Math.random()}`} style={{
                     borderRadius: '10px',
                     borderLeftWidth: '5px',
                     borderLeftStyle: 'solid',
@@ -225,7 +163,7 @@ const DashTable = () => {
                     <CardContent sx={{ padding: 0 }}>
                       {
                         columns.map(column => (
-                          <Box key={`box-${new Date().getTime()}`} sx={{
+                          <Box key={`box-${new Date().getTime()}-${Math.random()}`} sx={{
                             display: 'flex',
                             justifyContent: 'space-between',
                             borderBottom: '1px solid #DCDCDF',
@@ -233,13 +171,13 @@ const DashTable = () => {
                             alignItems: 'center',
                             paddingX: '20px',
                           }}>
-                            <Typography key={`column-label-${new Date().getTime()}`}>
+                            <Typography key={`column-label-${new Date().getTime()}-${Math.random()}`}>
                               {column.label}
                             </Typography>
                             {
                               operation[column.id].length >= 30 ? (
-                                <Tooltip key={`toolTip--${new Date().getTime()}`} title={operation[column.id]}>
-                                  <Typography key={`oper-${new Date().getTime()}`} sx={{
+                                <Tooltip key={`toolTip--${new Date().getTime()}-${Math.random()}`} title={operation[column.id]}>
+                                  <Typography key={`oper-${new Date().getTime()}-${Math.random()}`} sx={{
                                     maxWidth: '49%',
                                     width: '50%',
                                     display: 'block',
@@ -251,7 +189,7 @@ const DashTable = () => {
                                   </Typography>
                                 </Tooltip>
                               ) : (
-                                <Typography key={`operation-${new Date().getTime()}`} sx={{ maxWidth: '200px' }}>
+                                <Typography key={`operation-${new Date().getTime()}-${Math.random()}`} sx={{ maxWidth: '200px' }}>
                                   {operation[column.id]}
                                 </Typography>
                               )

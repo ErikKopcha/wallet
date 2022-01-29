@@ -19,44 +19,46 @@ import { useState } from 'react';
 import {useDispatch} from 'react-redux';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import {addTransaction} from '../../features/transactions';
 
 const ModalAddTransaction = ({ isOpen, onClose }) => {
   let categories = ['Main', 'Food', 'Car', 'Development', 'Kids', 'House', 'Education', 'Others'];
 
   const validationSchema = yup.object({
+    category: yup
+      .string('Choose a category')
+      .required('Category is required'),
     amount: yup
       .number('Enter a number')
       .required('Amount is required')
       .positive('Number should be positive'),
-    category: yup
-      .string('Choose a category')
-      .required('Category is required'),
     date: yup
       .date('Enter a correct format of the date')
       .required('Date is required'),
+    comments: yup
+      .string()
   });
 
   const dispatch = useDispatch();
 
-  const changeCategory = (event) => {
-    setCategory(event.target.value);
-  };
-
   const formik = useFormik({
     initialValues: {
-      amount: '',
       category: '',
+      amount: '',
       date: new Date(),
+      comments: '',
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      alert(values.date.toLocaleString());
+      dispatch(addTransaction(values, values.date.toLocaleString()));
+      // alert(JSON.stringify(values, null, 2));
     },
   });
 
   const [income, setIncome] = useState(true);
 
-  const changeTypeOfTransaction = (event) => {
+  const changeTypeOfTransaction = () => {
     setIncome((income) => !income);
   };
 
@@ -77,6 +79,7 @@ const ModalAddTransaction = ({ isOpen, onClose }) => {
             Income
           </Typography>
           <StyledSwitch
+            name='type'
             onChange={changeTypeOfTransaction}
           />
           <Typography sx={{ color: '#FF6596' }}>
@@ -98,7 +101,7 @@ const ModalAddTransaction = ({ isOpen, onClose }) => {
               <InputLabel id='selectCategoryLabel'>Select a category</InputLabel>
               <Select
                 labelId='selectCategoryLabel'
-                id='selectCategoryField'
+                name='category'
                 variant='standard'
                 label='Select a category'
                 value={formik.values.category}
@@ -111,7 +114,7 @@ const ModalAddTransaction = ({ isOpen, onClose }) => {
               >
                 {categories.map((category) => {
                   return (
-                    <MenuItem key={`category-${new Date().getTime()}`} value={category}
+                    <MenuItem key={`category-${new Date().getTime()}-${Math.random()}`} value={category}
                               sx={{ background: 'transparent' }}>{category}</MenuItem>
                   );
                 })
@@ -148,11 +151,22 @@ const ModalAddTransaction = ({ isOpen, onClose }) => {
             </LocalizationProvider>
           </Grid>
           <Grid item sm={12} xs={12} md={12}>
-            <TextField id='commentsField' placeholder='Comment' variant='standard' sx={{ width: '100%' }} />
+            <TextField
+              id='comments'
+              placeholder='Comment'
+              variant='standard'
+              value={formik.values.comments}
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange} error={formik.touched.comments && Boolean(formik.errors.comments)}
+              helperText={formik.touched.comments && formik.errors.comments}
+              sx={{ width: '100%' }} />
           </Grid>
         </Grid>
         <Stack sx={{ mt: '50px' }}>
-          <Button type='submit' variant='contained' sx={{ color: '#fff', mb: '20px' }}>Add</Button>
+          <Button
+            type='submit'
+            variant='contained'
+            sx={{ color: '#fff', mb: '20px' }}>Add</Button>
           <Button variant='outlined' onClick={onClose}>Cancel</Button>
         </Stack>
       </form>
