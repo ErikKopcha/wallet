@@ -53,9 +53,8 @@ const ModalAddTransaction = ({ isOpen, onClose }) => {
     onSubmit: (values) => {
       // alert(values.date.toLocaleString());
       const obj = {...values};
-      obj.date = '20.01.2022';
       alert(JSON.stringify(obj))
-      dispatch(addTransaction({ date: '22.01.2022', type: false, category: 'Car', comments: 'mak', amount: '123' }));
+      dispatch(addTransaction(obj));
       // alert(JSON.stringify(values, null, 2));
     },
   });
@@ -107,7 +106,6 @@ const ModalAddTransaction = ({ isOpen, onClose }) => {
                 labelId='selectCategoryLabel'
                 name='category'
                 variant='standard'
-                label='Select a category'
                 value={formik.values.category}
                 onBlur={formik.handleBlur}
                 onChange={formik.handleChange} error={formik.touched.category && Boolean(formik.errors.category)}
@@ -151,6 +149,13 @@ const ModalAddTransaction = ({ isOpen, onClose }) => {
                 OpenPickerButtonProps={{ sx: { color: theme => theme.palette.secondary.dark } }}
                 onChange={newValue => formik.setFieldValue('date', newValue)}
                 renderInput={(params) => <TextField {...params} id='dateField' variant='standard' />}
+                sx={{
+                  '& .MuiModal-root-MuiDialog-root .MuiDialog-paper': {
+                    background: 'red',
+                    backdropFilter: 'blur(0px)',
+                    borderRadius: '20px'
+                  }
+                }}
               />
             </LocalizationProvider>
           </Grid>
