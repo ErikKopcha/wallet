@@ -1,11 +1,10 @@
-import Box from '@mui/material/Box';
-
-import MenuItem from '@mui/material/MenuItem';
 import transactions from './transact.js';
 import Chart from './Chart/Chart.js';
 import styled from './Statistics.module.css';
 import React, { useEffect, useState } from 'react';
-import { makeStyles, TextField } from '@mui/material';
+import { TextField, Box, MenuItem } from '@mui/material';
+import {makeStyles} from '@mui/styles';
+
 const monthName = [
   'January',
   'February',
@@ -20,6 +19,7 @@ const monthName = [
   'November',
   'December',
 ];
+
 const useStyles = makeStyles({
   root: {
     width: '100%',

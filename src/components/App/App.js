@@ -6,6 +6,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import theme from '../../settings/themeSettings';
 
 const App = () => {
+
   const isUserAuthenticated = false; // for test
   const getRedirectUrl = () => isUserAuthenticated ? "/home/" : "/register"; // wait login component
 
