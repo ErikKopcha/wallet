@@ -5,6 +5,7 @@ import Balance from '../Balance/Balance';
 import ButtonAddTransaction from '../ButtonAddTransaction/ButtonAddTransaction';
 import ModalAddTransaction from '../ModalAddTransaction/ModalAddTransaction';
 import Currency from '../Currency/Currency';
+import Statistics from '../Statistics/Statistics.js'
 import { Routes, Route } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive'
 import { useState } from 'react';
@@ -20,7 +21,7 @@ function DashboardPage() {
       <Header />
       <div className={`${style.leftHeadContainer} container`}>
         <div className={style.leftContainer}>
-         <div>
+         <div className={style.balanceBlock}>
            <Navigation />
            <Balance />
          </div>
@@ -29,7 +30,7 @@ function DashboardPage() {
         <div className={style.rightContainer}>
           <Routes>
             <Route path="/" element={ <h1>Transaction table</h1> } />
-            <Route path="diagram" element={ <h1>Char table</h1> } />
+            <Route path="diagram" element={ <Statistics/> } />
             { isMobile && <Route path="currency" element={ <Currency /> } /> }
           </Routes>
         </div>

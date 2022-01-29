@@ -95,3 +95,26 @@
     background: unset;
   }
 }
+@media (min-width:769px ) and ( max-width:1280px){
+  .leftHeadContainer{
+    flex-direction: column;
+  }
+  .leftContainer::after{
+    width: 0;
+    border: none;
+  }
+  .leftContainer,
+  .rightContainer{
+    margin: 0 auto;
+    max-width: 100%;
+    margin-top: 40px;
+    padding: 0;
+  }
+  .leftContainer{
+    display: flex;
+    justify-content: space-between;
+  }
+  .balanceBlock{
+    width: 48%;
+  }
+}
