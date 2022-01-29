@@ -9,6 +9,7 @@ import AbelRegularWoff from '../../assets/fonts/Abel-Regular.woff';
 import PoppinsBoldWoff2 from '../../assets/fonts/Poppins-Bold.woff2';
 import PoppinsRegularWoff2 from '../../assets/fonts/Poppins-Regular.woff2';
 import AbelRegularWoff2 from '../../assets/fonts/Abel-Regular.woff2';
+import LoginPage from '../LoginPage/LoginPage'
 
 const theme = createTheme({
   palette: {
@@ -94,6 +95,7 @@ function App() {
               element={ <Navigate to={getRedirectUrl()} /> } />
             <Route path="*" element={ <Navigate to={getRedirectUrl()} /> } />
             <Route path="/home/*" element={ <DashboardPage /> } />
+            <Route path="/login" element={ <LoginPage /> } />
             <Route path="/register" element={ <RegistrationPage /> } />
           </Routes>
         </BrowserRouter>

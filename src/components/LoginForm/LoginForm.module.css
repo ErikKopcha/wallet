@@ -1,0 +1,108 @@
+.FormBox {
+    display: flex;
+    flex-direction: column;
+    padding: 36px 20px;
+    background: var(--whiteBgColor);
+    max-width: 540px;
+    margin-right: auto;
+    margin-left: auto;
+    min-height: 100vh;
+  }
+  
+  .LogoWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .LogoImg {
+    margin-right: 20px;
+    width: 30px;
+    height: 30px;
+  }
+  
+  .LogoText {
+    padding-top: 4px;
+    font-size: 30px;
+    line-height: 1;
+    font-weight: bold;
+  }
+  
+  .LogInForm{
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+  }
+  
+  .LogInInput {
+    display: inline-block;
+    margin-bottom: 40px;
+    border: none;
+    border-bottom: 1px solid #e0e0e0;
+    font-family: Abel;
+    font-size: 18px;
+    line-height: 1.27;
+  }
+  
+  .LogInInput:focus-visible {
+    outline: none;
+  }
+  
+  ::placeholder {
+    color: var(--placeholderTextColor);
+  }
+  
+  .Btn {
+    width: 280px;
+    height: 50px;
+    padding: 0;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+    border-radius: 20px;
+    border: none;
+    font-family: "Abel", sans-serif;
+    font-size: 18px;
+    line-height: 1.27;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  
+  .RegBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--greenAccentColor);
+    color: var(--textOnDarkBackgroundColor);
+  }
+  
+  .LogInBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--activeNavTextColor);
+    border: 1px solid var(--secondaryButtonColor);
+  }
+  
+  @media (min-width: 426px) {
+    .FormBox {
+      padding: 40px 65px 60px;
+      border-radius: 20px;
+      min-height: unset;
+    }
+  
+    .LogoImg {
+      width: 40px;
+      height: 40px;
+    }
+  
+    .LogoText {
+      font-size: 40px;
+    }
+  
+    .Btn {
+      width: 90%;
+      max-width: 300px;
+    }
+  }
+  
