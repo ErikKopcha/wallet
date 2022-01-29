@@ -24,8 +24,16 @@ const navigationData = [
     id: 3
   },
 ];
-//
-function getLink({ name, linkClass, iconClass, path, id }) {
+
+/**
+ * @param { String } name
+ * @param { String } linkClass
+ * @param { String } iconClass
+ * @param { String } path
+ * @param { Number } id
+ * @returns {JSX.Element}
+ */
+const getLink = ({ name, linkClass, iconClass, path, id }) => {
   const setActive = ({ isActive }) => (isActive ? `${linkClass} ${style.active}` : linkClass);
 
   return (
@@ -40,7 +48,7 @@ function getLink({ name, linkClass, iconClass, path, id }) {
   );
 }
 
-function Navigation() {
+const Navigation = () => {
   return (
     <nav className={style.navigation}>
       {navigationData.map(getLink)}

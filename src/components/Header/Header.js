@@ -2,10 +2,16 @@ import style from './Header.module.css';
 import logo from '../../assets/icons/wallet-logo.svg';
 import exitIcon from '../../assets/icons/exit.svg';
 import { Link } from "react-router-dom";
+import { useState } from 'react';
+import ModalLogout from '../ModalLogout/ModalLogout';
 
 const name = 'Name';
 
-function Header() {
+const Header = () => {
+  const [isModalLogoutOpen, setModalLogoutOpen] = useState(false);
+  const handleOpenModalLogout = () => setModalLogoutOpen(true);
+  const handleCloseModalLogout = () => setModalLogoutOpen(false);
+
   return (
     <div className={style.header}>
       <div className={`${style.headerContainer} container`}>
@@ -15,10 +21,11 @@ function Header() {
         </Link>
         <div className={style.headerInfo}>
           <p className={style.afterVerticalLine}>{name}</p>
-          <Link to="/" className={style.btnExit}>
+          <button className={style.btnExit} onClick={handleOpenModalLogout}>
             <img src={exitIcon} alt='logout' />
             <span>Exit</span>
-          </Link>
+          </button>
+          <ModalLogout isOpen={isModalLogoutOpen} onClose={handleCloseModalLogout}/>
         </div>
       </div>
     </div>
