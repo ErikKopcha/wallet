@@ -1,5 +1,5 @@
 import style from './Currency.module.css';
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import useWalletService from '../../services/walletService';
 import { Rings } from 'react-loader-spinner';
 import { numberWithSpaces } from '../../helpers/helpers';
@@ -128,27 +128,25 @@ const Currency = () => {
   /**
    * start check
    */
-  const getData = useCallback(
-    () => {
-      const diffDate = getDiffTime();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  const getData = () => {
+    const diffDate = getDiffTime();
 
-      if (diffDate < diffMs) {
-        const data = getCurrFromStorage() || "[]";
-        const parsed = JSON.parse(data);
+    if (diffDate < diffMs) {
+      const data = getCurrFromStorage() || "[]";
+      const parsed = JSON.parse(data);
 
-        if (parsed && parsed.length) {
-          onDataLoaded(parsed)
-        }
-      } else {
-        if (!currData.length) {
-          getCurrency().then(onDataLoaded);
-        }
+      if (parsed && parsed.length) {
+        onDataLoaded(parsed)
       }
+    } else {
+      if (!currData.length) {
+        getCurrency().then(onDataLoaded);
+      }
+    }
 
-      setLoadedData(true);
-    },
-    [currData.length, getCurrency, getDiffTime, onDataLoaded],
-  );
+    setLoadedData(true);
+  };
 
   useEffect(() => {
     if (loadedData) return;
