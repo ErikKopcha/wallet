@@ -129,7 +129,6 @@ const Currency = () => {
    * start check
    */
 
-        if (parsed && parsed.length) {
   const getData = () => {
     const diffDate = getDiffTime();
 
