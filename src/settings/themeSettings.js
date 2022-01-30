@@ -82,15 +82,6 @@ const theme = createTheme({
         },
       ],
     },
-    MuiPaper: {
-      styleOverrides: {
-        root: {
-          background: 'rgba(255, 255, 255, 0)',
-          backdropFilter: 'blur(50px)',
-          borderRadius: '20px'
-        },
-      }
-    }
   },
 });
 
