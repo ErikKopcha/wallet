@@ -123,7 +123,7 @@ const DashTable = () => {
                                   minWidth: column.minWidth,
                                   maxWidth: column.maxWidth,
                                 }}>
-                                  {value}
+                                  {value === true ? '+' : value === false ? '-' : value}
                                 </TableCell>
                               );
                             })

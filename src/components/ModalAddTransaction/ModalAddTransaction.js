@@ -16,10 +16,10 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import style from './ModalAddTransaction.module.css';
 import StyledSwitch from '../StyledSwitch/StyledSwitch';
 import { useState } from 'react';
-import {useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import {addTransaction} from '../../features/transactions';
+import { addTransaction } from '../../features/transactions';
 
 const ModalAddTransaction = ({ isOpen, onClose }) => {
   let categories = ['Main', 'Food', 'Car', 'Development', 'Kids', 'House', 'Education', 'Others'];
@@ -36,7 +36,7 @@ const ModalAddTransaction = ({ isOpen, onClose }) => {
       .date('Enter a correct format of the date')
       .required('Date is required'),
     comments: yup
-      .string()
+      .string(),
   });
 
   const dispatch = useDispatch();
@@ -44,15 +44,15 @@ const ModalAddTransaction = ({ isOpen, onClose }) => {
   const formik = useFormik({
     initialValues: {
       category: '',
+      type: false,
       amount: '',
       date: new Date(),
       comments: '',
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      alert(values.date.toLocaleString());
-      dispatch(addTransaction(values, values.date.toLocaleString()));
-      // alert(JSON.stringify(values, null, 2));
+      const obj = { ...values, date: values.date.toLocaleDateString() };
+      dispatch(addTransaction(obj));
     },
   });
 
@@ -103,7 +103,15 @@ const ModalAddTransaction = ({ isOpen, onClose }) => {
                 labelId='selectCategoryLabel'
                 name='category'
                 variant='standard'
-                label='Select a category'
+                MenuProps={{
+                  sx: {
+                    '& .MuiPaper-root': {
+                      background: 'rgba(0, 0, 0, 0.07)',
+                      backdropFilter: 'blur(50px)',
+                      borderRadius: '20px',
+                    },
+                  },
+                }}
                 value={formik.values.category}
                 onBlur={formik.handleBlur}
                 onChange={formik.handleChange} error={formik.touched.category && Boolean(formik.errors.category)}
@@ -115,7 +123,10 @@ const ModalAddTransaction = ({ isOpen, onClose }) => {
                 {categories.map((category) => {
                   return (
                     <MenuItem key={`category-${new Date().getTime()}-${Math.random()}`} value={category}
-                              sx={{ background: 'transparent' }}>{category}</MenuItem>
+                              sx={{
+                                background: 'transparent',
+                                '&:hover': { background: 'rgba(255, 255, 255, 0.7)', color: '#FF6596' },
+                              }}>{category}</MenuItem>
                   );
                 })
                 }
@@ -147,6 +158,13 @@ const ModalAddTransaction = ({ isOpen, onClose }) => {
                 OpenPickerButtonProps={{ sx: { color: theme => theme.palette.secondary.dark } }}
                 onChange={newValue => formik.setFieldValue('date', newValue)}
                 renderInput={(params) => <TextField {...params} id='dateField' variant='standard' />}
+                sx={{
+                  '& .MuiModal-root-MuiDialog-root .MuiDialog-paper': {
+                    background: 'red',
+                    backdropFilter: 'blur(0px)',
+                    borderRadius: '20px',
+                  },
+                }}
               />
             </LocalizationProvider>
           </Grid>
