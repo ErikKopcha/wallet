@@ -133,7 +133,7 @@ const Currency = () => {
 
     setIsLoading(true);
     getData();
-  }, [loadedData])
+  }, [getData, loadedData])
 
   /**
    * start function if data loaded
