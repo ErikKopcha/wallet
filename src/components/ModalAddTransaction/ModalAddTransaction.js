@@ -51,11 +51,8 @@ const ModalAddTransaction = ({ isOpen, onClose }) => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      // alert(values.date.toLocaleString());
       const obj = { ...values, date: values.date.toLocaleDateString() };
-      alert(JSON.stringify(obj));
       dispatch(addTransaction(obj));
-      // alert(JSON.stringify(values, null, 2));
     },
   });
 
@@ -112,7 +109,7 @@ const ModalAddTransaction = ({ isOpen, onClose }) => {
                       background: 'rgba(0, 0, 0, 0.07)',
                       backdropFilter: 'blur(50px)',
                       borderRadius: '20px',
-                    }
+                    },
                   },
                 }}
                 value={formik.values.category}
@@ -126,7 +123,10 @@ const ModalAddTransaction = ({ isOpen, onClose }) => {
                 {categories.map((category) => {
                   return (
                     <MenuItem key={`category-${new Date().getTime()}-${Math.random()}`} value={category}
-                              sx={{ background: 'transparent', '&:hover': {background: 'rgba(255, 255, 255, 0.7)', color: '#FF6596'}}}>{category}</MenuItem>
+                              sx={{
+                                background: 'transparent',
+                                '&:hover': { background: 'rgba(255, 255, 255, 0.7)', color: '#FF6596' },
+                              }}>{category}</MenuItem>
                   );
                 })
                 }
