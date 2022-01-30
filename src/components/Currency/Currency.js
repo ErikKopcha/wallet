@@ -1,5 +1,5 @@
 import style from './Currency.module.css';
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import useWalletService from '../../services/walletService';
 import { Rings } from 'react-loader-spinner';
 import { numberWithSpaces } from '../../helpers/helpers';
