@@ -92,10 +92,10 @@ const Currency = () => {
    * @returns {number}
    */
   const getDiffTime = () => {
-    const date = getStorageCurrDate() || JSON.stringify(new Date());
+    const date = getStorageCurrDate() || JSON.stringify(new Date(1980, 1, 1) );
     const dateLocal = new Date(JSON.parse(date));
 
-    if (!dateLocal) return 0;
+    if (!dateLocal) return (diffMs + 1);
 
     const dateNow = new Date();
 
@@ -128,7 +128,7 @@ const Currency = () => {
   /**
    * start check
    */
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const getData = () => {
     const diffDate = getDiffTime();
 
@@ -136,13 +136,9 @@ const Currency = () => {
       const data = getCurrFromStorage() || "[]";
       const parsed = JSON.parse(data);
 
-      if (parsed && parsed.length) {
-        onDataLoaded(parsed)
-      }
+      onDataLoaded(parsed);
     } else {
-      if (!currData.length) {
-        getCurrency().then(onDataLoaded);
-      }
+      getCurrency().then(onDataLoaded);
     }
 
     setLoadedData(true);
