@@ -13,7 +13,7 @@ const theme = createTheme({
     },
     secondary: {
       main: '#FF6596',
-      dark: '#4A56E2'
+      dark: '#4A56E2',
     },
   },
   typography: {
@@ -62,12 +62,13 @@ const theme = createTheme({
         outlined: {
           borderColor: '#4A56E2',
           color: '#4A56E2',
-          '&:hover': {
+          ':hover': {
             borderColor: '#4A56E2',
             color: '#4A56E2',
-            boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;'
+            boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px;',
+            transition: 'box-shadow 0.3s ease-in-out'
           }
-        }
+        },
       },
     },
     MuiTypography: {
@@ -81,7 +82,7 @@ const theme = createTheme({
           },
         },
       ],
-    },
+    }
   },
 });
 
