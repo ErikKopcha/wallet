@@ -128,7 +128,7 @@ const Currency = () => {
   /**
    * start check
    */
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   const getData = () => {
     const diffDate = getDiffTime();
 
@@ -153,7 +153,7 @@ const Currency = () => {
 
     setIsLoading(true);
     getData();
-  }, [])
+  }, [getData, loadedData])
 
   const isWaiting = isLoading ? <Rings wrapperClass={style.spinner} ariaLabel="loading-indicator" /> : null;
   const isRender = currData !== null && currData.length ? <Table currData={currData} /> : null;
