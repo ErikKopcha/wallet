@@ -17,7 +17,7 @@ const getRow = ({
     buy = 1,
     sale = 1,
     precision = 2,
-}) => {
+  }) => {
   return (
     <tr key={ccy}>
       <td>{ccy}</td>
@@ -42,7 +42,7 @@ const Table = ({currData}) => {
       </tr>
       </thead>
       <tbody>
-        {currData.map(getRow)}
+      {currData.map(getRow)}
       </tbody>
     </table>
   )
@@ -92,10 +92,10 @@ const Currency = () => {
    * @returns {number}
    */
   const getDiffTime = () => {
-    const date = getStorageCurrDate() || JSON.stringify(new Date());
+    const date = getStorageCurrDate() || JSON.stringify(new Date(1980, 1, 1) );
     const dateLocal = new Date(JSON.parse(date));
 
-    if (!dateLocal) return 0;
+    if (!dateLocal) return (diffMs + 1);
 
     const dateNow = new Date();
 
@@ -130,23 +130,19 @@ const Currency = () => {
    */
     // eslint-disable-next-line react-hooks/exhaustive-deps
   const getData = () => {
-    const diffDate = getDiffTime();
+      const diffDate = getDiffTime();
 
-    if (diffDate < diffMs) {
-      const data = getCurrFromStorage() || "[]";
-      const parsed = JSON.parse(data);
+      if (diffDate < diffMs) {
+        const data = getCurrFromStorage() || "[]";
+        const parsed = JSON.parse(data);
 
-      if (parsed && parsed.length) {
-        onDataLoaded(parsed)
-      }
-    } else {
-      if (!currData.length) {
+        onDataLoaded(parsed);
+      } else {
         getCurrency().then(onDataLoaded);
       }
-    }
 
-    setLoadedData(true);
-  };
+      setLoadedData(true);
+    };
 
   useEffect(() => {
     if (loadedData) return;
