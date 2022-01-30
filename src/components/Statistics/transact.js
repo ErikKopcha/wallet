@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-anonymous-default-export
 export default [
     {
         "transactionDate": "Thu Jan 27 2022 14:15:35 GMT+0200 (Восточная Европа, стандартное время)",

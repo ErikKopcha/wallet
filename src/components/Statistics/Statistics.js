@@ -41,6 +41,7 @@ const useStyles = makeStyles({
 export default function Statistics(props) {
   const [month, setMonth] = useState('');
   const [year, setYear] = useState('');
+  // eslint-disable-next-line no-unused-vars
   const [categories, setCategories] = useState({
     Main: 8,
     Food: 7,
