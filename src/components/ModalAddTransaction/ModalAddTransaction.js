@@ -52,7 +52,7 @@ const ModalAddTransaction = ({ isOpen, onClose }) => {
     validationSchema: validationSchema,
     onSubmit: (values) => {
       // alert(values.date.toLocaleString());
-      const obj = { ...values, date: values.date.toDateString() };
+      const obj = { ...values, date: values.date.toLocaleDateString() };
       alert(JSON.stringify(obj));
       dispatch(addTransaction(obj));
       // alert(JSON.stringify(values, null, 2));
