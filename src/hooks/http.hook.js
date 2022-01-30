@@ -1,26 +1,25 @@
-import { useCallback } from "react";
+import { useCallback, useState } from 'react';
 
 export const useHttp = () => {
-  const request = useCallback(async (
-    url,
-    method = 'GET',
-    body = null,
-    headers = { 'Content-Type': 'application/json' }
-  ) => {
+  const [isLoading, setLoading] = useState(false);
+
+  const request = useCallback(async (url) => {
     try {
-      const response = await fetch(url, { method, body, headers });
+      setLoading(true);
+
+      const response = await fetch(url);
+
+      setLoading(false);
 
       if (!response.ok) {
         throw new Error(`Could not fetch ${url}, status: ${response.status}`);
       }
 
-      const data = await response.json();
-      return data;
+      return await response.json();
     } catch(e) {
-      return null;
-      // throw e;
+      throw e;
     }
   }, []);
 
-  return {request}
+  return {request, isLoading}
 }
