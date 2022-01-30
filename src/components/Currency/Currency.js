@@ -128,34 +128,33 @@ const Currency = () => {
   /**
    * start check
    */
-  const getData = useCallback(
-    () => {
-      const diffDate = getDiffTime();
-
-      if (diffDate < diffMs) {
-        const data = getCurrFromStorage() || "[]";
-        const parsed = JSON.parse(data);
 
         if (parsed && parsed.length) {
-          onDataLoaded(parsed)
-        }
-      } else {
-        if (!currData.length) {
-          getCurrency().then(onDataLoaded);
-        }
-      }
+  const getData = () => {
+    const diffDate = getDiffTime();
 
-      setLoadedData(true);
-    },
-    [currData.length, getCurrency, getDiffTime, onDataLoaded],
-  );
+    if (diffDate < diffMs) {
+      const data = getCurrFromStorage() || "[]";
+      const parsed = JSON.parse(data);
+
+      if (parsed && parsed.length) {
+        onDataLoaded(parsed)
+      }
+    } else {
+      if (!currData.length) {
+        getCurrency().then(onDataLoaded);
+      }
+    }
+
+    setLoadedData(true);
+  };
 
   useEffect(() => {
     if (loadedData) return;
 
     setIsLoading(true);
     getData();
-  }, [getData, loadedData])
+  }, [])
 
   const isWaiting = isLoading ? <Rings wrapperClass={style.spinner} ariaLabel="loading-indicator" /> : null;
   const isRender = currData !== null && currData.length ? <Table currData={currData} /> : null;
