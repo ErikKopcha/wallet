@@ -117,8 +117,7 @@ const Currency = () => {
       const parsed = JSON.parse(data);
 
       if (parsed && parsed.length) {
-        setCurrData(parsed);
-        setIsLoading(false);
+        onDataLoaded(parsed)
       }
     } else {
       if (!currData.length) {
@@ -128,6 +127,7 @@ const Currency = () => {
 
     setLoadedData(true);
   };
+
   useEffect(() => {
     if (loadedData) return;
 
@@ -140,6 +140,9 @@ const Currency = () => {
    * @param { Array } currData
    */
   const onDataLoaded = (currData) => {
+    setIsLoading(false);
+    setCurrData(currData);
+
     if (currData && currData.length) {
       setLocalStorageData(currData);
       setCurrData(currData);
