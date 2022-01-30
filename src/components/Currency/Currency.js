@@ -51,6 +51,7 @@ const Table = ({currData}) => {
 const Currency = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [currData, setCurrData] = useState([]);
+  const [loadedData, setLoadedData] = useState(false)
 
   const diffMs = 3_600_000; // 1h
   const currDataDefault = [
@@ -124,18 +125,15 @@ const Currency = () => {
         getCurrency().then(onDataLoaded);
       }
     }
+
+    setLoadedData(true);
   };
-
   useEffect(() => {
+    if (loadedData) return;
+
     setIsLoading(true);
-
-    // eslint-disable-next-line no-unused-vars
-    let cleanupFunction = false;
-
     getData();
-
-    return () => cleanupFunction = true;
-  }, []);
+  }, [loadedData])
 
   /**
    * start function if data loaded
