@@ -36,12 +36,16 @@
 
 .RegInput {
   display: inline-block;
-  margin-bottom: 40px;
+  margin-top: 40px;
   border: none;
   border-bottom: 1px solid #e0e0e0;
   font-family: Abel;
   font-size: 18px;
   line-height: 1.27;
+}
+
+.RegInput:first-child {
+  margin-top: 0;
 }
 
 .RegInput:focus-visible {
@@ -61,7 +65,7 @@
   margin-bottom: 20px;
   border-radius: 20px;
   border: none;
-  font-family: "Abel", sans-serif;
+  font-family: 'Abel', sans-serif;
   font-size: 18px;
   line-height: 1.27;
   letter-spacing: 0.1em;
@@ -72,6 +76,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 40px;
   background: var(--greenAccentColor);
   color: var(--textOnDarkBackgroundColor);
 }
@@ -82,6 +87,11 @@
   align-items: center;
   color: var(--activeNavTextColor);
   border: 1px solid var(--secondaryButtonColor);
+}
+
+.Error {
+  font-size: 10px;
+  color: red;
 }
 
 @media (min-width: 426px) {
