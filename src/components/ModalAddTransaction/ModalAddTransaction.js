@@ -123,15 +123,16 @@ const ModalAddTransaction = ({ isOpen, onClose }) => {
             </Grid>
           }
           <Grid item sm={6} xs={6} md={6}>
-            <TextField id='amount'
-                       name='amount'
-                       placeholder={'0.00'}
-                       value={formik.values.amount}
-                       onChange={formik.handleChange}
-                       onBlur={formik.handleBlur}
-                       error={formik.touched.amount && Boolean(formik.errors.amount)}
-                       helperText={formik.touched.amount && formik.errors.amount} variant='standard'
-                       sx={{ textAlign: 'center' }} />
+            <TextField
+              id='amount'
+              name='amount'
+              placeholder={'0.00'}
+              value={formik.values.amount}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.amount && Boolean(formik.errors.amount)}
+              helperText={formik.touched.amount && formik.errors.amount} variant='standard'
+              sx={{ textAlign: 'center' }} />
           </Grid>
           <Grid item sm={6} xs={6} md={6}>
             <LocalizationProvider dateAdapter={AdapterDateFns} locale={ruLocale}>
@@ -147,7 +148,7 @@ const ModalAddTransaction = ({ isOpen, onClose }) => {
                 OpenPickerButtonProps={{ sx: { color: theme => theme.palette.secondary.dark } }}
                 onChange={newValue => formik.setFieldValue('date', newValue)}
                 renderInput={(params) => <TextField {...params} id='dateField' variant='standard' />}
-              />
+                date={null} openPicker={null} rawValue={null} />
             </LocalizationProvider>
           </Grid>
           <Grid item sm={12} xs={12} md={12}>
