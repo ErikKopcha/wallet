@@ -28,6 +28,12 @@
   font-weight: normal;
 }
 
+@media (max-width: 1280px) {
+  .balance {
+    margin-bottom: 0;
+  }
+}
+
 @media (max-width: 768px) {
   .balance {
     margin-bottom: 0;

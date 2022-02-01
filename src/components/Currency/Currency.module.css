@@ -1,6 +1,5 @@
 .currency {
   width: 100%;
-  min-height: 350px;
   max-height: 50vh;
   background-color: var(--secondaryButtonColor);
   background-image: url('../../assets/images/currency-bg.png');
@@ -50,10 +49,6 @@
 }
 
 @media (max-width: 768px) {
-  .currency {
-    min-height: 200px;
-  }
-
   .currency table tr td:first-child,
   .currency table tr th:first-child {
     padding-left: 20px;

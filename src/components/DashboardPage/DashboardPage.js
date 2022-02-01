@@ -11,6 +11,7 @@ import { useMediaQuery } from 'react-responsive';
 import { useState } from 'react';
 import DashTable from '../DashTable/DashTable';
 import Media from 'react-media';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 
 const DashboardPage = () => {
   const [isOpenModalTransaction, setModalTransaction] = useState(false);
@@ -27,13 +28,13 @@ const DashboardPage = () => {
            <Navigation />
            <Balance />
          </div>
-          { !isMobile && <Currency /> }
+          { !isMobile && <ErrorBoundary><Currency /></ErrorBoundary> }
         </div>
         <div className={style.rightContainer}>
           <Routes>
             <Route path="/" element={ <DashTable/> } />
             <Route path="diagram" element={ <Statistics/> } />
-            { isMobile && <Route path="currency" element={ <Currency /> } /> }
+            { isMobile && <Route path="currency" element={ <ErrorBoundary><Currency /></ErrorBoundary> } /> }
           </Routes>
         </div>
         <Media query='(min-width: 720px)'>
