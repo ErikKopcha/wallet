@@ -79,6 +79,7 @@
   margin-top: 40px;
   background: var(--greenAccentColor);
   color: var(--textOnDarkBackgroundColor);
+  cursor: pointer;
 }
 
 .LogInBtn {
@@ -90,6 +91,7 @@
 }
 
 .Error {
+  font-family: Abel;
   font-size: 10px;
   color: red;
 }

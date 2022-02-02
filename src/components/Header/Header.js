@@ -4,10 +4,10 @@ import exitIcon from '../../assets/icons/exit.svg';
 import { Link } from "react-router-dom";
 import { useState } from 'react';
 import ModalLogout from '../ModalLogout/ModalLogout';
-
-const name = 'Name';
+import { useSelector } from 'react-redux';
 
 const Header = () => {
+  const name = useSelector((state) => state.user.username)
   const [isModalLogoutOpen, setModalLogoutOpen] = useState(false);
   const handleOpenModalLogout = () => setModalLogoutOpen(true);
   const handleCloseModalLogout = () => setModalLogoutOpen(false);

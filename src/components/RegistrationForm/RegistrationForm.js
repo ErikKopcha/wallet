@@ -3,9 +3,21 @@ import logo from '../../assets/icons/wallet-logo.svg';
 import { Link } from "react-router-dom";
 import React, { useState } from 'react';
 import { Formik } from 'formik';
-import * as yup from 'yup'
+import * as yup from 'yup';
+import useUserService from '../../services/userService';
 
 export default function RegistrationForm() {
+  const { registerUser } = useUserService();
+
+  function handleSubmit(values) {
+    const user = {
+      username: values.name,
+      email: values.email,
+      password: values.password
+    }
+    registerUser(user);
+  }
+
   const validationSchema = yup.object().shape({
     email: yup.string().email('*Please enter a valid email').required('*Required field'),
     password: yup.string().required('*Required field').min(6, '*Password is too short - should be 6 chars minimum').max(12, '*Password is too long - should be 12 chars maximum'),
@@ -23,7 +35,7 @@ export default function RegistrationForm() {
           name: ''
         }}
         validateOnBlur
-        onSubmit={(values) => { console.log(values) }}
+        onSubmit={handleSubmit}
         validationSchema={validationSchema}
       >
         {({ values, errors, touched, handleChange, handleBlur, isValid, handleSubmit, dirty }) => (
