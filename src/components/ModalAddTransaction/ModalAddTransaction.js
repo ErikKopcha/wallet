@@ -13,15 +13,19 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import style from './ModalAddTransaction.module.css';
 import StyledSwitch from '../StyledSwitch/StyledSwitch';
-import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
+import {useSelector} from 'react-redux';
 import * as yup from 'yup';
-import { addTransaction } from '../../features/transactions';
-import { useEffect } from 'react';
+import useTransactionsService from '../../services/transactionsService';
 
-let categories = ['Main', 'Food', 'Car', 'Development', 'Kids', 'House', 'Education', 'Others'];
+// let categories = ['Main', 'Food', 'Car', 'Development', 'Kids', 'House', 'Education', 'Others'];
 
 const ModalAddTransaction = ({ isOpen, onClose }) => {
+
+  const { addTransaction, getCategories } = useTransactionsService();
+
+  getCategories();
+  const categories = useSelector(state => state.categories);
 
   const validationSchema = yup.object({
     type: yup
@@ -40,8 +44,6 @@ const ModalAddTransaction = ({ isOpen, onClose }) => {
       .string(),
   });
 
-  const dispatch = useDispatch();
-
   const formik = useFormik({
     initialValues: {
       type: true,
@@ -51,17 +53,19 @@ const ModalAddTransaction = ({ isOpen, onClose }) => {
       comments: '',
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      const obj = {...values, date: values.date.toLocaleDateString()}
-      alert(JSON.stringify(obj));
-      dispatch(addTransaction(obj));
+    onSubmit: (newTransaction) => {
+      const categoryId = categories.find(category => category.name === newTransaction.category).id;
+      const transaction = {
+        transactionDate: newTransaction.date.toLocaleDateString(),
+        type: newTransaction.typ === true ? 'INCOME' : 'EXPENSE',
+        categoryId: categoryId,
+        comment: newTransaction.comments,
+        amount: newTransaction.amount
+      }
+      alert(JSON.stringify(transaction));
+      addTransaction(transaction);
     },
   });
-  
-  useEffect((e) => {
-    // eslint-disable-next-line no-unused-expressions
-    !!formik.values.type ? formik.values.category = 'Irregular income' : null
-  }, [formik.values, formik.values.type])
 
   return (
     <Modal
@@ -82,6 +86,7 @@ const ModalAddTransaction = ({ isOpen, onClose }) => {
           <StyledSwitch
             id='type'
             name='type'
+            selected
             value={formik.values.type}
             onBlur={formik.handleBlur}
             onChange={formik.handleChange} error={formik.touched.category && Boolean(formik.errors.category)}
@@ -91,15 +96,7 @@ const ModalAddTransaction = ({ isOpen, onClose }) => {
             Expenses
           </Typography>
         </Stack>
-        <Grid container columnSpacing='30px' rowSpacing='40px' sx={{
-          width: '100%',
-          '& .MuiList-root': {
-            backgroundColor: 'red',
-          },
-          '& .MuiPaper-root': {
-            backgroundColor: 'red',
-          },
-        }}>
+        <Grid container columnSpacing='30px' rowSpacing='40px'>
           {
             formik.values.type === true ||
             <Grid item sm={12} xs={12} md={12}>
@@ -121,8 +118,8 @@ const ModalAddTransaction = ({ isOpen, onClose }) => {
                 >
                   {categories.map((category) => {
                     return (
-                      <MenuItem key={`category-${new Date().getTime()}-${Math.random()}`} value={category}
-                                sx={{ background: 'transparent' }}>{category}</MenuItem>
+                      <MenuItem key={`category-${new Date().getTime()}-${Math.random()}`} value={category.name}
+                                sx={{ background: 'transparent' }}>{category.name}</MenuItem>
                     );
                   })
                   }

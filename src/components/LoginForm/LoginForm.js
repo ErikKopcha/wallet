@@ -1,9 +1,20 @@
 import style from './LoginForm.module.css';
 import logo from '../../assets/icons/wallet-logo.svg';
 import { Link } from "react-router-dom";
+import useUserService from '../../services/userService';
 
 
 export default function RegistrationForm() {
+
+  const {authoriseUser} = useUserService();
+
+  const user = {
+    email: 'mishmak1606@gmail.com',
+    password: '123456',
+  };
+
+  authoriseUser(user);
+
   return (
     <div className={style.FormBox}>
       <div>

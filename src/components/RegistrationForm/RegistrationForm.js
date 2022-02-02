@@ -6,8 +6,9 @@ import { Formik } from 'formik';
 import * as yup from 'yup';
 import useUserService from '../../services/userService';
 
-export default function RegistrationForm() {
-  const { registerUser } = useUserService();
+export default function LoginForm() {
+
+  const {authoriseUser} = useUserService();
 
   function handleSubmit(values) {
     const user = {

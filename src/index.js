@@ -8,11 +8,13 @@ import { configureStore } from '@reduxjs/toolkit';
 import userReducer from './features/user';
 import transactionsReducer from './features/transactions';
 import sessionReducer from './features/session';
+import categoriesReducer from './features/trans-categories'
 
 const store = configureStore({
   reducer: {
     user: userReducer,
     transactions: transactionsReducer,
+    categories: categoriesReducer,
     session: sessionReducer
   },
 });

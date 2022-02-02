@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = { isAuth: false, authToken: null};
+// const initialState = { isAuth: true, authToken: null};
 
 export const sessionSlice = createSlice({
   name: 'session',
