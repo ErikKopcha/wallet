@@ -11,7 +11,7 @@ import { useMediaQuery } from 'react-responsive';
 import { useState } from 'react';
 import DashTable from '../DashTable/DashTable';
 import Media from 'react-media';
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 
 const DashboardPage = () => {
   const [isOpenModalTransaction, setModalTransaction] = useState(false);

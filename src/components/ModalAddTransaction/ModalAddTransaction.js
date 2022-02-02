@@ -5,9 +5,7 @@ import {
   Button,
   Grid,
   TextField,
-  Select,
-  MenuItem,
-  InputLabel,
+  InputLabel, MenuItem, Select,
 } from '@mui/material';
 import DatePicker from '@mui/lab/DatePicker';
 import ruLocale from 'date-fns/locale/ru';
@@ -15,16 +13,19 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import style from './ModalAddTransaction.module.css';
 import StyledSwitch from '../StyledSwitch/StyledSwitch';
-import { useState } from 'react';
-import {useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import {addTransaction} from '../../features/transactions';
+import { addTransaction } from '../../features/transactions';
+import { useEffect } from 'react';
+
+let categories = ['Main', 'Food', 'Car', 'Development', 'Kids', 'House', 'Education', 'Others'];
 
 const ModalAddTransaction = ({ isOpen, onClose }) => {
-  let categories = ['Main', 'Food', 'Car', 'Development', 'Kids', 'House', 'Education', 'Others'];
 
   const validationSchema = yup.object({
+    type: yup
+      .bool(),
     category: yup
       .string('Choose a category')
       .required('Category is required'),
@@ -36,13 +37,14 @@ const ModalAddTransaction = ({ isOpen, onClose }) => {
       .date('Enter a correct format of the date')
       .required('Date is required'),
     comments: yup
-      .string()
+      .string(),
   });
 
   const dispatch = useDispatch();
 
   const formik = useFormik({
     initialValues: {
+      type: true,
       category: '',
       amount: '',
       date: new Date(),
@@ -50,17 +52,16 @@ const ModalAddTransaction = ({ isOpen, onClose }) => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      alert(values.date.toLocaleString());
-      dispatch(addTransaction(values, values.date.toLocaleString()));
-      // alert(JSON.stringify(values, null, 2));
+      const obj = {...values, date: values.date.toLocaleDateString()}
+      alert(JSON.stringify(obj));
+      dispatch(addTransaction(obj));
     },
   });
-
-  const [income, setIncome] = useState(true);
-
-  const changeTypeOfTransaction = () => {
-    setIncome((income) => !income);
-  };
+  
+  useEffect((e) => {
+    // eslint-disable-next-line no-unused-expressions
+    !!formik.values.type ? formik.values.category = 'Irregular income' : null
+  }, [formik.values, formik.values.type])
 
   return (
     <Modal
@@ -79,8 +80,12 @@ const ModalAddTransaction = ({ isOpen, onClose }) => {
             Income
           </Typography>
           <StyledSwitch
+            id='type'
             name='type'
-            onChange={changeTypeOfTransaction}
+            value={formik.values.type}
+            onBlur={formik.handleBlur}
+            onChange={formik.handleChange} error={formik.touched.category && Boolean(formik.errors.category)}
+            helperText={formik.touched.type && formik.errors.type}
           />
           <Typography sx={{ color: '#FF6596' }}>
             Expenses
@@ -96,30 +101,33 @@ const ModalAddTransaction = ({ isOpen, onClose }) => {
           },
         }}>
           {
-            income ||
+            formik.values.type === true ||
             <Grid item sm={12} xs={12} md={12}>
               <InputLabel id='selectCategoryLabel'>Select a category</InputLabel>
-              <Select
-                labelId='selectCategoryLabel'
-                name='category'
-                variant='standard'
-                label='Select a category'
-                value={formik.values.category}
-                onBlur={formik.handleBlur}
-                onChange={formik.handleChange} error={formik.touched.category && Boolean(formik.errors.category)}
-                helperText={formik.touched.category && formik.errors.category}
-                sx={{
-                  width: '100%',
-                }}
-              >
-                {categories.map((category) => {
-                  return (
-                    <MenuItem key={`category-${new Date().getTime()}-${Math.random()}`} value={category}
-                              sx={{ background: 'transparent' }}>{category}</MenuItem>
-                  );
-                })
-                }
-              </Select>
+              {
+                !!formik.values.type ||
+                <Select
+                  labelId='selectCategoryLabel'
+                  name='category'
+                  variant='standard'
+                  label='Select a category'
+                  value={formik.values.category}
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange} error={formik.touched.category && Boolean(formik.errors.category)}
+                  helperText={formik.touched.category && formik.errors.category}
+                  sx={{
+                    width: '100%',
+                  }}
+                >
+                  {categories.map((category) => {
+                    return (
+                      <MenuItem key={`category-${new Date().getTime()}-${Math.random()}`} value={category}
+                                sx={{ background: 'transparent' }}>{category}</MenuItem>
+                    );
+                  })
+                  }
+                </Select>
+              }
             </Grid>
           }
           <Grid item sm={6} xs={6} md={6}>
@@ -147,8 +155,7 @@ const ModalAddTransaction = ({ isOpen, onClose }) => {
                 helperText={formik.touched.date && formik.errors.date}
                 OpenPickerButtonProps={{ sx: { color: theme => theme.palette.secondary.dark } }}
                 onChange={newValue => formik.setFieldValue('date', newValue)}
-                renderInput={(params) => <TextField {...params} id='dateField' variant='standard' />}
-                date={null} openPicker={null} rawValue={null} />
+                renderInput={(params) => <TextField {...params} id='dateField' variant='standard' />} />
             </LocalizationProvider>
           </Grid>
           <Grid item sm={12} xs={12} md={12}>
