@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 
 const useUserService = () => {
-  const { post, response, loading } = useFetch('https://wallet.goit.ua/api');
+  const { post, response } = useFetch('https://wallet.goit.ua/api');
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const _apiAuthSingup = 'auth/sign-up';

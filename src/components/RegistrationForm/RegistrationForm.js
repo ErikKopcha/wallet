@@ -1,7 +1,7 @@
 import style from './RegistrationForm.module.css';
 import logo from '../../assets/icons/wallet-logo.svg';
 import { Link } from "react-router-dom";
-import React, { useState } from 'react';
+import React from 'react';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import useUserService from '../../services/userService';
