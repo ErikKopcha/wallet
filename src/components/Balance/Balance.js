@@ -1,11 +1,14 @@
 import style from './Balance.module.css';
-
-const balanceInfo = {
-  sum: `24 000.00`,
-  currCode: `₴`
-};
+import { useSelector } from 'react-redux';
 
 const Balance = () => {
+  const balance = useSelector((state) => state.user.balance)
+
+  const balanceInfo = {
+    sum: balance,
+    currCode: `₴`
+  };
+
   return (
     <div className={style.balance}>
       <p className={style.balanceTitle}>Your balance</p>
