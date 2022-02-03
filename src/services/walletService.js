@@ -1,21 +1,25 @@
-import {useHttp} from '../hooks/http.hook';
+import useFetch from 'use-http';
+import { toast } from 'react-toastify';
 
-const useWalletService = () => {
-  const {request, isLoading} = useHttp();
-
-  const _apiPrivate = 'https://api.privatbank.ua/p24api/pubinfo';
-  const _baseCurrencyId = 11;
+const useCurrencyService = () => {
+  const { get, response } = useFetch('https://api.privatbank.ua/p24api/pubinfo');
+  const _baseCurrencyId = 5;
 
   const getCurrency = async () => {
-    const res = await request(`${_apiPrivate}?exchange&json&coursid=${_baseCurrencyId}`);
-    return res;
+    const result = await get(`?json&exchange&coursid=${_baseCurrencyId}`);
+
+    if (response.ok) {
+      return result;
+    } else {
+      toast.error(`Failed to load exchange rates.`, {
+        theme: "colored"
+      });
+
+      return [];
+    }
   };
 
-  return {
-    request,
-    isLoading,
-    getCurrency,
-  }
-}
+  return { getCurrency };
+};
 
-export default useWalletService;
+export default useCurrencyService;
