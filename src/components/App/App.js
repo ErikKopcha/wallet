@@ -1,8 +1,8 @@
 import './App.css';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import DashboardPage from '../DashboardPage/DashboardPage';
-import LoginPage from '../LoginPage/LoginPage'
-import RegistrationPage from '../RegistrationPage/RegistrationPage';
+import DashboardPage from '../../pages/DashboardPage/DashboardPage';
+import LoginPage from '../../pages/LoginPage/LoginPage'
+import RegistrationPage from '../../pages/RegistrationPage/RegistrationPage';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '../../settings/themeSettings';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
