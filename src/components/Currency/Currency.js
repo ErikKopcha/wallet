@@ -92,7 +92,7 @@ const Currency = () => {
    * @returns {number}
    */
   const getDiffTime = () => {
-    const date = getStorageCurrDate() || JSON.stringify(new Date(1980, 1, 1) );
+    const date = getStorageCurrDate() || JSON.stringify(new Date(1980, 1, 1));
     const dateLocal = new Date(JSON.parse(date));
 
     if (!dateLocal) return (diffMs + 1);
@@ -103,7 +103,7 @@ const Currency = () => {
       dateNow.setDate(dateNow.getDate() + 1);
     }
 
-    return (dateNow - dateLocal);
+    return (dateNow.getTime() - dateLocal.getTime());
   };
 
   /**
