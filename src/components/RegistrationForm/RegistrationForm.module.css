@@ -44,6 +44,11 @@
   line-height: 1.27;
 }
 
+.InputIcon {
+  color: var(--placeholderTextColor);
+  margin-left: 10px;
+}
+
 .RegInput:first-child {
   margin-top: 0;
 }
