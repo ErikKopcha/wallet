@@ -125,6 +125,7 @@ const Currency = () => {
   /**
    * start check
   */
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const getData = () => {
     const diffDate = getDiffTime();
 
