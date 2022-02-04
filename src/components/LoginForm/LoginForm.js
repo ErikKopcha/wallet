@@ -5,6 +5,10 @@ import React from 'react';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import useUserService from '../../services/userService';
+import EmailIcon from '@mui/icons-material/Email';
+import LockIcon from '@mui/icons-material/Lock';
+import InputAdornment from '@mui/material/InputAdornment';
+import Input from '@mui/material/Input';
 
 
 function LoginForm() {
@@ -59,7 +63,7 @@ function LoginForm() {
               </a>
             </div>
             <form className={style.LogInForm}>
-              <input
+              <Input
                 className={style.LogInInput}
                 type="email"
                 name="email"
@@ -67,10 +71,14 @@ function LoginForm() {
                 onBlur={handleBlur}
                 value={values.email}
                 placeholder="E-mail"
-                
-              ></input>
+                startAdornment={
+                  <InputAdornment position="start">
+                    <EmailIcon className={style.InputIcon}/>
+                  </InputAdornment>
+                }
+              />
               {touched.email && errors.email && <p className={style.Error}>{errors.email}</p>}
-              <input
+              <Input
                 className={style.LogInInput}
                 type='password'
                 name='password'
@@ -78,8 +86,12 @@ function LoginForm() {
                 onBlur={handleBlur}
                 value={values.password}
                 placeholder='Password'
-               
-              ></input>
+                startAdornment={
+                  <InputAdornment position="start">
+                    <LockIcon className={style.InputIcon}/>
+                  </InputAdornment>
+                }
+              />
               {touched.password && errors.password && <p className={style.Error}>{errors.password}</p>}
               <button
                 className={`${style.LogInBtn} ${style.Btn}`}

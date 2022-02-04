@@ -94,6 +94,10 @@
     color: red;
     
   }
+  .InputIcon {
+    color: var(--placeholderTextColor);
+    margin-left: 10px;
+  }
 
   @media (min-width: 426px) {
     .FormBox {
