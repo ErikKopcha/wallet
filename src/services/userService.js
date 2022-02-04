@@ -10,6 +10,7 @@ const useUserService = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const _apiAuthSingup = 'auth/sign-up';
+  const _apiAuthSingin = 'auth/sign-in'
 
   const registerUser = async (user) => {
     const result = await post(`${_apiAuthSingup}`, user);
@@ -23,10 +24,23 @@ const useUserService = () => {
       });
     }
   }
-
-  return {
-    registerUser
+  const loginUser = async (user) => {
+    const result = await post(`${_apiAuthSingin}`, user);
+    if (response.ok) {
+      dispatch(registration(result.user));
+      dispatch(authenticationSuccess({ token: result.token }));
+      navigate('/');
+    } else {
+      toast.error(result.message, {
+        theme: "colored"
+      });
+    }
   }
+  
+  return {
+    registerUser, loginUser
+  }
+  
 }
 
 export default useUserService;

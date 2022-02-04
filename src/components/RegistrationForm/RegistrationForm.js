@@ -1,10 +1,15 @@
 import style from './RegistrationForm.module.css';
 import logo from '../../assets/icons/wallet-logo.svg';
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import React from 'react';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import useUserService from '../../services/userService';
+import EmailIcon from '@mui/icons-material/Email';
+import LockIcon from '@mui/icons-material/Lock';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import InputAdornment from '@mui/material/InputAdornment';
+import Input from '@mui/material/Input';
 
 export default function RegistrationForm() {
   const { registerUser } = useUserService();
@@ -13,8 +18,8 @@ export default function RegistrationForm() {
     const user = {
       username: values.name,
       email: values.email,
-      password: values.password,
-    };
+      password: values.password
+    }
     registerUser(user);
   }
 
@@ -22,8 +27,8 @@ export default function RegistrationForm() {
     email: yup.string().email('*Please enter a valid email').required('*Required field'),
     password: yup.string().required('*Required field').min(6, '*Password is too short - should be 6 chars minimum').max(12, '*Password is too long - should be 12 chars maximum'),
     confirmPassword: yup.string().oneOf([yup.ref('password')], '*Password mismatch').required('*Required field'),
-    name: yup.string().required('*Required field').min(1, '*Name should be 1 chars minimum').max(12, '*Name is too long - should be 12 chars maximum'),
-  });
+    name: yup.string().required('*Required field').min(1, '*Name should be 1 chars minimum').max(12, '*Name is too long - should be 12 chars maximum')
+  })
 
   return (
     <div>
@@ -32,7 +37,7 @@ export default function RegistrationForm() {
           email: '',
           password: '',
           confirmPassword: '',
-          name: '',
+          name: ''
         }}
         validateOnBlur
         onSubmit={handleSubmit}
@@ -42,7 +47,7 @@ export default function RegistrationForm() {
           <div className={style.Container}>
             <div>
               <a href='/' className={style.LogoWrap}>
-                <img className={style.LogoImage} src={logo} alt='wallet logo' />
+                <img className={style.LogoImage} src={logo} alt='wallet logo'/>
                 <span className={style.LogoText}>Wallet</span>
               </a>
             </div>
@@ -55,8 +60,12 @@ export default function RegistrationForm() {
                 value={values.email}
                 className={style.RegInput}
                 placeholder='E-mail'
-              >
-              </input>
+                startAdornment={
+                  <InputAdornment position="start">
+                    <EmailIcon className={style.InputIcon}/>
+                  </InputAdornment>
+                }
+              />
               {touched.email && errors.email && <p className={style.Error}>{errors.email}</p>}
 
               <input
@@ -67,8 +76,12 @@ export default function RegistrationForm() {
                 value={values.password}
                 className={style.RegInput}
                 placeholder='Password'
-              >
-              </input>
+                startAdornment={
+                  <InputAdornment position="start">
+                    <LockIcon className={style.InputIcon}/>
+                  </InputAdornment>
+                }
+              />
               {touched.password && errors.password && <p className={style.Error}>{errors.password}</p>}
 
               <input
@@ -79,12 +92,15 @@ export default function RegistrationForm() {
                 value={values.confirmPassword}
                 className={style.RegInput}
                 placeholder='Confirm password'
-              >
-              </input>
-              {touched.confirmPassword && errors.confirmPassword &&
-                <p className={style.Error}>{errors.confirmPassword}</p>}
+                startAdornment={
+                  <InputAdornment position="start">
+                    <LockIcon className={style.InputIcon}/>
+                  </InputAdornment>
+                }
+                />
+               {touched.confirmPassword && errors.confirmPassword && <p className={style.Error}>{errors.confirmPassword}</p>}
 
-              <input
+              <Input
                 type='text'
                 name='name'
                 onChange={handleChange}
@@ -92,8 +108,12 @@ export default function RegistrationForm() {
                 value={values.name}
                 className={style.RegInput}
                 placeholder='Your name'
-              >
-              </input>
+                startAdornment={
+                  <InputAdornment position="start">
+                    <AccountBoxIcon className={style.InputIcon}/>
+                  </InputAdornment>
+                }
+                />
               {touched.name && errors.name && <p className={style.Error}>{errors.name}</p>}
 
               <button
@@ -104,11 +124,11 @@ export default function RegistrationForm() {
                 Registration
               </button>
 
-              <Link className={`${style.LogInBtn} ${style.Btn}`} to='/login'>Log in</Link>
+              <Link className={`${style.LogInBtn} ${style.Btn}`} to="/login">Log in</Link>
             </form>
           </div>
         )}
       </Formik>
     </div>
-  );
+  )
 }
