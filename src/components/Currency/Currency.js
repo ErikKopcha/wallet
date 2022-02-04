@@ -92,7 +92,7 @@ const Currency = () => {
    * @returns {number}
    */
   const getDiffTime = () => {
-    const date = getStorageCurrDate() || JSON.stringify(new Date(1980, 1, 1) );
+    const date = getStorageCurrDate() || JSON.stringify(new Date(1980, 1, 1));
     const dateLocal = new Date(JSON.parse(date));
 
     if (!dateLocal) return (diffMs + 1);
@@ -103,7 +103,7 @@ const Currency = () => {
       dateNow.setDate(dateNow.getDate() + 1);
     }
 
-    return (dateNow - dateLocal);
+    return (dateNow.getTime() - dateLocal.getTime());
   };
 
   /**
@@ -111,9 +111,6 @@ const Currency = () => {
    * @param { Array } currData
    */
   const onDataLoaded = (currData) => {
-    setIsLoading(false);
-    setCurrData(currData);
-
     if (currData && currData.length) {
       setLocalStorageData(currData);
       setCurrData(currData);
@@ -127,22 +124,22 @@ const Currency = () => {
 
   /**
    * start check
-   */
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  */
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const getData = () => {
-      const diffDate = getDiffTime();
+    const diffDate = getDiffTime();
 
-      if (diffDate < diffMs) {
-        const data = getCurrFromStorage() || "[]";
-        const parsed = JSON.parse(data);
+    if (diffDate < diffMs) {
+      const data = getCurrFromStorage() || "[]";
+      const parsed = JSON.parse(data);
 
-        onDataLoaded(parsed);
-      } else {
-        getCurrency().then(onDataLoaded);
-      }
+      onDataLoaded(parsed);
+    } else {
+      getCurrency().then(onDataLoaded);
+    }
 
-      setLoadedData(true);
-    };
+    setLoadedData(true);
+  };
 
   useEffect(() => {
     if (loadedData) return;

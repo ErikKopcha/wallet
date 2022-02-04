@@ -1,5 +1,5 @@
 import style from './RegistrationPage.module.css';
-import RegistrationForm from '../RegistrationForm/RegistrationForm';
+import RegistrationForm from '../../components/RegistrationForm/RegistrationForm';
 import ellipse1 from '../../assets/images/ellipse-1.svg';
 import ellipse2 from '../../assets/images/ellipse-2.svg';
 import regpageimg from '../../assets/images/regpagebig.png'
