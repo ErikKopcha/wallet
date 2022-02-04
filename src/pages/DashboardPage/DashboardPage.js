@@ -1,17 +1,17 @@
 import style from './DashboardPage.module.css';
-import Header from '../Header/Header';
-import Navigation from '../Navigation/Navigation';
-import Balance from '../Balance/Balance';
-import ButtonAddTransaction from '../ButtonAddTransaction/ButtonAddTransaction';
-import ModalAddTransaction from '../ModalAddTransaction/ModalAddTransaction';
-import Currency from '../Currency/Currency';
-import Statistics from '../Statistics/Statistics.js'
+import Header from '../../components/Header/Header';
+import Navigation from '../../components/Navigation/Navigation';
+import Balance from '../../components/Balance/Balance';
+import ButtonAddTransaction from '../../components/ButtonAddTransaction/ButtonAddTransaction';
+import ModalAddTransaction from '../../components/ModalAddTransaction/ModalAddTransaction';
+import Currency from '../../components/Currency/Currency';
+import Statistics from '../../components/Statistics/Statistics.js'
 import { Routes, Route } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 import { useEffect, useState } from 'react';
-import DashTable from '../DashTable/DashTable';
+import DashTable from '../../components/DashTable/DashTable';
 import Media from 'react-media';
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
+import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary';
 import useTransactionsService from '../../services/transactionsService';
 
 const DashboardPage = () => {

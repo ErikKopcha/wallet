@@ -36,14 +36,16 @@
   
   .LogInInput {
     display: inline-block;
-    margin-bottom: 40px;
     border: none;
+    margin-top: 40px;
     border-bottom: 1px solid #e0e0e0;
     font-family: Abel;
     font-size: 18px;
     line-height: 1.27;
   }
-  
+  .RegInput:first-child {
+    margin-top: 0;
+  }
   .LogInInput:focus-visible {
     outline: none;
   }
@@ -70,20 +72,33 @@
   
   .RegBtn {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--greenAccentColor);
-    color: var(--textOnDarkBackgroundColor);
-  }
-  
-  .LogInBtn {
-    display: flex;
     justify-content: center;
     align-items: center;
     color: var(--activeNavTextColor);
     border: 1px solid var(--secondaryButtonColor);
   }
   
+  .LogInBtn {
+    display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  background: var(--greenAccentColor);
+  color: var(--textOnDarkBackgroundColor);
+  cursor: pointer;
+  }
+  
+  .Error {
+    font-family: Abel;
+    font-size: 10px;
+    color: red;
+    
+  }
+  .InputIcon {
+    color: var(--placeholderTextColor);
+    margin-left: 10px;
+  }
+
   @media (min-width: 426px) {
     .FormBox {
       padding: 40px 65px 60px;

@@ -1,7 +1,7 @@
 import useFetch from 'use-http';
 import { authenticationSuccess } from '../features/session';
-import { registration, authorization } from '../features/user';
-import { useNavigate } from "react-router-dom";
+import { registration } from '../features/user';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 
@@ -10,7 +10,7 @@ const useUserService = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const _apiAuthSingup = 'auth/sign-up';
-  const _apiAuthSignin = 'auth/sign-in';
+  const _apiAuthSingin = 'auth/sign-in';
 
   const registerUser = async (user) => {
     const result = await post(`${_apiAuthSingup}`, user);
@@ -18,35 +18,30 @@ const useUserService = () => {
       dispatch(registration(result.user));
       dispatch(authenticationSuccess({ token: result.token }));
       navigate('/');
-    }
-    else {
+    } else {
       toast.error(result.message, {
-        theme: "colored"
-      }
+          theme: 'colored',
+        },
       );
     }
-  }
+  };
 
-  const authoriseUser = async (user) => {
-    const result = await post(`${_apiAuthSignin}`, user);
-    console.log(result.token);
+  const loginUser = async (user) => {
+    const result = await post(`${_apiAuthSingin}`, user);
     if (response.ok) {
-      dispatch(authorization(result.user));
+      dispatch(registration(result.user));
       dispatch(authenticationSuccess({ token: result.token }));
-      localStorage.setItem('token', result.token);
       navigate('/');
-    }
-    else {
+    } else {
       toast.error(result.message, {
-          theme: "colored"
-        }
-      );
+        theme: 'colored',
+      });
     }
-  }
+  };
 
   return {
-    registerUser, authoriseUser
-  }
-}
+    registerUser, loginUser,
+  };
+};
 
 export default useUserService;
