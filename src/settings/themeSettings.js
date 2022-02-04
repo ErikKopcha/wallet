@@ -13,7 +13,7 @@ const theme = createTheme({
     },
     secondary: {
       main: '#FF6596',
-      dark: '#4A56E2'
+      dark: '#4A56E2',
     },
   },
   typography: {
@@ -57,7 +57,7 @@ const theme = createTheme({
           width: '300px',
           height: '50px',
           textTransform: 'uppercase',
-          borderRadius: '20px'
+          borderRadius: '20px',
         },
         outlined: {
           borderColor: '#4A56E2',
@@ -66,8 +66,15 @@ const theme = createTheme({
             borderColor: '#4A56E2',
             color: '#4A56E2',
             boxShadow: '4px 4px 19px 0px rgba(34, 60, 80, 0.11);',
-          }
-        }
+          },
+        },
+      },
+    },
+    MuiInput: {
+      styleOverrides: {
+        root: {
+          padding: '0 10px',
+        },
       },
     },
     MuiTypography: {
@@ -81,7 +88,7 @@ const theme = createTheme({
           },
         },
       ],
-    }
+    },
   },
 });
 

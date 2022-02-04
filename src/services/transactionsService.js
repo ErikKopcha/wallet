@@ -14,9 +14,9 @@ const useTransactionsService = () => {
   const requestOptions = {
     headers: {
       'Authorization': `Bearer ${token}`,
-    }
-  }
-  const {post, get, response} = useFetch('https://wallet.goit.ua/api', requestOptions);
+    },
+  };
+  const { post, get, response } = useFetch('https://wallet.goit.ua/api', requestOptions);
 
   const addTransaction = async (transaction) => {
     const result = await post(`${_apiTransactions}`, transaction);
@@ -24,27 +24,24 @@ const useTransactionsService = () => {
       dispatch(saveTransaction(result));
     } else {
       toast.error(result.message, {
-        theme: "colored"
+        theme: 'colored',
       });
     }
-  }
+  };
 
   const getCategories = async () => {
     const result = await get(`${_apiCategories}`);
     if (response.ok) {
       dispatch(saveCategories(result));
+    } else {
+      toast.error('Sorry, we couldn\'t find categories' , {
+        theme: 'colored',
+      });
     }
-    // else {
-    //   console.log(result);
-    // }
+  };
 
-    // !response.ok && toast.error(result.message, {
-    //   theme: 'colored'
-    // });
-  }
-
-  return {addTransaction, getCategories}
-}
+  return { addTransaction, getCategories };
+};
 
 export default useTransactionsService;
 
