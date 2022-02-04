@@ -8,7 +8,7 @@ import useUserService from '../../services/userService';
 
 export default function LoginForm() {
 
-  const {authoriseUser} = useUserService();
+  const {authoriseUser, registerUser} = useUserService();
 
   function handleSubmit(values) {
     const user = {

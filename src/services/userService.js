@@ -29,9 +29,11 @@ const useUserService = () => {
 
   const authoriseUser = async (user) => {
     const result = await post(`${_apiAuthSignin}`, user);
+    console.log(result.token);
     if (response.ok) {
       dispatch(authorization(result.user));
       dispatch(authenticationSuccess({ token: result.token }));
+      localStorage.setItem('token', result.token);
       navigate('/');
     }
     else {

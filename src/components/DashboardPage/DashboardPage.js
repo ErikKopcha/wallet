@@ -8,16 +8,23 @@ import Currency from '../Currency/Currency';
 import Statistics from '../Statistics/Statistics.js'
 import { Routes, Route } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import DashTable from '../DashTable/DashTable';
 import Media from 'react-media';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
+import useTransactionsService from '../../services/transactionsService';
 
 const DashboardPage = () => {
   const [isOpenModalTransaction, setModalTransaction] = useState(false);
   const handleOpenModalTransaction = () => setModalTransaction(true);
   const handleCloseModalTransaction = () => setModalTransaction(false);
   const isMobile = useMediaQuery({ query: '(max-width: 425px)' });
+
+  const { getCategories } = useTransactionsService();
+
+  useEffect(() => {
+    getCategories()
+  }, [])
 
   return (
     <div className={style.dashboardWrap}>

@@ -13,6 +13,7 @@ const theme = createTheme({
     },
     secondary: {
       main: '#FF6596',
+      dark: '#4A56E2'
     },
   },
   typography: {
@@ -58,6 +59,15 @@ const theme = createTheme({
           textTransform: 'uppercase',
           borderRadius: '20px'
         },
+        outlined: {
+          borderColor: '#4A56E2',
+          color: '#4A56E2',
+          '&:hover': {
+            borderColor: '#4A56E2',
+            color: '#4A56E2',
+            boxShadow: '4px 4px 19px 0px rgba(34, 60, 80, 0.11);',
+          }
+        }
       },
     },
     MuiTypography: {

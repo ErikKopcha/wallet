@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = { isAuth: false, authToken: null};
-// const initialState = { isAuth: true, authToken: null};
+ const initialState = { isAuth: false, authToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzaWQiOiI0ZDdiMjMwNy02MzczLTRjZDEtYjdhNC01OTJiNWY4MTFhOWIiLCJpYXQiOjE2NDM4OTYxMjgsImV4cCI6MTAwMDAwMDE2NDM4OTYxMjh9.H_OeKRNV1n5FEys9HV32vZtPdErhkQeR1yuahLOqj8c'};
+//const initialState = { isAuth: false, authToken: null};
 
 export const sessionSlice = createSlice({
   name: 'session',
