@@ -4,7 +4,7 @@ import ellipse1 from '../../assets/images/ellipse-1.svg';
 import ellipse2 from '../../assets/images/ellipse-2.svg';
 import LogInPageImg from '../../assets/images/LogInPageImg.png'
 
-export default function RegistrationPage() {
+function LoginPage() {
   return (
     <div className={style.LogInPage}>
       <div className={style.Ellipse1}>
@@ -27,4 +27,4 @@ export default function RegistrationPage() {
     </div>
   )
 }
-
+export default LoginPage;
