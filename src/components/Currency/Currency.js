@@ -166,14 +166,7 @@ const Currency = () => {
       getData();
       startCheckTime();
     }
-
-    return () => {
-      // unmount
-      if (getDataInterval) {
-        clearInterval(getDataInterval)
-      }
-    }
-  }, [diffMs])
+  }, [getData, startCheckTime, getDataInterval, loadedData]);
 
   const isWaiting = isLoading ? <Rings wrapperClass={style.spinner} ariaLabel="loading-indicator" /> : null;
   const isRender = currData !== null && currData.length ? <Table currData={currData} /> : null;
