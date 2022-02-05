@@ -67,9 +67,12 @@ const Currency = () => {
   /**
    * @param { Array } item
    */
-  const setLocalStorageData = (item) => {
-    window.localStorage.setItem('currDate', JSON.stringify(new Date()));
+  const setLocalStorageCurrData = (item) => {
     window.localStorage.setItem('currData', JSON.stringify(item));
+  };
+
+  const setDateToLocalStorage = () => {
+    window.localStorage.setItem('currDate', JSON.stringify(new Date()));
   };
 
   /**
@@ -115,11 +118,11 @@ const Currency = () => {
    */
   const onDataLoaded = (currData) => {
     if (currData && currData.length) {
-      setLocalStorageData(currData);
+      setLocalStorageCurrData(currData);
       setCurrData(currData);
     } else {
       setCurrData(currDataDefault);
-      setLocalStorageData(currDataDefault);
+      setLocalStorageCurrData(currDataDefault);
     }
 
     setIsLoading(false);
@@ -135,6 +138,7 @@ const Currency = () => {
     if (isGetCurrency) {
       setLoadedData(true);
       getCurrency().then(onDataLoaded);
+      setDateToLocalStorage();
     } else {
       const data = getCurrFromStorage() || "[]";
       const parsed = JSON.parse(data);
@@ -145,18 +149,22 @@ const Currency = () => {
 
   /**
    * start check time to get data currency
-   */
+  */
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const startCheckTime = () => {
+    if (getDataInterval) clearInterval(getDataInterval);
+
     getDataInterval = setInterval(() => {
       const isGetCurrency = isGetData();
 
       if (isGetCurrency) {
         setCurrData([]);
         setIsLoading(true);
+        setDateToLocalStorage();
         getCurrency().then(onDataLoaded);
       }
     }, 10000);
-  };
+  }
 
   useEffect(() => {
     if (!loadedData) {
