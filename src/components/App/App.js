@@ -12,15 +12,15 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
-  const isUserAuthenticated = useSelector((state) => state.session.isAuth)
-  const getRedirectUrl = () => isUserAuthenticated ? "/home/" : "/login";
+  const isUserAuthenticated = useSelector((state) => state.session.isAuth);
+  const redirectUrl = isUserAuthenticated ? "/home/" : "/login";
 
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
         <Routes>
-          <Route exact path="/" element={ <Navigate to={getRedirectUrl()} /> } />
-          <Route path="*" element={ <Navigate to={getRedirectUrl()} /> } />
+          <Route path="/" element={ <Navigate to={redirectUrl} /> } />
+          <Route path="*" element={ <Navigate to={redirectUrl} /> } />
           <Route path="/home/*" element={
             <ProtectedRoute>
               <DashboardPage />

@@ -1,19 +1,11 @@
-// import { useSelector } from 'react-redux';
-import { Navigate, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 
 const ProtectedRoute = ({ children }) => {
-  // const { isAuthenticated, loading } = useSelector(state => state.auth);
-  // if (loading) {
-  //   return global spinner
-  // }
-
-  // wait login state
-  const isUserAuthenticated = true;
-
-  let location = useLocation();
+  const isUserAuthenticated = useSelector((state) => state.session.isAuth);
 
   if (!isUserAuthenticated) {
-    return <Navigate to="/login" state={{ from: location }} />;
+    return <Navigate to="/login" />;
   }
 
   return children;

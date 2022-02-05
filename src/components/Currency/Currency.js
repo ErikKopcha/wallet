@@ -51,7 +51,8 @@ const Table = ({currData}) => {
 const Currency = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [currData, setCurrData] = useState([]);
-  const [loadedData, setLoadedData] = useState(false)
+  const [loadedData, setLoadedData] = useState(false);
+  let getDataInterval = null;
 
   const diffMs = 3_600_000; // 1h
   const currDataDefault = [
@@ -66,9 +67,12 @@ const Currency = () => {
   /**
    * @param { Array } item
    */
-  const setLocalStorageData = (item) => {
-    window.localStorage.setItem('currDate', JSON.stringify(new Date()));
+  const setLocalStorageCurrData = (item) => {
     window.localStorage.setItem('currData', JSON.stringify(item));
+  };
+
+  const setDateToLocalStorage = () => {
+    window.localStorage.setItem('currDate', JSON.stringify(new Date()));
   };
 
   /**
@@ -89,13 +93,13 @@ const Currency = () => {
 
   /**
    * return diff (get curr data from api)
-   * @returns {number}
+   * @returns {boolean}
    */
-  const getDiffTime = () => {
+  const isGetData = () => {
     const date = getStorageCurrDate() || JSON.stringify(new Date(1980, 1, 1));
     const dateLocal = new Date(JSON.parse(date));
 
-    if (!dateLocal) return (diffMs + 1);
+    if (!dateLocal) return true;
 
     const dateNow = new Date();
 
@@ -103,7 +107,9 @@ const Currency = () => {
       dateNow.setDate(dateNow.getDate() + 1);
     }
 
-    return (dateNow.getTime() - dateLocal.getTime());
+    const diff = (dateNow.getTime() - dateLocal.getTime());
+
+    return diff > diffMs;
   };
 
   /**
@@ -112,11 +118,11 @@ const Currency = () => {
    */
   const onDataLoaded = (currData) => {
     if (currData && currData.length) {
-      setLocalStorageData(currData);
+      setLocalStorageCurrData(currData);
       setCurrData(currData);
     } else {
       setCurrData(currDataDefault);
-      setLocalStorageData(currDataDefault);
+      setLocalStorageCurrData(currDataDefault);
     }
 
     setIsLoading(false);
@@ -127,26 +133,48 @@ const Currency = () => {
   */
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const getData = () => {
-    const diffDate = getDiffTime();
+    const isGetCurrency = isGetData();
 
-    if (diffDate < diffMs) {
+    if (isGetCurrency) {
+      setLoadedData(true);
+      getCurrency().then(onDataLoaded);
+      setDateToLocalStorage();
+    } else {
       const data = getCurrFromStorage() || "[]";
       const parsed = JSON.parse(data);
 
       onDataLoaded(parsed);
-    } else {
-      getCurrency().then(onDataLoaded);
     }
-
-    setLoadedData(true);
   };
 
-  useEffect(() => {
-    if (loadedData) return;
+  /**
+   * start check time to get data currency
+  */
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const startCheckTime = () => {
+    if (getDataInterval) clearInterval(getDataInterval);
 
-    setIsLoading(true);
-    getData();
-  }, [getData, loadedData])
+    getDataInterval = setInterval(() => {
+      const isGetCurrency = isGetData();
+
+      if (isGetCurrency) {
+        setCurrData([]);
+        setIsLoading(true);
+        setDateToLocalStorage();
+        getCurrency().then(onDataLoaded);
+      }
+    }, 10000);
+  }
+
+  useEffect(() => {
+    if (!loadedData) {
+      setLoadedData(true);
+      setIsLoading(true);
+
+      getData();
+      startCheckTime();
+    }
+  }, [getData, startCheckTime, getDataInterval, loadedData]);
 
   const isWaiting = isLoading ? <Rings wrapperClass={style.spinner} ariaLabel="loading-indicator" /> : null;
   const isRender = currData !== null && currData.length ? <Table currData={currData} /> : null;
