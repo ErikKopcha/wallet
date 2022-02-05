@@ -1,10 +1,14 @@
 import useFetch from 'use-http';
 import { toast } from 'react-toastify';
 
-const useCurrencyService = () => {
+const useWalletService = () => {
   const { get, response } = useFetch('https://api.privatbank.ua/p24api/pubinfo');
   const _baseCurrencyId = 5;
 
+  /**
+   * get currency data
+   * @returns {Promise<*[]|any>}
+   */
   const getCurrency = async () => {
     const result = await get(`?json&exchange&coursid=${_baseCurrencyId}`);
 
@@ -22,4 +26,4 @@ const useCurrencyService = () => {
   return { getCurrency };
 };
 
-export default useCurrencyService;
+export default useWalletService;

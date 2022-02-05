@@ -51,7 +51,8 @@ const Table = ({currData}) => {
 const Currency = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [currData, setCurrData] = useState([]);
-  const [loadedData, setLoadedData] = useState(false)
+  const [loadedData, setLoadedData] = useState(false);
+  let getDataInterval = null;
 
   const diffMs = 3_600_000; // 1h
   const currDataDefault = [
@@ -89,13 +90,13 @@ const Currency = () => {
 
   /**
    * return diff (get curr data from api)
-   * @returns {number}
+   * @returns {boolean}
    */
-  const getDiffTime = () => {
+  const isGetData = () => {
     const date = getStorageCurrDate() || JSON.stringify(new Date(1980, 1, 1));
     const dateLocal = new Date(JSON.parse(date));
 
-    if (!dateLocal) return (diffMs + 1);
+    if (!dateLocal) return true;
 
     const dateNow = new Date();
 
@@ -103,7 +104,9 @@ const Currency = () => {
       dateNow.setDate(dateNow.getDate() + 1);
     }
 
-    return (dateNow.getTime() - dateLocal.getTime());
+    const diff = (dateNow.getTime() - dateLocal.getTime());
+
+    return diff > diffMs;
   };
 
   /**
@@ -127,26 +130,50 @@ const Currency = () => {
   */
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const getData = () => {
-    const diffDate = getDiffTime();
+    const isGetCurrency = isGetData();
 
-    if (diffDate < diffMs) {
+    if (isGetCurrency) {
+      setLoadedData(true);
+      getCurrency().then(onDataLoaded);
+    } else {
       const data = getCurrFromStorage() || "[]";
       const parsed = JSON.parse(data);
 
       onDataLoaded(parsed);
-    } else {
-      getCurrency().then(onDataLoaded);
     }
+  };
 
-    setLoadedData(true);
+  /**
+   * start check time to get data currency
+   */
+  const startCheckTime = () => {
+    getDataInterval = setInterval(() => {
+      const isGetCurrency = isGetData();
+
+      if (isGetCurrency) {
+        setCurrData([]);
+        setIsLoading(true);
+        getCurrency().then(onDataLoaded);
+      }
+    }, 10000);
   };
 
   useEffect(() => {
-    if (loadedData) return;
+    if (!loadedData) {
+      setLoadedData(true);
+      setIsLoading(true);
 
-    setIsLoading(true);
-    getData();
-  }, [getData, loadedData])
+      getData();
+      startCheckTime();
+    }
+
+    return () => {
+      // unmount
+      if (getDataInterval) {
+        clearInterval(getDataInterval)
+      }
+    }
+  }, [diffMs])
 
   const isWaiting = isLoading ? <Rings wrapperClass={style.spinner} ariaLabel="loading-indicator" /> : null;
   const isRender = currData !== null && currData.length ? <Table currData={currData} /> : null;

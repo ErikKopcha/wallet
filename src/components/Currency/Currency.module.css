@@ -1,5 +1,6 @@
 .currency {
   width: 100%;
+  min-height: 145px;
   max-height: 50vh;
   background-color: var(--secondaryButtonColor);
   background-image: url('../../assets/images/currency-bg.png');
