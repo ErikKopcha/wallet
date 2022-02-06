@@ -67,6 +67,7 @@ const Currency = () => {
     {ccy: 'USD', base_ccy: 'UAH', buy: '0', sale: '0'},
     {ccy: 'BTC', base_ccy: 'USD', buy: '0', sale: '0'}
   ];
+
   let getDataInterval = null;
 
   const { getCurrency } = useWalletService();
@@ -131,7 +132,8 @@ const Currency = () => {
 
   useEffect(() => {
     getData();
-  }, [getData]);
+    // eslint-disable-next-line
+  },[]);
 
   const isWaiting = isLoading ? <Rings wrapperClass={style.spinner} ariaLabel="loading-indicator" /> : null;
   const isRender = currData !== null && currData.length ? <Table currData={currData} /> : null;
