@@ -1,8 +1,16 @@
 import style from './Currency.module.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import useWalletService from '../../services/walletService';
 import { Rings } from 'react-loader-spinner';
 import { numberWithSpaces } from '../../helpers/helpers';
+import currencyHelpers from './helpers';
+
+const {
+  setLocalStorageCurrData,
+  setDateToLocalStorage,
+  getCurrFromStorage,
+  isGetData
+} = currencyHelpers();
 
 /**
  * @param { Number } currCode
@@ -13,7 +21,6 @@ import { numberWithSpaces } from '../../helpers/helpers';
  */
 const getRow = ({
     ccy = 'UAH',
-    base_ccy = 'UAH',
     buy = 1,
     sale = 1,
     precision = 2,
@@ -51,66 +58,18 @@ const Table = ({currData}) => {
 const Currency = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [currData, setCurrData] = useState([]);
-  const [loadedData, setLoadedData] = useState(false);
-  let getDataInterval = null;
 
-  const diffMs = 3_600_000; // 1h
+  const msCheckUpdateData = 10_000;
+
   const currDataDefault = [
     {ccy: 'EUR', base_ccy: 'UAH', buy: '0', sale: '0'},
     {ccy: 'RUR', base_ccy: 'UAH', buy: '0', sale: '0'},
     {ccy: 'USD', base_ccy: 'UAH', buy: '0', sale: '0'},
     {ccy: 'BTC', base_ccy: 'USD', buy: '0', sale: '0'}
   ];
+  let getDataInterval = null;
 
-  const {getCurrency} = useWalletService();
-
-  /**
-   * @param { Array } item
-   */
-  const setLocalStorageCurrData = (item) => {
-    window.localStorage.setItem('currData', JSON.stringify(item));
-  };
-
-  const setDateToLocalStorage = () => {
-    window.localStorage.setItem('currDate', JSON.stringify(new Date()));
-  };
-
-  /**
-   * get currency data from localStorage
-   * @returns {string}
-   */
-  const getCurrFromStorage = () => {
-    return window.localStorage.getItem('currData');
-  };
-
-  /**
-   * get currency date (last get data)
-   * @returns {string}
-   */
-  const getStorageCurrDate = () => {
-    return window.localStorage.getItem('currDate');
-  };
-
-  /**
-   * return diff (get curr data from api)
-   * @returns {boolean}
-   */
-  const isGetData = () => {
-    const date = getStorageCurrDate() || JSON.stringify(new Date(1980, 1, 1));
-    const dateLocal = new Date(JSON.parse(date));
-
-    if (!dateLocal) return true;
-
-    const dateNow = new Date();
-
-    if (dateNow < dateLocal) {
-      dateNow.setDate(dateNow.getDate() + 1);
-    }
-
-    const diff = (dateNow.getTime() - dateLocal.getTime());
-
-    return diff > diffMs;
-  };
+  const { getCurrency } = useWalletService();
 
   /**
    * start function if data loaded
@@ -129,28 +88,8 @@ const Currency = () => {
   }
 
   /**
-   * start check
-  */
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const getData = () => {
-    const isGetCurrency = isGetData();
-
-    if (isGetCurrency) {
-      setLoadedData(true);
-      getCurrency().then(onDataLoaded);
-      setDateToLocalStorage();
-    } else {
-      const data = getCurrFromStorage() || "[]";
-      const parsed = JSON.parse(data);
-
-      onDataLoaded(parsed);
-    }
-  };
-
-  /**
    * start check time to get data currency
   */
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const startCheckTime = () => {
     if (getDataInterval) clearInterval(getDataInterval);
 
@@ -163,18 +102,36 @@ const Currency = () => {
         setDateToLocalStorage();
         getCurrency().then(onDataLoaded);
       }
-    }, 10000);
-  }
+    }, msCheckUpdateData);
+  };
+
+  /**
+   * start check
+   */
+  const getData = useCallback(
+    () => {
+      setIsLoading(true);
+      const isGetCurrency = isGetData();
+
+      if (isGetCurrency) {
+        getCurrency().then(onDataLoaded);
+        setDateToLocalStorage();
+      } else {
+        const data = getCurrFromStorage() || "[]";
+        const parsed = JSON.parse(data);
+
+        onDataLoaded(parsed);
+      }
+
+      startCheckTime();
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
 
   useEffect(() => {
-    if (!loadedData) {
-      setLoadedData(true);
-      setIsLoading(true);
-
-      getData();
-      startCheckTime();
-    }
-  }, [getData, startCheckTime, getDataInterval, loadedData]);
+    getData();
+  }, [getData]);
 
   const isWaiting = isLoading ? <Rings wrapperClass={style.spinner} ariaLabel="loading-indicator" /> : null;
   const isRender = currData !== null && currData.length ? <Table currData={currData} /> : null;
