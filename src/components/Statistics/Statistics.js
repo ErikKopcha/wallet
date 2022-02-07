@@ -2,8 +2,12 @@ import transactions from './transact.js';
 import Chart from './Chart/Chart.js';
 import styled from './Statistics.module.css';
 import React, { useEffect, useState } from 'react';
-import { TextField, Box, MenuItem } from '@mui/material';
-import {makeStyles} from '@mui/styles';
+import {Box} from '@mui/material';
+import Table from './Table/Table.js';
+import ButtonControl from './ButtonControl/ButtonControl.js';
+import wallet1 from '../../assets/images/wallet1.jpeg';
+const randomColor = require('randomcolor');
+
 
 const monthName = [
   'January',
@@ -20,166 +24,73 @@ const monthName = [
   'December',
 ];
 
-const useStyles = makeStyles({
-  root: {
-    width: '100%',
+export default function Statistics() {
 
-    '& .MuiOutlinedInput-input': {
-      color: 'black',
-    },
-    '& .MuiInputLabel-root': {
-      color: 'black',
-    },
-    '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
-      borderColor: 'black',
-      borderRadius: 30,
-      width: '100%',
-    },
-  },
-});
+  const [month, setMonth] = useState(JSON.parse(localStorage.getItem('month')) || '');
+  const [year, setYear] = useState(JSON.parse(localStorage.getItem('year')) || '');
+const [color,setColor] = useState('#4a56e2')
+  const [categories, setCategories] = useState({expenses:{
 
-export default function Statistics(props) {
-  const [month, setMonth] = useState('');
-  const [year, setYear] = useState('');
-  // eslint-disable-next-line no-unused-vars
-  const [categories, setCategories] = useState({
-    Main: 8,
-    Food: 7,
-    Car: 6,
-    Development: 5,
-    Kids: 4,
-    House: 3,
-    Education: 2,
-    Other: 1,
-  });
-
-  const classes = useStyles();
+  },income: 0});
+  
+  
 
   const handleChangeMonth = e => {
     setMonth(e.target.value);
+    localStorage.setItem('month',JSON.stringify(e.target.value))
   };
   const handleChangeYear = e => {
     setYear(e.target.value);
+    localStorage.setItem('year',JSON.stringify(e.target.value) )
   };
-  useEffect(() => {}, [month]);
 
+  useEffect(() => {
+    if (month && year) {
+      setColor(randomColor({count:10,luminosity: 'bright',}))
+      setCategories({expenses:{
+       
+      },income: 0});
+
+      transactions.filter(el => {
+        const filterDate = new Date(el.transactionDate);
+        if (
+          filterDate.getFullYear() === year &&
+          monthName[filterDate.getMonth()] === month &&
+          el.type === 'EXPENSES'
+        ) {
+          
+          setCategories(prev => {
+         if(isNaN(prev.expenses[el.categoryId])){
+           return { ...prev,expenses: {...prev.expenses, [el.categoryId]: el.amount} }
+         }
+       
+            return { ...prev,expenses: {...prev.expenses, [el.categoryId]: prev.expenses[el.categoryId] + el.amount} };
+          });
+        }
+        if(
+          filterDate.getFullYear() === year &&
+          monthName[filterDate.getMonth()] === month &&
+          el.type === 'INCOME'
+        ){
+          setCategories(prev => {
+         
+            return { ...prev,income: prev.income + el.amount };
+          });
+        }
+        return null
+      });
+    }
+  }, [month,year]);
+  
   return (
     <Box className={styled.container}>
-      <Chart categories={categories} />
+      {transactions.length > 1 ? (<>
+      <Chart categories={categories} colors={color}/>
       <section className={styled.TableContainer}>
-        <Box className={styled.buttonBox}>
-          <Box className={styled.button}>
-            <TextField
-              className={classes.root}
-              variant="outlined"
-              label="Month"
-              value={month}
-              select
-              onChange={handleChangeMonth}
-            >
-              {transactions
-                .map(el => {
-                  const date = new Date(el.transactionDate);
-
-                  return monthName[date.getMonth()];
-                })
-                .filter((mon, index, array) => array.indexOf(mon) === index)
-                .map(el => {
-                  return (
-                    <MenuItem key={el} value={el}>
-                      {el}
-                    </MenuItem>
-                  );
-                })}
-            </TextField>
-          </Box>
-          <Box className={styled.button}>
-            <TextField
-              className={classes.root}
-              variant="outlined"
-              label="Year"
-              value={year}
-              select
-              onChange={handleChangeYear}
-            >
-              {transactions
-                .map(el => {
-                  const date = new Date(el.transactionDate);
-
-                  return date.getFullYear();
-                })
-                .filter((year, index, array) => array.indexOf(year) === index)
-                .map(el => {
-                  return (
-                    <MenuItem key={el} value={el}>
-                      {el}
-                    </MenuItem>
-                  );
-                })}
-            </TextField>
-          </Box>
-        </Box>
-        <Box className={styled.tableHeader}>
-          <p className={styled.category}>Category</p>
-          <p className={styled.amount}>Amount</p>
-        </Box>
-        <ul className={styled.table}>
-          <li className={styled.tableItem}>
-            {' '}
-            <div className={styled.Main}></div>{' '}
-            <p className={styled.itemName}>Main expenses</p>{' '}
-            <p className={styled.itemAmount}>{categories.Main}</p>
-          </li>
-          <li className={styled.tableItem}>
-            {' '}
-            <div className={styled.Food}></div>{' '}
-            <p className={styled.itemName}>Food</p>{' '}
-            <p className={styled.itemAmount}>{categories.Food}</p>
-          </li>
-          <li className={styled.tableItem}>
-            {' '}
-            <div className={styled.Car}></div>{' '}
-            <p className={styled.itemName}>Car</p>{' '}
-            <p className={styled.itemAmount}>{categories.Car}</p>
-          </li>
-          <li className={styled.tableItem}>
-            {' '}
-            <div className={styled.Development}></div>{' '}
-            <p className={styled.itemName}>Development</p>{' '}
-            <p className={styled.itemAmount}>{categories.Development}</p>
-          </li>
-          <li className={styled.tableItem}>
-            {' '}
-            <div className={styled.Kids}></div>{' '}
-            <p className={styled.itemName}>Kids</p>{' '}
-            <p className={styled.itemAmount}>{categories.Kids}</p>
-          </li>
-          <li className={styled.tableItem}>
-            {' '}
-            <div className={styled.House}></div>{' '}
-            <p className={styled.itemName}>House</p>{' '}
-            <p className={styled.itemAmount}>{categories.House}</p>
-          </li>
-          <li className={styled.tableItem}>
-            {' '}
-            <div className={styled.Education}></div>{' '}
-            <p className={styled.itemName}>Education</p>{' '}
-            <p className={styled.itemAmount}>{categories.Education}</p>
-          </li>
-          <li className={styled.tableItem}>
-            {' '}
-            <div className={styled.Other}></div>{' '}
-            <p className={styled.itemName}>Other</p>{' '}
-            <p className={styled.itemAmount}>{categories.Other}</p>
-          </li>
-        </ul>
-        <p className={styled.expenses}>
-          Expenses:<span className={styled.expensesValue}>4500</span>
-        </p>
-        <p className={styled.incomes}>
-          Incomes:<span className={styled.incomesValue}>4500</span>
-        </p>
+       <ButtonControl handleChangeMonth={handleChangeMonth} handleChangeYear={handleChangeYear} month={month} year={year}/>
+        <Table categories={categories} colors={color} month={month} year={year}/>
       </section>
+      </>) : (<div className={styled.errorBox}><img src={wallet1} alt='emptyWallet'></img></div>)}
     </Box>
   );
 }
