@@ -68,11 +68,11 @@ export const transactionsSlice = createSlice({
   name: 'transactions',
   initialState: initialState,
   reducers: {
-    addTransaction: (state, action) => {
-      state.push(action.payload);
+    saveTransaction: (state, action) => {
+      state.push(action.payload)
     }
   }
 })
 
-export const {addTransaction} = transactionsSlice.actions;
+export const {saveTransaction} = transactionsSlice.actions;
 export default transactionsSlice.reducer;

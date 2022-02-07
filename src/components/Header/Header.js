@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useState } from 'react';
 import ModalLogout from '../ModalLogout/ModalLogout';
 import { useSelector } from 'react-redux';
+import { useMediaQuery } from 'react-responsive';
 
 const Header = () => {
   const name = useSelector((state) => state.user.username)
@@ -12,8 +13,10 @@ const Header = () => {
   const handleOpenModalLogout = () => setModalLogoutOpen(true);
   const handleCloseModalLogout = () => setModalLogoutOpen(false);
 
+  const isMobile = useMediaQuery({ query: '(max-width: 420px)' });
+
   return (
-    <div className={style.header}>
+    <div className={style.header} style={isMobile ? {zIndex: 300} : {zIndex: 100}}>
       <div className={`${style.headerContainer} container`}>
         <Link to="/" className={style.logoWrap}>
           <img width="40" height="40" className={style.logoImage} src={logo} alt="wallet logo" />

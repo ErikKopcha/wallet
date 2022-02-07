@@ -1,6 +1,6 @@
 import style from './LoginForm.module.css';
 import logo from '../../assets/icons/wallet-logo.svg';
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import React from 'react';
 import { Formik } from 'formik';
 import * as yup from 'yup';
@@ -9,7 +9,6 @@ import EmailIcon from '@mui/icons-material/Email';
 import LockIcon from '@mui/icons-material/Lock';
 import InputAdornment from '@mui/material/InputAdornment';
 import Input from '@mui/material/Input';
-
 
 function LoginForm() {
   const { loginUser } = useUserService();
@@ -32,7 +31,6 @@ function LoginForm() {
       .min(6, '*Password is too short - should be 6 chars minimum')
       .max(12, '*Password is too long - should be 12 chars maximum'),
   });
-  
 
   return (
     <div>

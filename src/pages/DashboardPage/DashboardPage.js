@@ -8,16 +8,21 @@ import Currency from '../../components/Currency/Currency';
 import Statistics from '../../components/Statistics/Statistics.js'
 import { Routes, Route } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
-import { useState } from 'react';
+import { useEffect } from 'react';
 import DashTable from '../../components/DashTable/DashTable';
 import Media from 'react-media';
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary';
+import useTransactionsService from '../../services/transactionsService';
 
 const DashboardPage = () => {
-  const [isOpenModalTransaction, setModalTransaction] = useState(false);
-  const handleOpenModalTransaction = () => setModalTransaction(true);
-  const handleCloseModalTransaction = () => setModalTransaction(false);
   const isMobile = useMediaQuery({ query: '(max-width: 425px)' });
+
+  const { getCategories } = useTransactionsService();
+
+  useEffect(() => {
+    getCategories();
+    //eslint-disable-next-line
+  }, [])
 
   return (
     <div className={style.dashboardWrap}>
@@ -40,13 +45,13 @@ const DashboardPage = () => {
         <Media query='(min-width: 720px)'>
           {
             matches => matches ? (
-              <ButtonAddTransaction open={handleOpenModalTransaction} right='80px' bottom='60px' />
+              <ButtonAddTransaction right='80px' bottom='60px' />
             ) : (
-              <ButtonAddTransaction open={handleOpenModalTransaction} right='20px' bottom='20px' />
+              <ButtonAddTransaction right='20px' bottom='20px' />
             )
           }
         </Media>
-        <ModalAddTransaction isOpen={isOpenModalTransaction} onClose={handleCloseModalTransaction} />
+        <ModalAddTransaction />
       </div>
     </div>
   );

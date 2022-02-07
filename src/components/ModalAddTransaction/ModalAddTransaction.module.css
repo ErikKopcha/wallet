@@ -1,5 +1,5 @@
 .box {
-    width: 540px;
+    max-width: 540px;
     background-color: #fff;
     display: flex;
     flex-direction: column;
@@ -7,11 +7,8 @@
     outline: none;
     border-radius: 20px;
     position: absolute;
-    top: 50px;
     left: 50%;
     transform: translateX(-50%);
     padding: 40px 80px 60px 80px;
-    display: flex;
-    flex-direction: column;
     align-items: center;
 }

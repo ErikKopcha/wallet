@@ -9,7 +9,7 @@ import {
   TablePagination, Stack, Card, CardContent, Box, Typography, Tooltip,
 } from '@mui/material';
 import Media from 'react-media';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const DashTable = () => {
 
@@ -46,7 +46,7 @@ const DashTable = () => {
     },
   ];
 
-  const transactions = useSelector((state) => state.transactions)
+  const transactions = useSelector((state) => state.transactions);
 
   const [page, setPage] = useState(0);
   const rowsPerPage = 5;
@@ -61,31 +61,32 @@ const DashTable = () => {
         {
           matches => matches ? (
             <>
+              <h1>Transaction table</h1>
               <TableContainer
-                              sx={{ mt: '0', maxHeight: '400px', background: 'transparent', boxShadow: 'none' }}>
+                sx={{ mt: '20px', maxHeight: '400px', background: 'transparent', boxShadow: 'none' }}>
                 <Table stickyHeader
                        sx={{ boxShadow: 'none', '& .MuiTableCell': { borderLeft: 'none', borderRight: 'none' } }}
                        aria-label='simple table'>
                   <TableHead>
-                    <TableRow sx={{
-                      '& > *': { background: '#fff', fontSize: 18, textAlign: 'center' },
-                      '& .column-date': { borderTopLeftRadius: '100px', borderBottomLeftRadius: '100px' },
-                      '& .column-amount': { borderTopRightRadius: '100px', borderBottomRightRadius: '100px' },
-                    }}>
+                    <TableRow sx={{ '& > *': { background: '#fff', fontSize: 18, textAlign: 'center' }, }}>
                       {
-                        //TODO: change name of classes (.column-date .column-amount) - it should be flexible!!!
                         columns.map((column) => {
-                          return column.id === 'date' || column.id === 'amount' ?
-                            <TableCell key={`column-${column.id}-${new Date().getTime()}-${Math.random()}`}
-                                       style={{ minWidth: column.minWidth, maxWidth: column.maxWidth }}
-                                       classes={{ root: `column-${column.id}` }}
+                          return (
+                            <TableCell
+                              key={`column-${column.id}-${new Date().getTime()}-${Math.random()}`}
+                              style={{ minWidth: column.minWidth, maxWidth: column.maxWidth }}
+                              sx={{
+                                '&:first-of-type': {
+                                  borderTopLeftRadius: '100px', borderBottomLeftRadius: '100px',
+                                },
+                                '&:last-of-type': {
+                                  borderTopRightRadius: '100px', borderBottomRightRadius: '100px',
+                                },
+                              }}
                             >
                               {column.label}
                             </TableCell>
-                            :
-                            <TableCell key={`${column.id}-${Math.random()}`}
-                                       style={{ minWidth: column.minWidth, maxWidth: column.maxWidth }}
-                                       classes={{ root: `column-${column.id}` }}>{column.label}</TableCell>;
+                          );
                         })
                       }
                     </TableRow>
@@ -104,7 +105,8 @@ const DashTable = () => {
                             columns.map((column) => {
                               const value = operation[column.id];
                               return value.length >= 30 ? (
-                                <Tooltip key={`tooltip-${new Date().getTime()}-${Math.random()}`} title={operation[column.id]}>
+                                <Tooltip key={`tooltip-${new Date().getTime()}-${Math.random()}`}
+                                         title={operation[column.id]}>
                                   <TableCell key={`cell-${new Date().getTime()}-${Math.random()}`} style={{
                                     maxWidth: column.maxWidth,
                                     minWidth: column.minWidth,
@@ -122,7 +124,7 @@ const DashTable = () => {
                                   minWidth: column.minWidth,
                                   maxWidth: column.maxWidth,
                                 }}>
-                                  {value === true ? '+' : value === false ? '-' : value}
+                                  {value}
                                 </TableCell>
                               );
                             })
@@ -175,7 +177,8 @@ const DashTable = () => {
                             </Typography>
                             {
                               operation[column.id].length >= 30 ? (
-                                <Tooltip key={`toolTip--${new Date().getTime()}-${Math.random()}`} title={operation[column.id]}>
+                                <Tooltip key={`toolTip--${new Date().getTime()}-${Math.random()}`}
+                                         title={operation[column.id]}>
                                   <Typography key={`oper-${new Date().getTime()}-${Math.random()}`} sx={{
                                     maxWidth: '49%',
                                     width: '50%',
@@ -188,7 +191,8 @@ const DashTable = () => {
                                   </Typography>
                                 </Tooltip>
                               ) : (
-                                <Typography key={`operation-${new Date().getTime()}-${Math.random()}`} sx={{ maxWidth: '200px' }}>
+                                <Typography key={`operation-${new Date().getTime()}-${Math.random()}`}
+                                            sx={{ maxWidth: '200px' }}>
                                   {operation[column.id]}
                                 </Typography>
                               )

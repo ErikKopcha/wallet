@@ -5,7 +5,6 @@ import PoppinsRegularWoff2 from '../assets/fonts/Poppins-Regular.woff2';
 import PoppinsRegularWoff from '../assets/fonts/Poppins-Regular.woff';
 import AbelRegularWoff2 from '../assets/fonts/Abel-Regular.woff2';
 import AbelRegularWoff from '../assets/fonts/Abel-Regular.woff';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 const theme = createTheme({
   palette: {
@@ -58,33 +57,17 @@ const theme = createTheme({
           width: '300px',
           height: '50px',
           textTransform: 'uppercase',
-          borderRadius: '20px',
+          borderRadius: '20px'
         },
         outlined: {
           borderColor: '#4A56E2',
           color: '#4A56E2',
-          '&:hover': {
+          ':hover': {
             borderColor: '#4A56E2',
             color: '#4A56E2',
-            boxShadow: '4px 4px 19px 0px rgba(34, 60, 80, 0.11);',
-          },
-        },
-      },
-    },
-    MuiSelect: {
-      styleOverrides: {
-        '& .MuiSvgIcon-root': {
-
-        },
-      },
-      defaultProps: {
-        IconComponent: KeyboardArrowDownIcon,
-      }
-    },
-    MuiInput: {
-      styleOverrides: {
-        root: {
-          padding: '0 10px',
+            boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px;',
+            transition: 'box-shadow 0.3s ease-in-out'
+          }
         },
       },
     },
@@ -99,7 +82,7 @@ const theme = createTheme({
           },
         },
       ],
-    },
+    }
   },
 });
 
