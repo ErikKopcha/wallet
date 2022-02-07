@@ -14,16 +14,14 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import style from './ModalAddTransaction.module.css';
 import StyledSwitch from '../StyledSwitch/StyledSwitch';
 import { useFormik } from 'formik';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as yup from 'yup';
 import useTransactionsService from '../../services/transactionsService';
 import { useMediaQuery } from 'react-responsive';
+import { closeModalAddTransaction } from '../../features/global';
 
-// let categories = ['Main', 'Food', 'Car', 'Development', 'Kids', 'House', 'Education', 'Others'];
+const ModalAddTransaction = () => {
 
-const ModalAddTransaction = ({ isOpen, onClose }) => {
-
-    const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' });
     const isMobile = useMediaQuery({ query: '(max-width: 420px)' });
 
     const { addTransaction } = useTransactionsService();
@@ -34,8 +32,14 @@ const ModalAddTransaction = ({ isOpen, onClose }) => {
       type: yup
         .bool(),
       category: yup
-        .string('Choose a category')
-        .required('Category is required'),
+        .string()
+        .notRequired()
+        .when('type', {
+          is: true,
+          then: yup
+            .string('Choose a category')
+            .required('Category is required'),
+        }),
       amount: yup
         .number('Enter a number')
         .required('Amount is required')
@@ -70,21 +74,33 @@ const ModalAddTransaction = ({ isOpen, onClose }) => {
       },
     });
 
+    const isModalOpen = useSelector(state => state.global.ModalAddTransactionOpen);
+    const dispatch = useDispatch();
+
+    const onClose = () => {
+      dispatch(closeModalAddTransaction());
+    };
+
+    const handleSubmit = (e) => {
+      formik.handleSubmit(e);
+      dispatch(closeModalAddTransaction());
+    };
+
     return (
       <Modal
-        open={isOpen}
+        open={isModalOpen}
         onClose={onClose}
         aria-labelledby='modal-modal-title'
         aria-describedby='modal-modal-description'
-        sx={{ overflowY: 'scroll' }}
-        style={isMobile ? { width: '100%', height: '100%', top: 0} : { top: '50px' }}
+        sx={{ overflowY: 'scroll', zIndex: 200 }}
+        style={isMobile ? { width: '100%', height: '100%', top: '30px' } : { top: '50px' }}
       >
-        <form className={style.box} onSubmit={formik.handleSubmit}>
+        <form className={style.box} onSubmit={handleSubmit}>
           <Typography id='modal-modal-title' variant='h1' component='h1' sx={{ mb: '40px' }}>
             Add transaction
           </Typography>
           <Stack direction='row' spacing='20px' alignItems='center' sx={{ mb: '38px' }}>
-            <Typography sx={{ color: '#24CCA7' }}>
+            <Typography style={formik.values.type === true ? { color: '#24CCA7' } : { color: '#E0E0E0' }}>
               Income
             </Typography>
             <StyledSwitch
@@ -96,7 +112,7 @@ const ModalAddTransaction = ({ isOpen, onClose }) => {
               onChange={formik.handleChange} error={formik.touched.category && Boolean(formik.errors.category)}
               helperText={formik.touched.type && formik.errors.type}
             />
-            <Typography sx={{ color: '#FF6596' }}>
+            <Typography style={formik.values.type === false ? { color: '#FF6596' } : { color: '#E0E0E0' }}>
               Expenses
             </Typography>
           </Stack>
@@ -141,7 +157,7 @@ const ModalAddTransaction = ({ isOpen, onClose }) => {
                 </Select>
               </Grid>
             }
-            <Grid item sm={6} xs={6} md={6}>
+            <Grid item sm={12} xs={12} md={6} sx={{ '& .MuiFormControl-root': { width: '100%' } }}>
               <TextField
                 id='amount'
                 name='amount'
@@ -153,7 +169,7 @@ const ModalAddTransaction = ({ isOpen, onClose }) => {
                 helperText={formik.touched.amount && formik.errors.amount} variant='standard'
                 sx={{ '& .MuiInput-input': { paddingX: 0, textAlign: 'center' } }} />
             </Grid>
-            <Grid item sm={6} xs={6} md={6}>
+            <Grid item sm={12} xs={12} md={6} sx={{ '& .MuiFormControl-root': { width: '100%' } }}>
               <LocalizationProvider dateAdapter={AdapterDateFns} locale={ruLocale}>
                 <DatePicker
                   id='date'
@@ -164,6 +180,7 @@ const ModalAddTransaction = ({ isOpen, onClose }) => {
                   error={formik.touched.date && Boolean(formik.errors.date)}
                   onBlur={formik.handleBlur}
                   helperText={formik.touched.date && formik.errors.date}
+                  sx={{ width: '100%' }}
                   OpenPickerButtonProps={{ sx: { color: theme => theme.palette.secondary.dark } }}
                   onChange={newValue => formik.setFieldValue('date', newValue)}
                   renderInput={(params) => <TextField {...params} id='dateField' variant='standard' />} />

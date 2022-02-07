@@ -5,6 +5,7 @@ import PoppinsRegularWoff2 from '../assets/fonts/Poppins-Regular.woff2';
 import PoppinsRegularWoff from '../assets/fonts/Poppins-Regular.woff';
 import AbelRegularWoff2 from '../assets/fonts/Abel-Regular.woff2';
 import AbelRegularWoff from '../assets/fonts/Abel-Regular.woff';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 const theme = createTheme({
   palette: {
@@ -69,6 +70,16 @@ const theme = createTheme({
           },
         },
       },
+    },
+    MuiSelect: {
+      styleOverrides: {
+        '& .MuiSvgIcon-root': {
+
+        },
+      },
+      defaultProps: {
+        IconComponent: KeyboardArrowDownIcon,
+      }
     },
     MuiInput: {
       styleOverrides: {

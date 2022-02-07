@@ -13,7 +13,7 @@ import Input from '@mui/material/Input';
 
 export default function LoginForm() {
 
-  const {authoriseUser, registerUser} = useUserService();
+  const {registerUser} = useUserService();
 
   function handleSubmit(values) {
     const user = {
