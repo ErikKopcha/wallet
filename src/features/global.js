@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {ModalAddTransactionOpen: false}
+const initialState = {ModalAddTransactionOpen: false};
 
 export const globalSlice = createSlice({
   name: 'global',

@@ -61,7 +61,6 @@ const DashTable = () => {
         {
           matches => matches ? (
             <>
-              <h1>Transaction table</h1>
               <TableContainer
                 sx={{ mt: '20px', maxHeight: '400px', background: 'transparent', boxShadow: 'none' }}>
                 <Table stickyHeader

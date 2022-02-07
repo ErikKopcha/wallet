@@ -69,6 +69,9 @@ const theme = createTheme({
             boxShadow: '4px 4px 19px 0px rgba(34, 60, 80, 0.11);',
           },
         },
+        contained: {
+          color: '#fff'
+        }
       },
     },
     MuiSelect: {
