@@ -8,10 +8,7 @@
         background-size: cover;
         margin: 0 auto;
     }
-    img{
-        display: block;
-        width: 100%;
-    }
+
     .TableContainer{
         margin-top: 30px;
     }
