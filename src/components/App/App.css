@@ -31,7 +31,7 @@ dd {
 
 /* Выставляем основные настройки по-умолчанию для body */
 body {
-  font-family: "Poppins", "Abel", sans-serif;
+  font-family: 'Poppins', 'Abel', sans-serif;
   font-size: 18px;
   min-height: 100vh;
   scroll-behavior: smooth;
@@ -113,4 +113,18 @@ select {
 
 .ta-r {
   text-align: right;
+}
+
+.loader {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  overflow: hidden;
 }

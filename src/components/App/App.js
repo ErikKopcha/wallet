@@ -10,10 +10,13 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { TailSpin } from 'react-loader-spinner'
 
 const App = () => {
   const isUserAuthenticated = useSelector((state) => state.session.isAuth);
   const redirectUrl = isUserAuthenticated ? "/home/" : "/login";
+  const showLoader = useSelector((state) => state.global.isLoading);
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -40,6 +43,16 @@ const App = () => {
           draggable
           pauseOnHover
         />
+        { showLoader &&
+          <div
+            className={`loader`}>
+            <TailSpin
+              color="var(--redAccentColor)"
+              height={80}
+              width={80}
+          />
+          </div>
+        }  
       </div>
     </ThemeProvider>
   );

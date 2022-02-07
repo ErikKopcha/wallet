@@ -8,12 +8,14 @@ import { configureStore } from '@reduxjs/toolkit';
 import userReducer from './features/user';
 import transactionsReducer from './features/transactions';
 import sessionReducer from './features/session';
+import globalReducer from './features/global';
 
 const store = configureStore({
   reducer: {
     user: userReducer,
     transactions: transactionsReducer,
-    session: sessionReducer
+    session: sessionReducer,
+    global: globalReducer
   },
 });
 
