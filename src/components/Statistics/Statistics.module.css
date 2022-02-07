@@ -1,183 +1,214 @@
-.container{
-margin: 10px 20px;
+.container {
+    margin: 10px 20px;
 }
-.TableContainer{
+
+.TableContainer {
     margin-top: 30px;
 }
-.button{
+
+.button {
     min-width: 267px;
     margin-bottom: 20px;
-   
+
 
 }
-.tableHeader{
-  min-width: 267px;
+
+.tableHeader {
+    min-width: 267px;
     height: 58px;
- background-color: white;
+    background-color: white;
     border-radius: 30px;
-       
-        position: relative;
+
+    position: relative;
 }
-.category{
+
+.category {
     font-style: normal;
-font-weight: normal;
-font-size: 18px;
-line-height: 23px;
-color: #000000;
-position: absolute; 
-top:15px;
-left: 21px;
-margin: 0;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 23px;
+    color: #000000;
+    position: absolute;
+    top: 15px;
+    left: 21px;
+    margin: 0;
 }
-.amount{
+
+.amount {
     margin: 0;
     font-style: normal;
     font-weight: normal;
     font-size: 18px;
     line-height: 23px;
     color: #000000;
-    position: absolute; 
-    top:15px;
+    position: absolute;
+    top: 15px;
     right: 21px;
 }
-.table{
+
+.table {
     margin: 0;
     padding: 0;
 
-   
-}
-.tableItem{
-    list-style: none;
-height: 54px;
-display: flex;
 
-border-bottom: 1px solid #DCDCDF;
 }
-.itemBox{
+
+.tableItem {
+    list-style: none;
+    height: 54px;
+    display: flex;
+
+    border-bottom: 1px solid #DCDCDF;
+}
+
+.itemBox {
     width: 24px;
     height: 24px;
     margin: 15px;
-    
-    
+
+
 }
-.Main{
+
+.Main {
     background-color: #FED057;
-    composes:itemBox;
+    composes: itemBox;
 }
-.Food{
-    composes:itemBox;
+
+.Food {
+    composes: itemBox;
     background-color: #FFD8D0;
 }
-.Car{
-    composes:itemBox;
+
+.Car {
+    composes: itemBox;
     background-color: #FD9498;
 }
-.Development{
-    composes:itemBox;
+
+.Development {
+    composes: itemBox;
     background-color: #C5BAFF;
 }
-.Kids{
-    composes:itemBox;
+
+.Kids {
+    composes: itemBox;
     background-color: #6E78E8;
 }
-.House{
-    composes:itemBox;
+
+.House {
+    composes: itemBox;
     background-color: #4A56E2;
 }
-.Education{
-    composes:itemBox;
+
+.Education {
+    composes: itemBox;
     background-color: #81E1FF;
 }
-.Other{
-    composes:itemBox;
+
+.Other {
+    composes: itemBox;
     background-color: #24CCA7;
 }
-.itemName{
+
+.itemName {
     font-size: 16px;
     line-height: 20px;
     padding: 15px 0px;
 }
-.itemAmount{
+
+.itemAmount {
     flex-grow: 1;
     text-align: right;
     margin-right: 15px;
     font-size: 16px;
-line-height: 20px;
-padding: 15px 0px;
+    line-height: 20px;
+    padding: 15px 0px;
 }
-.expenses,.incomes{
+
+.expenses, .incomes {
     margin-bottom: 17px;
     font-size: 16px;
-line-height: 20px;
-color: #000000;
-padding-right: auto;
-margin-left: 15px;
-margin-right: 15px;
-display: flex;
+    line-height: 20px;
+    color: #000000;
+    margin-left: 15px;
+    margin-right: 15px;
+    display: flex;
 }
-.expensesValue,.incomesValue{
-flex-grow: 1;
-text-align: right;
+
+.expensesValue, .incomesValue {
+    flex-grow: 1;
+    text-align: right;
 }
-.expenses{
+
+.expenses {
     color: #FF6596;
     margin-top: 15px;
 }
-.incomes{
-    color:#24CCA7;
-    ;
+
+.incomes {
+    color: #24CCA7;;
 }
 
 
-@media(min-width:425px){
-.container{
-    margin-top: 20px;
-}
-    .TableContainer{
-max-width: 380px;
-margin: 30px auto;
+@media (min-width: 425px) {
+    .container {
+        margin-top: 20px;
     }
-    .button{
+
+    .TableContainer {
+        max-width: 380px;
+        margin: 30px auto;
+    }
+
+    .button {
         min-width: 145px;
         width: 148px;
         margin-right: 0;
     }
-    .buttonBox{
+
+    .buttonBox {
         display: flex;
         justify-content: space-between;
         max-width: 380px;
     }
-    .tableHeader{
-      max-width: 380px;
- 
+
+    .tableHeader {
+        max-width: 380px;
+
     }
 
 }
-@media(min-width:768px){
-    .container{
+
+@media (min-width: 768px) {
+    .container {
         display: flex;
         max-width: 700px;
         margin: 10px auto;
     }
-    .TableContainer{
+
+    .TableContainer {
         flex-grow: 1;
         margin: 0 auto;
     }
 }
-@media(min-width:768px) and ( max-width:1280px){
-    .container{
+
+@media (min-width: 768px) and ( max-width: 1280px) {
+    .container {
         max-width: 2000px;
     }
-    .TableContainer{
+
+    .TableContainer {
         max-width: 2000px;
     }
-    .tableHeader{
+
+    .tableHeader {
         max-width: 2000px;
     }
-    .buttonBox{
+
+    .buttonBox {
         max-width: 2000px;
     }
-    .button{
+
+    .button {
         max-width: 267px;
         width: 45%;
     }

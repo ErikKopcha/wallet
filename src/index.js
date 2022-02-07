@@ -8,15 +8,18 @@ import { configureStore } from '@reduxjs/toolkit';
 import userReducer from './features/user';
 import transactionsReducer from './features/transactions';
 import sessionReducer from './features/session';
+import categoriesReducer from './features/trans-categories';
+import globalReducer from './features/global';
 
 const store = configureStore({
   reducer: {
+    global: globalReducer,
     user: userReducer,
     transactions: transactionsReducer,
-    session: sessionReducer
+    categories: categoriesReducer,
+    session: sessionReducer,
   },
 });
-
 
 ReactDOM.render(
   <React.StrictMode>

@@ -11,8 +11,9 @@ import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import InputAdornment from '@mui/material/InputAdornment';
 import Input from '@mui/material/Input';
 
-export default function RegistrationForm() {
-  const { registerUser } = useUserService();
+export default function LoginForm() {
+
+  const {registerUser} = useUserService();
 
   function handleSubmit(values) {
     const user = {
@@ -52,7 +53,7 @@ export default function RegistrationForm() {
               </a>
             </div>
             <form className={style.RegForm}>
-              <Input
+              <input
                 type='email'
                 name='email'
                 onChange={handleChange}
@@ -68,7 +69,7 @@ export default function RegistrationForm() {
               />
               {touched.email && errors.email && <p className={style.Error}>{errors.email}</p>}
 
-              <Input
+              <input
                 type='password'
                 name='password'
                 onChange={handleChange}
@@ -84,7 +85,7 @@ export default function RegistrationForm() {
               />
               {touched.password && errors.password && <p className={style.Error}>{errors.password}</p>}
 
-              <Input
+              <input
                 type='password'
                 name='confirmPassword'
                 onChange={handleChange}
@@ -99,7 +100,7 @@ export default function RegistrationForm() {
                 }
                 />
                {touched.confirmPassword && errors.confirmPassword && <p className={style.Error}>{errors.confirmPassword}</p>}
-              
+
               <Input
                 type='text'
                 name='name'

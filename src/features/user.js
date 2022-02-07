@@ -11,9 +11,12 @@ export const userSlice = createSlice({
       state.username = action.payload.username;
       state.email = action.payload.email;
       state.balance = action.payload.balance
+    },
+    authorization: (state, action) => {
+      state = action.payload.user;
     }
   }
 })
 
-export const { registration } = userSlice.actions;
+export const { registration, authorization } = userSlice.actions;
 export default userSlice.reducer;
