@@ -18,7 +18,6 @@ const store = configureStore({
     transactions: transactionsReducer,
     categories: categoriesReducer,
     session: sessionReducer,
-    global: globalReducer
   }
 });
 
