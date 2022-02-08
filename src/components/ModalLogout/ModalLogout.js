@@ -3,6 +3,7 @@ import { Button, Modal, Paper, Stack, Typography } from '@mui/material';
 import { useMediaQuery } from 'react-responsive';
 import { useDispatch } from 'react-redux';
 import LoginPage from '../../pages/LoginPage/LoginPage';
+import { toast } from 'react-toastify';
 
 const ModalLogout = ({ isOpen, onClose }) => {
   const isMobile = useMediaQuery({ query: '(max-width: 420px)' });
@@ -10,8 +11,16 @@ const ModalLogout = ({ isOpen, onClose }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-   dispatch({type: 'USER_LOGOUT'});
-   return <Link to='/login'/>;
+    try{
+      dispatch({type: 'USER_LOGOUT'});
+      return <Link to='/login'/>;
+    }
+   catch (e) {
+      toast.error(e.error.message, {
+        theme: 'colored',
+      });
+      onClose();
+   }
   }
 
   return (
