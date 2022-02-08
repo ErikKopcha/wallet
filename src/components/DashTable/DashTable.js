@@ -156,4 +156,5 @@ const DashTable = () => {
     </>
   );
 };
+
 export default DashTable;
