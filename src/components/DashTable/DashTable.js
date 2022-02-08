@@ -10,6 +10,7 @@ import {
 import { useSelector } from 'react-redux';
 import zeroImage from '../../assets/images/zero.png';
 import uniqid from 'uniqid';
+import { useState } from 'react';
 
 const DashTable = () => {
 

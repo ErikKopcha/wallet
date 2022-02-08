@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import {
   Stack, Card, CardContent, Box, Typography, Tooltip,
 } from '@mui/material';
