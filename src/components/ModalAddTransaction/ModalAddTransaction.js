@@ -24,7 +24,7 @@ const ModalAddTransaction = () => {
 
     const isMobile = useMediaQuery({ query: '(max-width: 420px)' });
 
-    const { addTransaction } = useTransactionsService();
+    const { postTransaction } = useTransactionsService();
 
     const categories = useSelector(state => state.categories);
 
@@ -70,7 +70,7 @@ const ModalAddTransaction = () => {
           amount: newTransaction.type === true ? newTransaction.amount : '-' + newTransaction.amount,
         };
         alert(JSON.stringify(transaction));
-        addTransaction(transaction);
+        postTransaction(transaction);
       },
     });
 
