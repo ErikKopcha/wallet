@@ -4,20 +4,22 @@ import {Chart, ArcElement} from 'chart.js'
 Chart.register(ArcElement);
 
 export default function Charts (props){
+const {categories,colors} = props;
   const options = {
     legend: {
       display: false
     },
     
     };
-    const val = Object.values(props.categories)
+
+    const val =  Object.values(categories.expenses).length >0 ? Object.values(categories.expenses) : [1]
       const data = {
        
         labels: ['hfd'],
         datasets: [
           {
             data: val,
-            backgroundColor: ['#FED057','#FFD8D0','#FD9498','#C5BAFF','#6E78E8','#4A56E2','#81E1FF','#24CCA7','#00AD84'],
+            backgroundColor: colors ,
            
           }
         ]
