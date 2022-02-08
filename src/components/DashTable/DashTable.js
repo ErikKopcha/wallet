@@ -62,7 +62,7 @@ const DashTable = () => {
           matches => matches ? (
             <>
               <TableContainer
-                sx={{ mt: '20px', maxHeight: '400px', background: 'transparent', boxShadow: 'none' }}>
+                sx={{maxHeight: '400px', background: 'transparent', boxShadow: 'none' }}>
                 <Table stickyHeader
                        sx={{ boxShadow: 'none', '& .MuiTableCell': { borderLeft: 'none', borderRight: 'none' } }}
                        aria-label='simple table'>
