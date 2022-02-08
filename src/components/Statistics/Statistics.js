@@ -6,6 +6,7 @@ import {Box} from '@mui/material';
 import Table from './Table/Table.js';
 import ButtonControl from './ButtonControl/ButtonControl.js';
 import wallet1 from '../../assets/images/wallet1.jpeg';
+
 const randomColor = require('randomcolor');
 
 

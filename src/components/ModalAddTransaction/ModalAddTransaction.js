@@ -74,7 +74,7 @@ const ModalAddTransaction = () => {
       },
     });
 
-    const isModalOpen = useSelector(state => state.global.ModalAddTransactionOpen);
+    const isModalOpen = useSelector(state => state.global.isModalAddTransactionOpen);
     const dispatch = useDispatch();
 
     const onClose = () => {
