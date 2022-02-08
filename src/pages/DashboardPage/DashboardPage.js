@@ -18,10 +18,11 @@ const DashboardPage = () => {
   const isMobile = useMediaQuery({ query: '(max-width: 425px)' });
   const isTabletOrMobile = useMediaQuery({query: '(max-width: 520px)'});
 
-  const { getCategories } = useTransactionsService();
+  const { getCategories, getTransactions } = useTransactionsService();
 
   useEffect(() => {
     getCategories();
+    getTransactions();
     //eslint-disable-next-line
   }, [])
 

@@ -69,7 +69,12 @@ export const transactionsSlice = createSlice({
   initialState: [],
   reducers: {
     saveTransactions: (state, action) => {
-      state = action.payload;
+      // state = action.payload.map((transaction) => {
+      //   transaction.date = Date.parse(transaction.date).toLocaleDateString();
+      //   transaction.type === 'true' ? transaction.type = '+' : transaction.type = '-';
+      //   return transaction;
+      // });
+      state.push(...action.payload);
     },
     addTransaction: (state, action) => {
       state.push(action.payload);

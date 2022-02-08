@@ -10,12 +10,13 @@ import {
 } from '@mui/material';
 import { useSelector } from 'react-redux';
 import zeroImage from '../../assets/images/zero.png';
+import uniqid from 'uniqid';
 
 const DashTable = () => {
 
   let columns = [
     {
-      id: 'date',
+      id: 'transactionDate',
       label: 'Date',
       minWidth: '80px',
       maxWidth: '150px',
@@ -26,14 +27,14 @@ const DashTable = () => {
       minWidth: '50px',
       maxWidth: '80px',
     },
+    // {
+    //   id: 'category',
+    //   label: 'Category',
+    //   minWidth: '80px',
+    //   maxWidth: '150px',
+    // },
     {
-      id: 'category',
-      label: 'Category',
-      minWidth: '80px',
-      maxWidth: '150px',
-    },
-    {
-      id: 'comments',
+      id: 'comment',
       label: 'Comments',
       minWidth: '80px',
       maxWidth: '150px',
@@ -46,6 +47,7 @@ const DashTable = () => {
     },
   ];
   const transactions = useSelector((state) => state.transactions);
+  const refactedTransactions = transactions.map(transaction => transaction);
 
   const [page, setPage] = useState(0);
   const rowsPerPage = 5;
@@ -56,9 +58,9 @@ const DashTable = () => {
 
   const noTransaction = () => {
     return (
-      <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <h1 style={{marginBottom: '20px'}}>Sorry, now you don't have any transaction(</h1>
-        <img src={zeroImage} alt={'noTransactions'} style={{width: '60vh'}} />
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <h1 style={{ marginBottom: '20px' }}>Sorry, now you don't have any transaction(</h1>
+        <img src={zeroImage} alt={'noTransactions'} style={{ width: '60vh' }} />
       </div>
     );
   };
@@ -66,7 +68,7 @@ const DashTable = () => {
   return (
     <>
       {
-        transactions.length > 0 ? (
+        refactedTransactions.length > 0 ? (
           <>
             <TableContainer
               sx={{ mt: '20px', maxHeight: '400px', background: 'transparent', boxShadow: 'none' }}>
@@ -79,7 +81,7 @@ const DashTable = () => {
                       columns.map((column) => {
                         return (
                           <TableCell
-                            key={`column-${column.id}-${new Date().getTime()}-${Math.random()}`}
+                            key={uniqid()}
                             style={{ minWidth: column.minWidth, maxWidth: column.maxWidth }}
                             sx={{
                               '&:first-of-type': {
@@ -98,22 +100,22 @@ const DashTable = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {transactions
+                  {refactedTransactions
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((operation) => (
                       <TableRow
                         hover
                         role='checkbox'
-                        key={`row-${new Date().getTime()}-${Math.random()}`}
+                        key={uniqid()}
                         sx={{ '& > *': { textAlign: 'center' } }}
                       >
                         {
                           columns.map((column) => {
                             const value = operation[column.id];
                             return value.length >= 30 ? (
-                              <Tooltip key={`tooltip-${new Date().getTime()}-${Math.random()}`}
+                              <Tooltip key={uniqid()}
                                        title={operation[column.id]}>
-                                <TableCell key={`cell-${new Date().getTime()}-${Math.random()}`} style={{
+                                <TableCell key={uniqid()} style={{
                                   maxWidth: column.maxWidth,
                                   minWidth: column.minWidth,
                                   width: '99%',
@@ -126,7 +128,7 @@ const DashTable = () => {
                                 </TableCell>
                               </Tooltip>
                             ) : (
-                              <TableCell style={{
+                              <TableCell key={uniqid()} style={{
                                 minWidth: column.minWidth,
                                 maxWidth: column.maxWidth,
                               }}>
