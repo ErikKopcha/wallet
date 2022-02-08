@@ -10,17 +10,19 @@ import { Routes, Route } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 import { useEffect } from 'react';
 import DashTable from '../../components/DashTable/DashTable';
-import Media from 'react-media';
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary';
 import useTransactionsService from '../../services/transactionsService';
+import MobileDahTable from '../../components/DashTable/MobileDashTable/MobileDashTable';
 
 const DashboardPage = () => {
   const isMobile = useMediaQuery({ query: '(max-width: 425px)' });
+  const isTabletOrMobile = useMediaQuery({query: '(max-width: 520px)'});
 
-  const { getCategories } = useTransactionsService();
+  const { getCategories, getTransactions } = useTransactionsService();
 
   useEffect(() => {
     getCategories();
+    getTransactions();
     //eslint-disable-next-line
   }, [])
 
@@ -37,20 +39,14 @@ const DashboardPage = () => {
         </div>
         <div className={style.rightContainer}>
           <Routes>
-            <Route path="/" element={ <DashTable/> } />
+            <Route path="/" element={ isTabletOrMobile ? <MobileDahTable/> : <DashTable/> } />
             <Route path="diagram" element={ <Statistics/> } />
             { isMobile && <Route path="currency" element={ <ErrorBoundary><Currency /></ErrorBoundary> } /> }
           </Routes>
         </div>
-        <Media query='(min-width: 720px)'>
-          {
-            matches => matches ? (
-              <ButtonAddTransaction right='80px' bottom='60px' />
-            ) : (
-              <ButtonAddTransaction right='20px' bottom='20px' />
-            )
-          }
-        </Media>
+        <Routes>
+          <Route path="/" element={ isTabletOrMobile ? <ButtonAddTransaction right='20px' bottom='20px' /> :  <ButtonAddTransaction right='80px' bottom='60px' />}/>
+        </Routes>
         <ModalAddTransaction />
       </div>
     </div>

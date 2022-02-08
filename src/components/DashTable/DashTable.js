@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import {
   TableContainer,
   Table,
@@ -6,16 +5,18 @@ import {
   TableRow,
   TableCell,
   TableBody,
-  TablePagination, Stack, Card, CardContent, Box, Typography, Tooltip,
+  TablePagination, Tooltip,
 } from '@mui/material';
-import Media from 'react-media';
 import { useSelector } from 'react-redux';
+import zeroImage from '../../assets/images/zero.png';
+import uniqid from 'uniqid';
+import { useState } from 'react';
 
 const DashTable = () => {
 
   let columns = [
     {
-      id: 'date',
+      id: 'transactionDate',
       label: 'Date',
       minWidth: '80px',
       maxWidth: '150px',
@@ -26,14 +27,14 @@ const DashTable = () => {
       minWidth: '50px',
       maxWidth: '80px',
     },
+    // {
+    //   id: 'category',
+    //   label: 'Category',
+    //   minWidth: '80px',
+    //   maxWidth: '150px',
+    // },
     {
-      id: 'category',
-      label: 'Category',
-      minWidth: '80px',
-      maxWidth: '150px',
-    },
-    {
-      id: 'comments',
+      id: 'comment',
       label: 'Comments',
       minWidth: '80px',
       maxWidth: '150px',
@@ -45,8 +46,8 @@ const DashTable = () => {
       maxWidth: '150px',
     },
   ];
-
   const transactions = useSelector((state) => state.transactions);
+  const refactedTransactions = transactions.map(transaction => transaction);
 
   const [page, setPage] = useState(0);
   const rowsPerPage = 5;
@@ -55,158 +56,104 @@ const DashTable = () => {
     setPage(newPage);
   };
 
+  const noTransaction = () => {
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <h1 style={{ marginBottom: '20px' }}>Sorry, now you don't have any transaction(</h1>
+        <img src={zeroImage} alt={'noTransactions'} style={{ width: '60vh' }} />
+      </div>
+    );
+  };
+
   return (
     <>
-      <Media query='(min-width: 580px)'>
-        {
-          matches => matches ? (
-            <>
-              <TableContainer
-                sx={{maxHeight: '400px', background: 'transparent', boxShadow: 'none' }}>
-                <Table stickyHeader
-                       sx={{ boxShadow: 'none', '& .MuiTableCell': { borderLeft: 'none', borderRight: 'none' } }}
-                       aria-label='simple table'>
-                  <TableHead>
-                    <TableRow sx={{ '& > *': { background: '#fff', fontSize: 18, textAlign: 'center' }, }}>
-                      {
-                        columns.map((column) => {
-                          return (
-                            <TableCell
-                              key={`column-${column.id}-${new Date().getTime()}-${Math.random()}`}
-                              style={{ minWidth: column.minWidth, maxWidth: column.maxWidth }}
-                              sx={{
-                                '&:first-of-type': {
-                                  borderTopLeftRadius: '100px', borderBottomLeftRadius: '100px',
-                                },
-                                '&:last-of-type': {
-                                  borderTopRightRadius: '100px', borderBottomRightRadius: '100px',
-                                },
-                              }}
-                            >
-                              {column.label}
-                            </TableCell>
-                          );
-                        })
-                      }
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {transactions
-                      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                      .map((operation) => (
-                        <TableRow
-                          hover
-                          role='checkbox'
-                          key={`row-${new Date().getTime()}-${Math.random()}`}
-                          sx={{ '& > *': { textAlign: 'center' } }}
-                        >
-                          {
-                            columns.map((column) => {
-                              const value = operation[column.id];
-                              return value.length >= 30 ? (
-                                <Tooltip key={`tooltip-${new Date().getTime()}-${Math.random()}`}
-                                         title={operation[column.id]}>
-                                  <TableCell key={`cell-${new Date().getTime()}-${Math.random()}`} style={{
-                                    maxWidth: column.maxWidth,
-                                    minWidth: column.minWidth,
-                                    width: '99%',
-                                    display: 'block',
-                                    overflow: 'hidden',
-                                    whiteSpace: 'nowrap',
-                                    textOverflow: 'ellipsis',
-                                  }}>
-                                    {operation[column.id]}
-                                  </TableCell>
-                                </Tooltip>
-                              ) : (
-                                <TableCell style={{
-                                  minWidth: column.minWidth,
+      {
+        refactedTransactions.length > 0 ? (
+          <>
+            <TableContainer
+              sx={{ mt: '20px', maxHeight: '400px', background: 'transparent', boxShadow: 'none' }}>
+              <Table stickyHeader
+                     sx={{ boxShadow: 'none', '& .MuiTableCell': { borderLeft: 'none', borderRight: 'none' } }}
+                     aria-label='simple table'>
+                <TableHead>
+                  <TableRow sx={{ '& > *': { background: '#fff', fontSize: 18, textAlign: 'center' } }}>
+                    {
+                      columns.map((column) => {
+                        return (
+                          <TableCell
+                            key={uniqid()}
+                            style={{ minWidth: column.minWidth, maxWidth: column.maxWidth }}
+                            sx={{
+                              '&:first-of-type': {
+                                borderTopLeftRadius: '100px', borderBottomLeftRadius: '100px',
+                              },
+                              '&:last-of-type': {
+                                borderTopRightRadius: '100px', borderBottomRightRadius: '100px',
+                              },
+                            }}
+                          >
+                            {column.label}
+                          </TableCell>
+                        );
+                      })
+                    }
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {refactedTransactions
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((operation) => (
+                      <TableRow
+                        hover
+                        role='checkbox'
+                        key={uniqid()}
+                        sx={{ '& > *': { textAlign: 'center' } }}
+                      >
+                        {
+                          columns.map((column) => {
+                            const value = operation[column.id];
+                            return value.length >= 30 ? (
+                              <Tooltip key={uniqid()}
+                                       title={operation[column.id]}>
+                                <TableCell key={uniqid()} style={{
                                   maxWidth: column.maxWidth,
+                                  minWidth: column.minWidth,
+                                  width: '99%',
+                                  display: 'block',
+                                  overflow: 'hidden',
+                                  whiteSpace: 'nowrap',
+                                  textOverflow: 'ellipsis',
                                 }}>
-                                  {value}
-                                </TableCell>
-                              );
-                            })
-                          }
-                        </TableRow>
-                      ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-              <TablePagination
-                rowsPerPageOptions={[]}
-                rowsPerPage={rowsPerPage}
-                component='div'
-                count={transactions.length}
-                page={page}
-                onPageChange={handleChangePage}
-                style={{ display: 'flex', justifyContent: 'space-around' }}
-              />
-            </>
-          ) : (
-            <Stack direction={'column'} sx={{ pb: '25px' }}>
-              {
-                transactions.map(operation => (
-                  <Card key={`card-${new Date().getTime()}-${Math.random()}`} style={{
-                    borderRadius: '10px',
-                    borderLeftWidth: '5px',
-                    borderLeftStyle: 'solid',
-                    borderLeftColor: operation.type === '+' ? '#24CCA7' : '#FF6596',
-                  }} sx={{
-                    '&:not(:last-of-type)': {
-                      marginBottom: '10px',
-                    },
-                    '& .MuiCardContent-root:last-child': {
-                      pb: 0,
-                    },
-                  }}>
-                    <CardContent sx={{ padding: 0 }}>
-                      {
-                        columns.map(column => (
-                          <Box key={`box-${new Date().getTime()}-${Math.random()}`} sx={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            borderBottom: '1px solid #DCDCDF',
-                            height: '47px',
-                            alignItems: 'center',
-                            paddingX: '20px',
-                          }}>
-                            <Typography key={`column-label-${new Date().getTime()}-${Math.random()}`}>
-                              {column.label}
-                            </Typography>
-                            {
-                              operation[column.id].length >= 30 ? (
-                                <Tooltip key={`toolTip--${new Date().getTime()}-${Math.random()}`}
-                                         title={operation[column.id]}>
-                                  <Typography key={`oper-${new Date().getTime()}-${Math.random()}`} sx={{
-                                    maxWidth: '49%',
-                                    width: '50%',
-                                    display: 'block',
-                                    overflow: 'hidden',
-                                    whiteSpace: 'nowrap',
-                                    textOverflow: 'ellipsis',
-                                  }}>
-                                    {operation[column.id]}
-                                  </Typography>
-                                </Tooltip>
-                              ) : (
-                                <Typography key={`operation-${new Date().getTime()}-${Math.random()}`}
-                                            sx={{ maxWidth: '200px' }}>
                                   {operation[column.id]}
-                                </Typography>
-                              )
-                            }
-                          </Box>
-                        ))
-                      }
-                    </CardContent>
-                  </Card>
-                ))
-              }
-            </Stack>
-          )
-        }
-      </Media>
+                                </TableCell>
+                              </Tooltip>
+                            ) : (
+                              <TableCell key={uniqid()} style={{
+                                minWidth: column.minWidth,
+                                maxWidth: column.maxWidth,
+                              }}>
+                                {value}
+                              </TableCell>
+                            );
+                          })
+                        }
+                      </TableRow>
+                    ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <TablePagination
+              rowsPerPageOptions={[]}
+              rowsPerPage={rowsPerPage}
+              component='div'
+              count={transactions.length}
+              page={page}
+              onPageChange={handleChangePage}
+              style={{ display: 'flex', justifyContent: 'space-around' }}
+            />
+          </>
+        ) : noTransaction()
+      }
     </>
   );
 };

@@ -1,17 +1,25 @@
 import { Link, Route, Routes } from 'react-router-dom';
 import { Button, Modal, Paper, Stack, Typography } from '@mui/material';
 import { useMediaQuery } from 'react-responsive';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import LoginPage from '../../pages/LoginPage/LoginPage';
 import { toast } from 'react-toastify';
+import { closeModalLogout } from '../../features/global';
 
-const ModalLogout = ({ isOpen, onClose }) => {
+const ModalLogout = () => {
   const isMobile = useMediaQuery({ query: '(max-width: 420px)' });
   const dispatch = useDispatch();
+
+  const isModalOpen = useSelector(state => state.global.isModalLogoutOpen);
+
+  const onClose = () => {
+    dispatch(closeModalLogout());
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     try{
+      onClose();
       dispatch({type: 'USER_LOGOUT'});
       return <Link to='/login'/>;
     }
@@ -25,7 +33,7 @@ const ModalLogout = ({ isOpen, onClose }) => {
 
   return (
     <Modal
-      open={isOpen}
+      open={isModalOpen}
       onClose={onClose}
       aria-labelledby='modal-modal-title'
       aria-describedby='modal-modal-description'

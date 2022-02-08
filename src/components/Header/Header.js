@@ -2,18 +2,21 @@ import style from './Header.module.css';
 import logo from '../../assets/icons/wallet-logo.svg';
 import exitIcon from '../../assets/icons/exit.svg';
 import { Link } from "react-router-dom";
-import { useState } from 'react';
 import ModalLogout from '../ModalLogout/ModalLogout';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
+import { openModalLogout } from '../../features/global';
 
 const Header = () => {
   const name = useSelector((state) => state.user.username)
-  const [isModalLogoutOpen, setModalLogoutOpen] = useState(false);
-  const handleOpenModalLogout = () => setModalLogoutOpen(true);
-  const handleCloseModalLogout = () => setModalLogoutOpen(false);
 
   const isMobile = useMediaQuery({ query: '(max-width: 420px)' });
+
+  const dispatch = useDispatch();
+
+  const handleOpenModalLogout = () => {
+    dispatch(openModalLogout());
+  };
 
   return (
     <div className={style.header} style={isMobile ? {zIndex: 300} : {zIndex: 100}}>
@@ -28,7 +31,7 @@ const Header = () => {
             <img src={exitIcon} alt='logout' />
             <span>Exit</span>
           </button>
-          <ModalLogout isOpen={isModalLogoutOpen} onClose={handleCloseModalLogout}/>
+          <ModalLogout/>
         </div>
       </div>
     </div>

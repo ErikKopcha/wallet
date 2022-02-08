@@ -24,7 +24,7 @@ const ModalAddTransaction = () => {
 
     const isMobile = useMediaQuery({ query: '(max-width: 420px)' });
 
-    const { addTransaction } = useTransactionsService();
+    const { postTransaction } = useTransactionsService();
 
     const categories = useSelector(state => state.categories);
 
@@ -65,16 +65,16 @@ const ModalAddTransaction = () => {
         const transaction = {
           transactionDate: newTransaction.date.toISOString(),
           type: newTransaction.type === true ? 'INCOME' : 'EXPENSE',
-          categoryId: categoryId,
+          categoryId:  newTransaction.type === true ? categories.find(category => category.type === 'INCOME').id : categoryId,
           comment: newTransaction.comments,
           amount: newTransaction.type === true ? newTransaction.amount : '-' + newTransaction.amount,
         };
         alert(JSON.stringify(transaction));
-        addTransaction(transaction);
+        postTransaction(transaction);
       },
     });
 
-    const isModalOpen = useSelector(state => state.global.ModalAddTransactionOpen);
+    const isModalOpen = useSelector(state => state.global.isModalAddTransactionOpen);
     const dispatch = useDispatch();
 
     const onClose = () => {
@@ -149,7 +149,7 @@ const ModalAddTransaction = () => {
                 >
                   {categories.map((category) => {
                     return (
-                      <MenuItem key={`category-${new Date().getTime()}-${Math.random()}`} value={category.name}
+                      category.type === 'EXPENSE' && <MenuItem key={`category-${new Date().getTime()}-${Math.random()}`} value={category.name}
                                 sx={{ background: 'transparent' }}>{category.name}</MenuItem>
                     );
                   })

@@ -2,7 +2,7 @@ import useFetch from 'use-http';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { saveCategories } from '../features/trans-categories';
-import { saveTransaction } from '../features/transactions';
+import { addTransaction, saveTransactions } from '../features/transactions';
 
 const useTransactionsService = () => {
 
@@ -18,10 +18,21 @@ const useTransactionsService = () => {
   };
   const { post, get, response } = useFetch('https://wallet.goit.ua/api', requestOptions);
 
-  const addTransaction = async (transaction) => {
+  const getTransactions = async () => {
+    const result = await get(`${_apiTransactions}`);
+    if (response.ok) {
+      dispatch(saveTransactions(result));
+    } else {
+      toast.error(result.message, {
+        theme: 'colored',
+      });
+    }
+  };
+
+  const postTransaction = async (transaction) => {
     const result = await post(`${_apiTransactions}`, transaction);
     if (response.ok) {
-      dispatch(saveTransaction(result));
+      dispatch(addTransaction(result));
     } else {
       toast.error(result.message, {
         theme: 'colored',
@@ -34,13 +45,13 @@ const useTransactionsService = () => {
     if (response.ok) {
       dispatch(saveCategories(result));
     } else {
-      toast.error('Sorry, we couldn\'t find categories' , {
+      toast.error('Sorry, we couldn\'t find categories', {
         theme: 'colored',
       });
     }
   };
 
-  return { addTransaction, getCategories };
+  return { getTransactions, postTransaction, getCategories };
 };
 
 export default useTransactionsService;
