@@ -5,20 +5,10 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import App from './components/App/App';
 import { configureStore } from '@reduxjs/toolkit';
-import userReducer from './features/user';
-import transactionsReducer from './features/transactions';
-import sessionReducer from './features/session';
-import categoriesReducer from './features/trans-categories';
-import globalReducer from './features/global';
+import rootReducer from './features/rootReducer';
 
 const store = configureStore({
-  reducer: {
-    global: globalReducer,
-    user: userReducer,
-    transactions: transactionsReducer,
-    categories: categoriesReducer,
-    session: sessionReducer,
-  }
+  reducer: rootReducer,
 });
 
 ReactDOM.render(

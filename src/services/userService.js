@@ -1,6 +1,6 @@
 import useFetch from 'use-http';
 import { authenticationSuccess } from '../features/session';
-import { registration } from '../features/user';
+import { authorization, registration } from '../features/user';
 import { loadingStarted, loadingFinished} from '../features/global';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -33,7 +33,7 @@ const useUserService = () => {
     const result = await post(`${_apiAuthSingin}`, user);
     dispatch(loadingFinished());
     if (response.ok) {
-      dispatch(registration(result.user));
+      dispatch(authorization(result.user));
       dispatch(authenticationSuccess({ token: result.token }));
       navigate('/');
     } else {
