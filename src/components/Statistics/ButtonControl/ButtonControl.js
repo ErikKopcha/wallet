@@ -71,15 +71,14 @@ export default function ButtonControl(props) {
         return null;
       })
       .filter((yearFilter, index, array) => {
-        return array.indexOf(yearFilter) === index;
+        console.log(yearFilter);
+        return array.indexOf(yearFilter) === index && yearFilter !== null ;
       })
       .sort((a, b) => {
         return a - b;
       })
       .map(el => {
-        if (el === null) {
-          return;
-        }
+      
         return (
           <MenuItem key={uuidv4()} value={el}>
             {el}
