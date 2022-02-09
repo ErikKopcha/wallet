@@ -1,4 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { useSelector } from 'react-redux';
 
 // const initialState = [
 //   { date: '22.01.2022', type: false, category: 'Car', comments: 'ghjghjgh', amount: '123' },
@@ -63,24 +64,99 @@ import { createSlice } from '@reduxjs/toolkit';
 //   },
 //   { date: '22.01.2022', type: false, category: 'Car', comments: 'ghjghjgh', amount: '565656' },
 // ];
+const useTransactionsAPI = () => {
+  const urlBase = 'https://wallet.goit.ua/api';
+  const _apiTransactions = 'transactions';
+  const _apiCategories = 'transaction-categories';
+  const token = useSelector(state => state.session.authToken);
+
+  const requestOptions = {
+    headers: {
+      'Authorization': `Bearer ${token}`,
+    },
+  };
+};
+
+export const fetchCategories = createAsyncThunk(
+  'reansactions/fetchCategories',
+  async function() {
+    const token = useSelector(state => state.session.authToken);
+    const requestOptions = {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    };
+    const response = await fetch('https://wallet.goit.ua/api/transaction-categories', requestOptions);
+    const data = await response.json();
+
+    return data;
+  }
+)
+
+export const fetchTransactions = createAsyncThunk(
+  'transactions/fetchTransactions',
+  async function() {
+    const token = useSelector(state => state.session.authToken);
+    const requestOptions = {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    };
+    const response = await fetch('https://wallet.goit.ua/api/transactions', requestOptions);
+    const data = await response.json();
+
+    return data;
+  },
+);
 
 export const transactionsSlice = createSlice({
   name: 'transactions',
-  initialState: [],
+  initialState: { transactions: [], categories: [], status: null, error: null },
   reducers: {
-    saveTransactions: (state, action) => {
-      // state = action.payload.map((transaction) => {
-      //   transaction.date = Date.parse(transaction.date).toLocaleDateString();
-      //   transaction.type === 'true' ? transaction.type = '+' : transaction.type = '-';
-      //   return transaction;
-      // });
-      state.push(...action.payload);
-    },
+    // saveCategories: (state, action) => {
+    //   state.categories = action.payload;
+    // },
+    // saveTransactions: (state, action) => {
+    //   state.transactions = action.payload.map(transaction => {
+    //     return {
+    //       date: (new Date(transaction.transactionDate)).toLocaleDateString(),
+    //       type: transaction.type === 'INCOME' ? '+' : '-',
+    //       category: state.categories.find(category => category.id === transaction.categoryId).name,
+    //       comment: transaction.comment,
+    //       amount: transaction.amount,
+    //     };
+    //   });
+    // },
     addTransaction: (state, action) => {
-      state.push(action.payload);
-    }
+      state.transactions.push(action.payload);
+    },
+  },
+  extraReducers: {
+    [fetchTransactions.pending]: (state, action) => {
+      state.status = 'loading';
+      state.error = null;
+    },
+    [fetchTransactions.fulfilled]: (state, action) => {
+      state.status = 'resolved';
+      state.error = null;
+      state.transactions = action.payload.map(transaction => {
+        return {
+          date: (new Date(transaction.transactionDate)).toLocaleDateString(),
+          type: transaction.type === 'INCOME' ? '+' : '-',
+          category: state.categories.find(category => category.id === transaction.categoryId).name,
+          comment: transaction.comment,
+          amount: transaction.amount,
+        };
+      });
+    },
+    [fetchTransactions.rejected]: (state, action) => {
+
+    },
+    [fetchCategories.fulfilled]: (state, action) => {
+      state.categories = action.payload;
+    },
   },
 });
 
-export const { saveTransactions, addTransaction } = transactionsSlice.actions;
+export const { addTransaction } = transactionsSlice.actions;
 export default transactionsSlice.reducer;

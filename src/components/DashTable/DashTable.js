@@ -16,7 +16,7 @@ const DashTable = () => {
 
   let columns = [
     {
-      id: 'transactionDate',
+      id: 'date',
       label: 'Date',
       minWidth: '80px',
       maxWidth: '150px',
@@ -27,12 +27,12 @@ const DashTable = () => {
       minWidth: '50px',
       maxWidth: '80px',
     },
-    // {
-    //   id: 'category',
-    //   label: 'Category',
-    //   minWidth: '80px',
-    //   maxWidth: '150px',
-    // },
+    {
+      id: 'category',
+      label: 'Category',
+      minWidth: '80px',
+      maxWidth: '150px',
+    },
     {
       id: 'comment',
       label: 'Comments',
@@ -47,7 +47,7 @@ const DashTable = () => {
     },
   ];
   const transactions = useSelector((state) => state.transactions);
-  const refactedTransactions = transactions.map(transaction => transaction);
+  console.log(transactions);
 
   const [page, setPage] = useState(0);
   const rowsPerPage = 5;
@@ -68,7 +68,7 @@ const DashTable = () => {
   return (
     <>
       {
-        refactedTransactions.length > 0 ? (
+        transactions.length > 0 ? (
           <>
             <TableContainer
               sx={{ mt: '20px', maxHeight: '400px', background: 'transparent', boxShadow: 'none' }}>
@@ -100,9 +100,9 @@ const DashTable = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {refactedTransactions
+                  {transactions
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((operation) => (
+                    .map((transaction) => (
                       <TableRow
                         hover
                         role='checkbox'
@@ -111,10 +111,10 @@ const DashTable = () => {
                       >
                         {
                           columns.map((column) => {
-                            const value = operation[column.id];
+                            const value = transaction[column.id];
                             return value.length >= 30 ? (
                               <Tooltip key={uniqid()}
-                                       title={operation[column.id]}>
+                                       title={transaction[column.id]}>
                                 <TableCell key={uniqid()} style={{
                                   maxWidth: column.maxWidth,
                                   minWidth: column.minWidth,
@@ -124,7 +124,7 @@ const DashTable = () => {
                                   whiteSpace: 'nowrap',
                                   textOverflow: 'ellipsis',
                                 }}>
-                                  {operation[column.id]}
+                                  {transaction[column.id]}
                                 </TableCell>
                               </Tooltip>
                             ) : (

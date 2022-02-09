@@ -1,8 +1,7 @@
 import useFetch from 'use-http';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { saveCategories } from '../features/trans-categories';
-import { addTransaction, saveTransactions } from '../features/transactions';
+import { saveCategories, addTransaction, saveTransactions } from '../features/transactions';
 
 const useTransactionsService = () => {
 
@@ -18,16 +17,16 @@ const useTransactionsService = () => {
   };
   const { post, get, response } = useFetch('https://wallet.goit.ua/api', requestOptions);
 
-  const getTransactions = async () => {
-    const result = await get(`${_apiTransactions}`);
-    if (response.ok) {
-      dispatch(saveTransactions(result));
-    } else {
-      toast.error(result.message, {
-        theme: 'colored',
-      });
-    }
-  };
+  // const getTransactions = async () => {
+  //   const result = await get(`${_apiTransactions}`);
+  //   if (response.ok) {
+  //     dispatch(saveTransactions(result));
+  //   } else {
+  //     toast.error(result.message, {
+  //       theme: 'colored',
+  //     });
+  //   }
+  // };
 
   const postTransaction = async (transaction) => {
     const result = await post(`${_apiTransactions}`, transaction);
@@ -40,18 +39,18 @@ const useTransactionsService = () => {
     }
   };
 
-  const getCategories = async () => {
-    const result = await get(`${_apiCategories}`);
-    if (response.ok) {
-      dispatch(saveCategories(result));
-    } else {
-      toast.error('Sorry, we couldn\'t find categories', {
-        theme: 'colored',
-      });
-    }
-  };
+  // const getCategories = async () => {
+  //   const result = await get(`${_apiCategories}`);
+  //   if (response.ok) {
+  //     dispatch(saveCategories(result));
+  //   } else {
+  //     toast.error('Sorry, we couldn\'t find categories', {
+  //       theme: 'colored',
+  //     });
+  //   }
+  // };
 
-  return { getTransactions, postTransaction, getCategories };
+  return {  postTransaction };
 };
 
 export default useTransactionsService;
