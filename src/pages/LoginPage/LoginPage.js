@@ -3,6 +3,7 @@ import LoginForm from '../../components/LoginForm/LoginForm';
 import ellipse1 from '../../assets/images/ellipse-1.svg';
 import ellipse2 from '../../assets/images/ellipse-2.svg';
 import LogInPageImg from '../../assets/images/LogInPageImg.png';
+import withAuthRedirect from '../../hoc/withAuthRedirect';
 
 function LoginPage() {
   return (
@@ -27,4 +28,5 @@ function LoginPage() {
     </div>
   )
 }
-export default LoginPage;
+
+export default withAuthRedirect(LoginPage, { location: '/home/' })
