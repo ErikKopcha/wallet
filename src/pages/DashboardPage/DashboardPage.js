@@ -22,9 +22,10 @@ const DashboardPage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchCategories())
+    dispatch(fetchCategories());
     dispatch(fetchTransactions());
-  }, [dispatch])
+    // eslint-disable-next-line
+  }, [])
 
   return (
     <div className={style.dashboardWrap}>
