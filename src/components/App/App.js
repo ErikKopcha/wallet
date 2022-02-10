@@ -17,7 +17,6 @@ const App = () => {
   const redirectUrl = isUserAuthenticated ? "/home/" : "/login";
   const showLoader = useSelector((state) => state.global.isLoading);
 
-
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
@@ -45,7 +44,7 @@ const App = () => {
         />
         { showLoader &&
           <Loader/>
-        }  
+        }
       </div>
     </ThemeProvider>
   );

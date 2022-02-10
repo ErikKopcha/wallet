@@ -3,8 +3,9 @@ import RegistrationForm from '../../components/RegistrationForm/RegistrationForm
 import ellipse1 from '../../assets/images/ellipse-1.svg';
 import ellipse2 from '../../assets/images/ellipse-2.svg';
 import regpageimg from '../../assets/images/regpagebig.png'
+import withAuthRedirect from '../../hoc/withAuthRedirect';
 
-export default function RegistrationPage() {
+function RegistrationPage() {
   return (
     <div className={style.RegPage}>
       <div className={style.Ellipse1}>
@@ -28,3 +29,4 @@ export default function RegistrationPage() {
   )
 }
 
+export default withAuthRedirect(RegistrationPage, { location: '/home/' })
