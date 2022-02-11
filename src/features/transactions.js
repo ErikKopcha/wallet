@@ -1,86 +1,111 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { transactionRefactor } from '../helpers/transactionRefactor';
 
-// const initialState = [
-//   { date: '22.01.2022', type: false, category: 'Car', comments: 'ghjghjgh', amount: '123' },
-//   {
-//     date: '22.01.2022',
-//     type: false,
-//     category: 'Car',
-//     comments: 'ghjgfnsvs dvlbldvjsdv slbjdvsbjld svjlbsd vlbjhjgh',
-//     amount: '123',
-//   },
-//   { date: '01.05.2020', type: true, category: 'Car', comments: 'ghjghjgh', amount: '56' },
-//   {
-//     date: '10.01.2021',
-//     type: false,
-//     category: 'Car',
-//     comments: 'ghjghd fljdljdbldzjnlb djlz;zndljb fgndbfjgh',
-//     amount: '123',
-//   },
-//   { date: '22.01.2022', type: true, category: 'Other', comments: 'ghjghjgh', amount: '45656' },
-//   { date: '22.01.2022', type: false, category: 'Car', comments: 'ghjghjgh', amount: '123' },
-//   {
-//     date: '11.01.2022',
-//     type: true,
-//     category: 'Products',
-//     comments: 'ghjv dnljsdvjvdljbvbjlv dsbjldvsjbldsvbjldsbj ldsvvsdjbdvsjb ldsvbvdsblj vdsghjgh',
-//     amount: '123',
-//   },
-//   {
-//     date: '11.01.2022',
-//     type: true,
-//     category: 'Products',
-//     comments: 'ghjv dnljsdvjvdljbvbjlv dsbjldvsjbldsvbjldsbj ldsvvsdjbdvsjb ldsvbvdsblj vdsghjgh',
-//     amount: '123',
-//   },
-//   {
-//     date: '11.01.2022',
-//     type: true,
-//     category: 'Products',
-//     comments: 'ghjv dnljsdvjvdljbvbjlv dsbjldvsjbldsvbjldsbj ldsvvsdjbdvsjb ldsvbvdsblj vdsghjgh',
-//     amount: '123',
-//   },
-//   {
-//     date: '11.01.2022',
-//     type: true,
-//     category: 'Products',
-//     comments: 'ghjv dnljsdvjvdljbvbjlv dsbjldvsjbldsvbjldsbj ldsvvsdjbdvsjb ldsvbvdsblj vdsghjgh',
-//     amount: '123',
-//   },
-//   {
-//     date: '11.01.2022',
-//     type: true,
-//     category: 'Products',
-//     comments: 'ghjv dnljsdvjvdljbvbjlv dsbjldvsjbldsvbjldsbj ldsvvsdjbdvsjb ldsvbvdsblj vdsghjgh',
-//     amount: '123',
-//   },
-//   {
-//     date: '11.01.2022',
-//     type: true,
-//     category: 'Products',
-//     comments: 'ghjv dnljsdvjvdljbvbjlv dsbjldvsjbldsvbjldsbj ldsvvsdjbdvsjb ldsvbvdsblj vdsghjgh',
-//     amount: '123',
-//   },
-//   { date: '22.01.2022', type: false, category: 'Car', comments: 'ghjghjgh', amount: '565656' },
-// ];
+export const fetchCategories = createAsyncThunk(
+  'transactions/fetchCategories',
+  async (_, { rejectWithValue }) => {
+    const token = localStorage.getItem('token');
+    const requestOptions = {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    };
+    try {
+      const response = await fetch('https://wallet.goit.ua/api/transaction-categories', requestOptions);
+      if (!response.ok) {
+        throw new Error('Server error');
+      } else {
+        return await response.json();
+      }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
+export const fetchTransactions = createAsyncThunk(
+  'transactions/fetchTransactions',
+  async (_, { rejectWithValue }) => {
+    const token = localStorage.getItem('token');
+    const requestOptions = {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    };
+    const response = await fetch('https://wallet.goit.ua/api/transactions', requestOptions);
+    return await response.json();
+  },
+);
+
+export const postTransaction = createAsyncThunk(
+  'transactions/addTransaction',
+  async (transaction, { rejectWithValue, dispatch }) => {
+    const token = localStorage.getItem('token');
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(transaction),
+    };
+    try {
+      const response = await fetch('https://wallet.goit.ua/api/transactions', requestOptions);
+      if (!response.ok) {
+        throw new Error('Server error!');
+      } else {
+        const data = await response.json();
+        dispatch(addTransaction(data));
+      }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  },
+);
 
 export const transactionsSlice = createSlice({
   name: 'transactions',
-  initialState: [],
+  initialState: { transactions: [], categories: [], status: null, error: null },
   reducers: {
-    saveTransactions: (state, action) => {
-      // state = action.payload.map((transaction) => {
-      //   transaction.date = Date.parse(transaction.date).toLocaleDateString();
-      //   transaction.type === 'true' ? transaction.type = '+' : transaction.type = '-';
-      //   return transaction;
-      // });
-      state.push(...action.payload);
-    },
     addTransaction: (state, action) => {
-      state.push(action.payload);
-    }
+      state.transactions.push(transactionRefactor(action.payload, state.categories));
+    },
+  },
+  extraReducers: {
+    [fetchCategories.fulfilled]: (state, action) => {
+      state.categories = action.payload;
+    },
+    [fetchTransactions.pending]: (state, action) => {
+      state.error = null;
+      state.status = 'loading';
+    },
+    [fetchTransactions.fulfilled]: (state, action) => {
+      state.error = null;
+      state.status = 'resolved';
+      // state.status = 'loading';
+      state.transactions = action.payload.map(transaction => {
+        return transactionRefactor(transaction, state.categories);
+      });
+    },
+    [fetchTransactions.rejected]: (state, action) => {
+      state.error = 'Error';
+      state.status = 'rejected';
+    },
+    [postTransaction.pending]: (state, action) => {
+      state.error = null;
+      state.status = 'loading';
+    },
+    [postTransaction.fulfilled]: (state, action) => {
+      state.error = null;
+      state.status = 'resolved';
+    },
+    [postTransaction.rejected]: (state, action) => {
+      state.error = action.payload;
+      state.status = 'rejected';
+    },
   },
 });
 
-export const { saveTransactions, addTransaction } = transactionsSlice.actions;
+export const { addTransaction } = transactionsSlice.actions;
+
 export default transactionsSlice.reducer;

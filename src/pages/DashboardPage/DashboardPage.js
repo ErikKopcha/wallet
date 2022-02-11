@@ -11,19 +11,20 @@ import { useMediaQuery } from 'react-responsive';
 import { useEffect } from 'react';
 import DashTable from '../../components/DashTable/DashTable';
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary';
-import useTransactionsService from '../../services/transactionsService';
 import MobileDahTable from '../../components/DashTable/MobileDashTable/MobileDashTable';
+import { fetchCategories, fetchTransactions } from '../../features/transactions';
+import { useDispatch } from 'react-redux';
 
 const DashboardPage = () => {
   const isMobile = useMediaQuery({ query: '(max-width: 425px)' });
   const isTabletOrMobile = useMediaQuery({query: '(max-width: 520px)'});
 
-  const { getCategories, getTransactions } = useTransactionsService();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getCategories();
-    getTransactions();
-    //eslint-disable-next-line
+    dispatch(fetchCategories());
+    dispatch(fetchTransactions());
+    // eslint-disable-next-line
   }, [])
 
   return (

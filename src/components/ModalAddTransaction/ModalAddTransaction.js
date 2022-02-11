@@ -16,17 +16,20 @@ import StyledSwitch from '../StyledSwitch/StyledSwitch';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import * as yup from 'yup';
-import useTransactionsService from '../../services/transactionsService';
 import { useMediaQuery } from 'react-responsive';
 import { closeModalAddTransaction } from '../../features/global';
+import { postTransaction } from '../../features/transactions';
+import { toast } from 'react-toastify';
+import Loader from '../Loader/Loader';
 
 const ModalAddTransaction = () => {
 
+    const dispatch = useDispatch();
+
     const isMobile = useMediaQuery({ query: '(max-width: 420px)' });
 
-    const { postTransaction } = useTransactionsService();
-
-    const categories = useSelector(state => state.categories);
+    const categories = useSelector(state => state.transactions.categories);
+    const { error, status } = useSelector(state => state.transactions);
 
     const validationSchema = yup.object({
       type: yup
@@ -35,7 +38,7 @@ const ModalAddTransaction = () => {
         .string()
         .notRequired()
         .when('type', {
-          is: true,
+          is: false,
           then: yup
             .string('Choose a category')
             .required('Category is required'),
@@ -61,21 +64,31 @@ const ModalAddTransaction = () => {
       },
       validationSchema: validationSchema,
       onSubmit: (newTransaction) => {
-        const categoryId = categories.find(category => category.name === newTransaction.category).id;
+        let categoryIdOfExpense, categoryIdOfIncome;
+        newTransaction.type ? categoryIdOfIncome = categories.find(category => category.type === 'INCOME').id : categoryIdOfExpense = categories.find(category => category.name === newTransaction.category).id;
         const transaction = {
           transactionDate: newTransaction.date.toISOString(),
-          type: newTransaction.type === true ? 'INCOME' : 'EXPENSE',
-          categoryId:  newTransaction.type === true ? categories.find(category => category.type === 'INCOME').id : categoryId,
+          type: newTransaction.type ? 'INCOME' : 'EXPENSE',
+          categoryId: newTransaction.type ? categoryIdOfIncome : categoryIdOfExpense,
           comment: newTransaction.comments,
           amount: newTransaction.type === true ? newTransaction.amount : '-' + newTransaction.amount,
         };
-        alert(JSON.stringify(transaction));
-        postTransaction(transaction);
+        dispatch(postTransaction(transaction));
+        if (error) {
+          toast.error('Sorry, something went wrong(', {
+            theme: 'colored',
+          });
+        }
+        setTimeout(()=> {
+          if (status === 'resolved') {
+            formik.resetForm();
+            onClose();
+          }
+        }, 1000)
       },
     });
 
     const isModalOpen = useSelector(state => state.global.isModalAddTransactionOpen);
-    const dispatch = useDispatch();
 
     const onClose = () => {
       dispatch(closeModalAddTransaction());
@@ -83,7 +96,7 @@ const ModalAddTransaction = () => {
 
     const handleSubmit = (e) => {
       formik.handleSubmit(e);
-      dispatch(closeModalAddTransaction());
+      //dispatch(closeModalAddTransaction());
     };
 
     return (
@@ -96,6 +109,9 @@ const ModalAddTransaction = () => {
         style={isMobile ? { width: '100%', height: '100%', top: '30px' } : { top: '50px' }}
       >
         <form className={style.box} onSubmit={handleSubmit}>
+          {
+            status === 'loading' && <Loader width={60} right={'30px'} top={'30px'} />
+          }
           <Typography id='modal-modal-title' variant='h1' component='h1' sx={{ mb: '40px' }}>
             Add transaction
           </Typography>
@@ -106,7 +122,7 @@ const ModalAddTransaction = () => {
             <StyledSwitch
               id='type'
               name='type'
-              defaultChecked={true}
+              defaultChecked={formik.values.type}
               value={formik.values.type}
               onBlur={formik.handleBlur}
               onChange={formik.handleChange} error={formik.touched.category && Boolean(formik.errors.category)}
@@ -149,7 +165,8 @@ const ModalAddTransaction = () => {
                 >
                   {categories.map((category) => {
                     return (
-                      category.type === 'EXPENSE' && <MenuItem key={`category-${new Date().getTime()}-${Math.random()}`} value={category.name}
+                      category.type === 'EXPENSE' &&
+                      <MenuItem key={`category-${new Date().getTime()}-${Math.random()}`} value={category.name}
                                 sx={{ background: 'transparent' }}>{category.name}</MenuItem>
                     );
                   })

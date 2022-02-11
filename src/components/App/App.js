@@ -10,7 +10,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { TailSpin } from 'react-loader-spinner'
+import Loader from '../Loader/Loader';
 
 const App = () => {
   const isUserAuthenticated = useSelector((state) => state.session.isAuth);
@@ -43,14 +43,7 @@ const App = () => {
           pauseOnHover
         />
         { showLoader &&
-          <div
-            className={`loader`}>
-            <TailSpin
-              color="var(--redAccentColor)"
-              height={80}
-              width={80}
-          />
-          </div>
+          <Loader/>
         }
       </div>
     </ThemeProvider>
