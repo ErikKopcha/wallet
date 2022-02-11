@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { transactionRefactor } from '../helpers/transactionRefactor';
+import { updateBalance } from './user';
 
 export const fetchCategories = createAsyncThunk(
   'transactions/fetchCategories',
@@ -56,6 +57,7 @@ export const postTransaction = createAsyncThunk(
       } else {
         const data = await response.json();
         dispatch(addTransaction(data));
+        dispatch(updateBalance(data));
       }
     } catch (error) {
       return rejectWithValue(error.message);
@@ -82,7 +84,7 @@ export const transactionsSlice = createSlice({
     [fetchTransactions.fulfilled]: (state, action) => {
       state.error = null;
       state.status = 'resolved';
-      // state.status = 'loading';
+      //  state.status = 'loading';
       state.transactions = action.payload.map(transaction => {
         return transactionRefactor(transaction, state.categories);
       });

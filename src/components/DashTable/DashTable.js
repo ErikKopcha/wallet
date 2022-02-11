@@ -12,6 +12,7 @@ import zeroImage from '../../assets/images/zero.png';
 import uniqid from 'uniqid';
 import { useState } from 'react';
 import Loader from '../Loader/Loader';
+import { transactionSortingByDate } from '../../helpers/transactionSorting';
 
 const DashTable = () => {
 
@@ -53,6 +54,7 @@ const DashTable = () => {
     },
   ];
   const { transactions, status } = useSelector((state) => state.transactions);
+  const sortedTransactions = transactionSortingByDate(transactions);
 
   const [page, setPage] = useState(0);
   const rowsPerPage = 5;
@@ -73,7 +75,7 @@ const DashTable = () => {
   return (
     <>
       {
-        status === 'loading' ? <Loader left={'45%'} top={'500%'} zIndex={5} /> :
+        status === 'loading' ? <Loader top={'500%'} left={'45%'} zIndex={5} /> :
           status === 'resolved' && transactions.length > 0 ? (
             <>
               <TableContainer
@@ -106,7 +108,7 @@ const DashTable = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {transactions
+                    {sortedTransactions
                       .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                       .map((transaction) => (
                         <TableRow

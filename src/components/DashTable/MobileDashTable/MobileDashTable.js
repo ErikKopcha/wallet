@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import zeroImage from '../../../assets/images/zero.png';
 import Loader from '../../Loader/Loader';
 import uniqid from 'uniqid';
+import { transactionSortingByDate } from '../../../helpers/transactionSorting';
 
 const MobileDashTable = () => {
 
@@ -47,6 +48,7 @@ const MobileDashTable = () => {
   ];
 
   const { transactions, status } = useSelector((state) => state.transactions);
+  const sortedTransactions = transactionSortingByDate(transactions);
 
   const noTransaction = () => {
     return (
@@ -72,7 +74,7 @@ const MobileDashTable = () => {
           status === 'resolved' && transactions.length > 0 ? (
             <Stack direction={'column'} sx={{ pb: '25px' }}>
               {
-                transactions.map(transaction => (
+                sortedTransactions.map(transaction => (
                   <Card key={uniqid()} style={{
                     borderRadius: '10px',
                     borderLeftWidth: '5px',

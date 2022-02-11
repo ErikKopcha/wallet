@@ -1,8 +1,7 @@
 .dashboardWrap {
   min-height: 100vh;
   min-width: 100vw;
-  background: url("../../assets/images/bashboard-bg.jpg") no-repeat;
-  background-position: center;
+  background: url("../../assets/images/bashboard-bg.jpg") no-repeat center;
   background-size: cover;
 }
 
