@@ -96,7 +96,6 @@ const ModalAddTransaction = () => {
 
     const handleSubmit = (e) => {
       formik.handleSubmit(e);
-      //dispatch(closeModalAddTransaction());
     };
 
     return (

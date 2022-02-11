@@ -1,8 +1,8 @@
 import { TailSpin } from 'react-loader-spinner';
 
-const Loader = ({ right = 'auto', top = 'auto', left = 'auto', bottom = 'auto', width = 80, zIndex=99999 }) => {
+const Loader = ({ right = 'auto', top = 'auto', left = 'auto', bottom = 'auto', width = '80px', zIndex = 99999 }) => {
   return (
-    <div className={'loader'} style={{
+    <div style={{
       position: 'absolute',
       zIndex: zIndex,
       top: top,
@@ -11,6 +11,8 @@ const Loader = ({ right = 'auto', top = 'auto', left = 'auto', bottom = 'auto', 
       bottom: bottom,
       pointerEvents: 'none',
       overflow: 'hidden',
+      // width: { width },
+      // height: {width}
     }}>
       <TailSpin
         color='var(--redAccentColor)'
