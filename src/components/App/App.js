@@ -10,7 +10,6 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Loader from '../Loader/Loader';
 import { TailSpin } from 'react-loader-spinner';
 
 const App = () => {
