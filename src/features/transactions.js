@@ -34,7 +34,7 @@ export const fetchTransactions = createAsyncThunk(
       },
     };
     try {
-      const response = await fetch('https://wallet.goit.ua/api/transaction-categories', requestOptions);
+      const response = await fetch('https://wallet.goit.ua/api/transactions', requestOptions);
       if (!response.ok) {
         throw new Error('Server error');
       } else {
