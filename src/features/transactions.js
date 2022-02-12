@@ -4,8 +4,8 @@ import { updateBalance } from './user';
 
 export const fetchCategories = createAsyncThunk(
   'transactions/fetchCategories',
-  async (_, { rejectWithValue }) => {
-    const token = localStorage.getItem('token');
+  async (_, { rejectWithValue, getState }) => {
+    const token = getState().session.authToken;
     const requestOptions = {
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -26,22 +26,30 @@ export const fetchCategories = createAsyncThunk(
 
 export const fetchTransactions = createAsyncThunk(
   'transactions/fetchTransactions',
-  async (_, { rejectWithValue }) => {
-    const token = localStorage.getItem('token');
+  async (_, { rejectWithValue, getState }) => {
+    const token = getState().session.authToken;
     const requestOptions = {
       headers: {
         'Authorization': `Bearer ${token}`,
       },
     };
-    const response = await fetch('https://wallet.goit.ua/api/transactions', requestOptions);
-    return await response.json();
+    try {
+      const response = await fetch('https://wallet.goit.ua/api/transactions', requestOptions);
+      if (!response.ok) {
+        throw new Error('Server error');
+      } else {
+        return await response.json();
+      }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
   },
 );
 
 export const postTransaction = createAsyncThunk(
   'transactions/addTransaction',
-  async (transaction, { rejectWithValue, dispatch }) => {
-    const token = localStorage.getItem('token');
+  async (transaction, { rejectWithValue, getState, dispatch }) => {
+    const token = getState().session.authToken;
     const requestOptions = {
       method: 'POST',
       headers: {
