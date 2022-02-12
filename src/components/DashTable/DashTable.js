@@ -13,6 +13,7 @@ import uniqid from 'uniqid';
 import { useState } from 'react';
 import Loader from '../Loader/Loader';
 import { transactionSortingByDate } from '../../helpers/transactionSorting';
+import { transactionRefactor } from '../../helpers/transactionRefactor';
 
 const DashTable = () => {
 
@@ -53,8 +54,9 @@ const DashTable = () => {
       fontSize: '16px',
     },
   ];
-  const { transactions, status } = useSelector((state) => state.transactions);
-  const sortedTransactions = transactionSortingByDate(transactions);
+  const { transactions, status, categories } = useSelector((state) => state.transactions);
+  const editedTransactions = transactions.map(transaction => transactionRefactor(transaction, categories));
+  const sortedTransactions = transactionSortingByDate(editedTransactions);
 
   const [page, setPage] = useState(0);
   const rowsPerPage = 5;
