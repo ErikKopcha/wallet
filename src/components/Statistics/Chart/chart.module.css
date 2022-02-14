@@ -16,6 +16,8 @@
 .totalValue{
     position: absolute;
     left: 50%;
+    font-family: 'Abel', sans-serif;
+    font-weight: normal;
     top:50%;
     transform: translate(-50%,-50%);
     margin: 0;
@@ -26,7 +28,7 @@ font-weight: normal;
 }
 @media (min-width: 768px){
     .chartContainer{
-    width: 320px;
+    min-width: 320px;
         margin-right: 30px;
         max-width: 320px;
         max-height: 320px;

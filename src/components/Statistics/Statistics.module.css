@@ -31,6 +31,8 @@
     font-weight: normal;
     font-size: 18px;
     line-height: 23px;
+    font-family: 'Abel', sans-serif;
+    font-weight: normal;
     color: #000000;
     position: absolute; 
     top:15px;
@@ -42,6 +44,8 @@
         font-style: normal;
         font-weight: normal;
         font-size: 18px;
+        font-family: 'Abel', sans-serif;
+        font-weight: normal;
         line-height: 23px;
         color: #000000;
         position: absolute; 
@@ -68,47 +72,21 @@
         
         
     }
-    .Main{
-        background-color: #FED057;
-        composes:itemBox;
-    }
-    .Food{
-        composes:itemBox;
-        background-color: #FFD8D0;
-    }
-    .Car{
-        composes:itemBox;
-        background-color: #FD9498;
-    }
-    .Development{
-        composes:itemBox;
-        background-color: #C5BAFF;
-    }
-    .Kids{
-        composes:itemBox;
-        background-color: #6E78E8;
-    }
-    .House{
-        composes:itemBox;
-        background-color: #4A56E2;
-    }
-    .Education{
-        composes:itemBox;
-        background-color: #81E1FF;
-    }
-    .Other{
-        composes:itemBox;
-        background-color: #24CCA7;
-    }
+    
     .itemName{
         font-size: 16px;
         line-height: 20px;
         padding: 15px 0px;
+        font-family: 'Abel', sans-serif;
+        font-style: normal;
+    font-weight: 300;
     }
     .itemAmount{
         flex-grow: 1;
         text-align: right;
         margin-right: 15px;
+        font-family: 'Abel', sans-serif;
+        font-weight: normal;
         font-size: 16px;
     line-height: 20px;
     padding: 15px 0px;
@@ -116,6 +94,8 @@
     .expenses,.incomes{
         margin-bottom: 17px;
         font-size: 16px;
+        font-family: 'Abel', sans-serif;
+        font-weight: normal;
     line-height: 20px;
     color: #000000;
     padding-right: auto;
@@ -134,6 +114,13 @@
     .incomes{
         color:#24CCA7;
         ;
+    }
+    .noTrans{
+        text-align: center;
+        font-size: 25px;
+        margin-top: 20px;
+        font-family: 'Abel', sans-serif;
+        font-weight: normal;
     }
     
     
