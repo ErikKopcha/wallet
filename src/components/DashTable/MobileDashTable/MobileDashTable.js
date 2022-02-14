@@ -6,6 +6,7 @@ import zeroImage from '../../../assets/images/zero.png';
 import Loader from '../../Loader/Loader';
 import uniqid from 'uniqid';
 import { transactionSortingByDate } from '../../../helpers/transactionSorting';
+import { transactionRefactor } from '../../../helpers/transactionRefactor';
 
 const MobileDashTable = () => {
 
@@ -48,7 +49,8 @@ const MobileDashTable = () => {
   ];
 
   const { transactions, status } = useSelector((state) => state.transactions);
-  const sortedTransactions = transactionSortingByDate(transactions);
+  const editedTransactions = transactions.map(transaction => transactionRefactor(transaction));
+  const sortedTransactions = transactionSortingByDate(editedTransactions);
 
   const noTransaction = () => {
     return (

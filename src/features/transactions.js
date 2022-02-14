@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { transactionRefactor } from '../helpers/transactionRefactor';
 import { updateBalance } from './user';
 
 export const fetchCategories = createAsyncThunk(
@@ -78,7 +77,7 @@ export const transactionsSlice = createSlice({
   initialState: { transactions: [], categories: [], status: null, error: null },
   reducers: {
     addTransaction: (state, action) => {
-      state.transactions.push(transactionRefactor(action.payload, state.categories));
+      state.transactions.push(action.payload);
     },
   },
   extraReducers: {
@@ -93,9 +92,7 @@ export const transactionsSlice = createSlice({
       state.error = null;
       state.status = 'resolved';
       //  state.status = 'loading';
-      state.transactions = action.payload.map(transaction => {
-        return transactionRefactor(transaction, state.categories);
-      });
+      state.transactions = action.payload;
     },
     [fetchTransactions.rejected]: (state, action) => {
       state.error = 'Error';

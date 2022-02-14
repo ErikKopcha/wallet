@@ -33,7 +33,8 @@ export default function ButtonControl(props) {
     return transactions
       .map(el => {
         const date = new Date(el.transactionDate);
-        if (year && date.getFullYear() === year) {
+
+        if (year) {
           return date.getMonth() + 1;
         }
 
@@ -51,7 +52,7 @@ export default function ButtonControl(props) {
       })
       .map(el => {
         return (
-          <MenuItem key={uuidv4()} value={monthName[el]}>
+          <MenuItem key={uuidv4()} value={el}>
             {monthName[el]}
           </MenuItem>
         );
@@ -62,7 +63,7 @@ export default function ButtonControl(props) {
       .map(el => {
         const date = new Date(el.transactionDate);
 
-        if (month && monthName[date.getMonth() + 1] === month) {
+        if (month) {
           return date.getFullYear();
         }
         if (month === '') {
@@ -71,14 +72,12 @@ export default function ButtonControl(props) {
         return null;
       })
       .filter((yearFilter, index, array) => {
-        console.log(yearFilter);
-        return array.indexOf(yearFilter) === index && yearFilter !== null ;
+        return array.indexOf(yearFilter) === index && yearFilter !== null;
       })
       .sort((a, b) => {
         return a - b;
       })
       .map(el => {
-      
         return (
           <MenuItem key={uuidv4()} value={el}>
             {el}
@@ -86,6 +85,53 @@ export default function ButtonControl(props) {
         );
       });
   };
+  const standartStyles = {formControl:{
+    width: '100%',
+    backgroundColor: 'transparent',
+    height: 30,
+    '& .MuiInputLabel-root': {
+      color: 'rgba(0, 0, 0)',
+    },
+    '& .Mui-focused': {
+      backgroundColor: 'transparent',
+      color: 'rgba(0, 0, 0)',
+    },
+    '& .MuiFilledInput-root': {
+      backgroundColor: 'transparent',
+      '&:before': {
+        borderBottom: 0,
+      },
+      '&:hover': {
+        backgroundColor: 'transparent',
+      },
+      '&:hover:not(.Mui-disabled):before': {
+        borderBottom: 0,
+      },
+      '&:after': {
+        borderBottom: '0px',
+      },
+    },
+    '& .MuiFilledInput-input': {
+      '&:focus': {
+        backgroundColor: 'transparent',
+        color: 'black',
+      },
+    },
+  },
+inputLabel:{
+  '& .Mui-focused': {
+    backgroundColor: 'transparent',
+    color: 'rgba(0, 0, 0)',
+  },
+  '& .MuiInputLabel-focused': {
+    color: 'black',
+  },
+},
+select:{
+  borderRadius: 30,
+  border: '1px solid black',
+  width: '100%',
+}}
 
   return (
     <>
@@ -93,61 +139,17 @@ export default function ButtonControl(props) {
         <Box className={styled.button}>
           <FormControl
             variant="filled"
-            sx={{
-              width: '100%',
-              backgroundColor: 'transparent',
-              height: 30,
-              '& .MuiInputLabel-root': {
-                color: 'rgba(0, 0, 0)',
-              },
-              '& .Mui-focused': {
-                backgroundColor: 'transparent',
-                color: 'rgba(0, 0, 0)',
-              },
-              '& .MuiFilledInput-root': {
-                backgroundColor: 'transparent',
-                '&:before': {
-                  borderBottom: 0,
-                },
-                '&:hover': {
-                  backgroundColor: 'transparent',
-                },
-                '&:hover:not(.Mui-disabled):before': {
-                  borderBottom: 0,
-                },
-                '&:after': {
-                  borderBottom: '0px',
-                },
-              },
-              '& .MuiFilledInput-input': {
-                '&:focus': {
-                  backgroundColor: 'transparent',
-                  color: 'black',
-                },
-              },
-            }}
+            sx={standartStyles.formControl}
           >
             <InputLabel
-              sx={{
-                '& .Mui-focused': {
-                  backgroundColor: 'transparent',
-                  color: 'rgba(0, 0, 0)',
-                },
-                '& .MuiInputLabel-focused': {
-                  color: 'black',
-                },
-              }}
+              sx={standartStyles.inputLabel}
               id="demo-simple-select-standard-label"
             >
               Month
             </InputLabel>
             <Select
               defaultValue=""
-              sx={{
-                borderRadius: 30,
-                border: '1px solid black',
-                width: '100%',
-              }}
+              sx={standartStyles.select}
               value={month}
               labelId="demo-simple-select-label"
               id="demo-simple-select"
@@ -160,61 +162,17 @@ export default function ButtonControl(props) {
         <Box className={styled.button}>
           <FormControl
             variant="filled"
-            sx={{
-              width: '100%',
-              backgroundColor: 'transparent',
-              height: 30,
-              '& .MuiInputLabel-root': {
-                color: 'rgba(0, 0, 0)',
-              },
-              '& .Mui-focused': {
-                backgroundColor: 'transparent',
-                color: 'rgba(0, 0, 0)',
-              },
-              '& .MuiFilledInput-root': {
-                backgroundColor: 'transparent',
-                '&:before': {
-                  borderBottom: 0,
-                },
-                '&:hover': {
-                  backgroundColor: 'transparent',
-                },
-                '&:hover:not(.Mui-disabled):before': {
-                  borderBottom: 0,
-                },
-                '&:after': {
-                  borderBottom: '0px',
-                },
-              },
-              '& .MuiFilledInput-input': {
-                '&:focus': {
-                  backgroundColor: 'transparent',
-                  color: 'black',
-                },
-              },
-            }}
+            sx={standartStyles.formControl}
           >
             <InputLabel
-              sx={{
-                '& .Mui-focused': {
-                  backgroundColor: 'transparent',
-                  color: 'rgba(0, 0, 0)',
-                },
-                ' MuiFormLabel-root-MuiInputLabel-root.Mui-focused': {
-                  color: 'black',
-                },
-              }}
+              sx={standartStyles.inputLabel}
               id="demo-simple-select-standard-label"
             >
               Year
             </InputLabel>
             <Select
               defaultValue=""
-              sx={{
-                borderRadius: 30,
-                border: '1px solid black',
-                width: '100%',
-              }}
+              sx={standartStyles.select}
               value={year}
               labelId="demo-simple-select-label"
               id="demo-simple-select"

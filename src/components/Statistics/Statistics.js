@@ -6,65 +6,46 @@ import Table from './Table/Table.js';
 import ButtonControl from './ButtonControl/ButtonControl.js';
 import zeroImage from '../../assets/images/zero.png';
 import { connect } from 'react-redux';
-
+import Loader from '../Loader/Loader';
+import { useCallback } from 'react';
 const randomColor = require('randomcolor');
-const monthName = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-];
 
-const Statistics = ({ AllTransactions }) => {
+export const getLastTransaction = async transactions => {
+  return new Date(
+    [...transactions].sort((a, b) => {
+      const dateA = new Date(a.transactionDate);
+      const dateB = new Date(b.transactionDate);
+
+      return dateB - dateA;
+    })[0].transactionDate,
+  );
+};
+const Statistics = props => {
   const [month, setMonth] = useState(
     JSON.parse(localStorage.getItem('month')) || '',
   );
   const [year, setYear] = useState(
     JSON.parse(localStorage.getItem('year')) || '',
   );
-
-  const [categories, setCategories] = useState({
-    expenses: {},
-    income: 0,
-  });
-
-  const transactions = AllTransactions;
-
+  const [monthSummary, setMonthSummary] = useState('');
+  const {
+    token,
+    transactionsData: { transactions, categories },
+  } = props;
   if (!month && !year) {
-    console.log(1);
-    const lastTransactions = new Date(
-      [...transactions].sort((a, b) => {
-        const dateA = new Date(a.transactionDate);
-        const dateB = new Date(b.transactionDate);
-
-        return dateB - dateA;
-      })[0].transactionDate,
-    );
-    setMonth(monthName[lastTransactions.getMonth()]);
-    setYear(lastTransactions.getFullYear());
+    const lastTransaction = getLastTransaction(transactions);
+    setMonth(lastTransaction.getMonth() + 1);
+    setYear(lastTransaction.getFullYear());
     localStorage.setItem(
       'month',
-      JSON.stringify(monthName[lastTransactions.getMonth()]),
+      JSON.stringify(lastTransaction.getMonth() + 1),
     );
-    localStorage.setItem(
-      'year',
-      JSON.stringify(lastTransactions.getFullYear()),
-    );
+    localStorage.setItem('year', JSON.stringify(lastTransaction.getFullYear()));
   }
-
   const color = randomColor({
-    count: Object.keys(categories.expenses).length,
+    count: categories.length,
     luminosity: 'bright',
   });
-
   const handleChangeMonth = e => {
     setMonth(e.target.value);
     localStorage.setItem('month', JSON.stringify(e.target.value));
@@ -73,96 +54,87 @@ const Statistics = ({ AllTransactions }) => {
     setYear(e.target.value);
     localStorage.setItem('year', JSON.stringify(e.target.value));
   };
-
-  useEffect(() => {
-    if (month && year) {
-      setCategories({
-        expenses: {},
-        income: 0,
-      });
-
-      transactions.filter(el => {
-        const filterDate = new Date(el.transactionDate);
-
-        if (
-          filterDate.getFullYear() === year &&
-          monthName[filterDate.getMonth()] === month &&
-          el.type === 'EXPENSE'
-        ) {
-          setCategories(prev => {
-            if (isNaN(prev.expenses[el.categoryId])) {
-              return {
-                ...prev,
-                expenses: { ...prev.expenses, [el.categoryId]: el.amount },
-              };
-            }
-
-            return {
-              ...prev,
-              expenses: {
-                ...prev.expenses,
-                [el.categoryId]: prev.expenses[el.categoryId] + el.amount,
-              },
-            };
-          });
-        }
-        if (
-          filterDate.getFullYear() === year &&
-          monthName[filterDate.getMonth()] === month &&
-          el.type === 'INCOME'
-        ) {
-          setCategories(prev => {
-            return { ...prev, income: prev.income + el.amount };
-          });
-        }
-
+  const getSummaryOfMonth = useCallback(
+    async (month, year) => {
+      if (!month || !year) {
         return null;
-      });
-    }
-  }, [month, year, transactions]);
-
+      }
+      const requestOptions = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      try {
+        const response = await fetch(
+          `https://wallet.goit.ua/api/transactions-summary?month=${month}&year=${year}`,
+          requestOptions,
+        );
+        if (!response.ok) {
+          throw new Error('Server error');
+        } else {
+          return await response.json();
+        }
+      } catch (error) {
+        return error;
+      }
+    },
+    [token],
+  );
+  useEffect(() => {
+    getSummaryOfMonth(month, year).then(data => {
+      setMonthSummary(data);
+    });
+  }, [month, year, getSummaryOfMonth]);
   return (
-    <Box className={styled.container}>
-      {transactions.length > 1 ? (
-        <>
-          <Chart categories={categories} colors={color} />
-          <section className={styled.TableContainer}>
-            <ButtonControl
-              handleChangeMonth={handleChangeMonth}
-              handleChangeYear={handleChangeYear}
-              month={month}
-              year={year}
-              transactions={transactions}
-            />
-            <Table
-              categories={categories}
-              colors={color}
-              month={month}
-              year={year}
-            />
-          </section>
-        </>
+    <>
+      {monthSummary !== '' ? (
+        <Box className={styled.container}>
+          {transactions.length > 1 ? (
+            <>
+              <Chart categoriesAll={monthSummary} colors={color} />
+              <section className={styled.TableContainer}>
+                <ButtonControl
+                  handleChangeMonth={handleChangeMonth}
+                  handleChangeYear={handleChangeYear}
+                  month={month}
+                  year={year}
+                  transactions={transactions}
+                />
+                <Table
+                  categoriesAll={monthSummary}
+                  colors={color}
+                  month={month}
+                  year={year}
+                />
+              </section>
+            </>
+          ) : (
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+              }}
+            >
+              <p className={styled.noTrans}>Create your first transaction.</p>
+              <img
+                src={zeroImage}
+                alt={'noTransactions'}
+                style={{ width: '60vh' }}
+              />
+            </div>
+          )}
+        </Box>
       ) : (
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <img
-            src={zeroImage}
-            alt={'noTransactions'}
-            style={{ width: '60vh' }}
-          />
-        </div>
+        <Loader top={'500%'} left={'45%'} zIndex={5} />
       )}
-    </Box>
+    </>
   );
 };
 
 const mapStateToProps = state => ({
-  AllTransactions: state.transactions,
+  transactionsData: state.transactions,
+  token: state.session.authToken,
 });
 
 export default connect(mapStateToProps)(Statistics);

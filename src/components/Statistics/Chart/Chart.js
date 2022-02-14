@@ -1,11 +1,16 @@
 import { Doughnut } from 'react-chartjs-2';
 import styled from './chart.module.css';
-import { Chart, ArcElement } from 'chart.js';
-Chart.register(ArcElement);
+import { Chart, ArcElement, Tooltip } from 'chart.js';
+import { numberWithSpaces } from '../../../helpers/helpers.js';
+Chart.register(ArcElement, Tooltip);
 
 export default function Charts(props) {
-  const { categories, colors } = props;
+  const {
+    categoriesAll: { categoriesSummary, expenseSummary },
+    colors,
+  } = props;
 
+  const labels = categoriesSummary.map(el => el.name);
   const options = {
     legend: {
       display: false,
@@ -13,14 +18,15 @@ export default function Charts(props) {
   };
 
   const val =
-    Object.values(categories.expenses).length > 0
-      ? Object.values(categories.expenses)
-      : [1];
+    categoriesSummary.length > 0
+      ? categoriesSummary.map(el => Math.abs(el.total))
+      : [1, 1];
 
   const data = {
-    labels: ['hfd'],
+    labels: labels,
     datasets: [
       {
+        label: '# of Votes',
         data: val,
         backgroundColor: colors,
       },
@@ -30,9 +36,7 @@ export default function Charts(props) {
   return (
     <div className={styled.chartContainer}>
       <p className={styled.totalValue}>
-        {Math.abs(
-          Object.values(categories.expenses).reduce((acc, num) => acc + num, 0),
-        )}
+        ₴ {numberWithSpaces(Math.abs(expenseSummary))}
       </p>
       <Doughnut data={data} width={100} height={100} options={options} />
     </div>
