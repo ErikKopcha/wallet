@@ -33,7 +33,6 @@ const Statistics = props => {
     transactionsData: { transactions, categories },
   } = props;
   if (!month && !year) {
-    console.log(getLastTransaction(transactions));
     const lastTransaction = getLastTransaction(transactions);
     setMonth(lastTransaction.getMonth() + 1);
     setYear(lastTransaction.getFullYear());

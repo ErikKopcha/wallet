@@ -48,8 +48,8 @@ const MobileDashTable = () => {
     },
   ];
 
-  const { transactions, status } = useSelector((state) => state.transactions);
-  const editedTransactions = transactions.map(transaction => transactionRefactor(transaction));
+  const { transactions, status, categories } = useSelector((state) => state.transactions);
+  const editedTransactions = transactions.map(transaction => transactionRefactor(transaction, categories));
   const sortedTransactions = transactionSortingByDate(editedTransactions);
 
   const noTransaction = () => {
