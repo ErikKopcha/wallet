@@ -10,7 +10,7 @@ import Loader from '../Loader/Loader';
 import { useCallback } from 'react';
 const randomColor = require('randomcolor');
 
-export const getLastTransaction = async transactions => {
+export const getLastTransaction = transactions => {
   return new Date(
     [...transactions].sort((a, b) => {
       const dateA = new Date(a.transactionDate);
@@ -33,9 +33,11 @@ const Statistics = props => {
     transactionsData: { transactions, categories },
   } = props;
   if (!month && !year) {
+    console.log(getLastTransaction(transactions));
     const lastTransaction = getLastTransaction(transactions);
     setMonth(lastTransaction.getMonth() + 1);
     setYear(lastTransaction.getFullYear());
+    
     localStorage.setItem(
       'month',
       JSON.stringify(lastTransaction.getMonth() + 1),
