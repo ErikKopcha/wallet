@@ -49,8 +49,8 @@ const MobileDashTable = () => {
   ];
 
   const { transactions, status, categories } = useSelector((state) => state.transactions);
-  const editedTransactions = transactions.map(transaction => transactionRefactor(transaction, categories));
-  const sortedTransactions = transactionSortingByDate(editedTransactions);
+  const sortedTransactions = transactionSortingByDate(transactions);
+  const editedTransactions = sortedTransactions.map(transaction => transactionRefactor(transaction, categories));
 
   const noTransaction = () => {
     return (
@@ -76,7 +76,7 @@ const MobileDashTable = () => {
           status === 'resolved' && transactions.length > 0 ? (
             <Stack direction={'column'} sx={{ pb: '25px' }}>
               {
-                sortedTransactions.map(transaction => (
+                editedTransactions.map(transaction => (
                   <Card key={uniqid()} style={{
                     borderRadius: '10px',
                     borderLeftWidth: '5px',

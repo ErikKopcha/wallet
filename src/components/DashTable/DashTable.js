@@ -55,8 +55,8 @@ const DashTable = () => {
     },
   ];
   const { transactions, status, categories } = useSelector((state) => state.transactions);
-  const editedTransactions = transactions.map(transaction => transactionRefactor(transaction, categories));
-  const sortedTransactions = transactionSortingByDate(editedTransactions);
+  const sortedTransactions = transactionSortingByDate(transactions);
+  const editedTransactions = sortedTransactions.map(transaction => transactionRefactor(transaction, categories));
 
   const [page, setPage] = useState(0);
   const rowsPerPage = 5;
@@ -110,7 +110,7 @@ const DashTable = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {sortedTransactions
+                    {editedTransactions
                       .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                       .map((transaction) => (
                         <TableRow
