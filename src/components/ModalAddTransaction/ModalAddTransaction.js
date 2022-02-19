@@ -22,10 +22,13 @@ import {
 import style from 'components/ModalAddTransaction/ModalAddTransaction.module.css';
 import StyledSwitch from 'components/StyledSwitch/StyledSwitch';
 import Loader from 'components/Loader/Loader';
+import { useRef } from 'react';
 
 const ModalAddTransaction = () => {
 
     const dispatch = useDispatch();
+
+    const submitBtnRef = useRef();
 
     const isMobile = useMediaQuery({ query: '(max-width: 435px)' });
 
@@ -59,12 +62,14 @@ const ModalAddTransaction = () => {
       initialValues: {
         type: true,
         category: '',
-        amount: 0,
+        amount: undefined,
         date: new Date(),
         comments: '',
       },
       validationSchema: validationSchema,
       onSubmit: (newTransaction) => {
+        submitBtnRef.current.style.disabled = 'true';
+        submitBtnRef.current.style.backgroundColor = '#797979';
         let categoryIdOfExpense, categoryIdOfIncome;
         newTransaction.type ? categoryIdOfIncome = categories.find(category => category.type === 'INCOME').id : categoryIdOfExpense = categories.find(category => category.name === newTransaction.category).id;
         const transaction = {
@@ -80,12 +85,12 @@ const ModalAddTransaction = () => {
             theme: 'colored',
           });
         }
-        setTimeout(()=> {
+        setTimeout(() => {
           if (status === 'resolved') {
             formik.resetForm();
             onClose();
           }
-        }, 1000)
+        }, 1000);
       },
     });
 
@@ -218,6 +223,7 @@ const ModalAddTransaction = () => {
           </Grid>
           <Stack sx={{ mt: '50px' }}>
             <Button
+              ref={submitBtnRef}
               type='submit'
               variant='contained'
               sx={{ color: '#fff', mb: '20px' }}>Add</Button>
