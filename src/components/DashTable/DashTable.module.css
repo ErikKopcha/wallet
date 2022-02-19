@@ -1,0 +1,20 @@
+.tableBodyRow :last-child,
+.tableBodyRow:hover :last-child {
+    border-bottom: none;
+}
+
+.tableBodyRow :last-child svg {
+    visibility: hidden;
+}
+
+.tableBodyRow:hover :last-child svg {
+    visibility: visible;
+}
+
+.deleteIcon:hover,
+.deleteIcon:focus {
+    background-color: #fff;
+    border-radius: 50px;
+    padding: 2px;
+    cursor: pointer;
+}

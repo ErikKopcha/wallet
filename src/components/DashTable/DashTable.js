@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import uniqid from 'uniqid';
 import { useState } from 'react';
 import {
@@ -10,13 +10,17 @@ import {
   TableBody,
   TablePagination, Tooltip,
 } from '@mui/material';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 
+import style from './DashTable.module.css';
 import zeroImage from 'assets/images/zero.png';
 import Loader from 'components/Loader/Loader';
 import { transactionSortingByDate } from 'helpers/transactionSorting';
 import { transactionRefactor } from 'helpers/transactionRefactor';
+import { deleteTransaction } from 'redux/transactions';
+import { fetchCurrentUser } from 'redux/user';
 
-export const columns = [
+const columns = [
   {
     id: 'date',
     label: 'Date',
@@ -57,8 +61,10 @@ export const columns = [
 const DashTable = () => {
 
   const { transactions, status, categories } = useSelector((state) => state.transactions);
+  console.log(transactions)
   const sortedTransactions = transactionSortingByDate(transactions);
   const editedTransactions = sortedTransactions.map(transaction => transactionRefactor(transaction, categories));
+  const dispatch = useDispatch();
 
   const [page, setPage] = useState(0);
   const rowsPerPage = 5;
@@ -74,6 +80,13 @@ const DashTable = () => {
         <img src={zeroImage} alt={'noTransactions'} style={{ width: '60vh' }} />
       </div>
     );
+  };
+
+  const deleteTransactionFromTable = (transactionId) => {
+    dispatch(deleteTransaction(transactionId));
+    dispatch(fetchCurrentUser())
+    localStorage.setItem('year', '');
+    localStorage.setItem('month', '');
   };
 
   return (
@@ -94,13 +107,20 @@ const DashTable = () => {
                           return (
                             <TableCell
                               key={uniqid()}
-                              style={{ minWidth: column.minWidth, maxWidth: column.maxWidth }}
+                              style={column.id === 'amount' ? {
+                                minWidth: column.minWidth,
+                                maxWidth: column.maxWidth,
+                                borderTopRightRadius: '100px',
+                                borderBottomRightRadius: '100px',
+                                borderBottom: 'none',
+                              } : {
+                                minWidth: column.minWidth,
+                                maxWidth: column.maxWidth,
+                                borderBottom: 'none',
+                              }}
                               sx={{
                                 '&:first-of-type': {
                                   borderTopLeftRadius: '100px', borderBottomLeftRadius: '100px',
-                                },
-                                '&:last-of-type': {
-                                  borderTopRightRadius: '100px', borderBottomRightRadius: '100px',
                                 },
                               }}
                             >
@@ -109,6 +129,7 @@ const DashTable = () => {
                           );
                         })
                       }
+                      <TableCell sx={{ width: '50px', backgroundColor: 'transparent', borderBottom: 'none' }} />
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -116,6 +137,7 @@ const DashTable = () => {
                       .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                       .map((transaction) => (
                         <TableRow
+                          className={style.tableBodyRow}
                           hover
                           role='checkbox'
                           key={uniqid()}
@@ -136,6 +158,7 @@ const DashTable = () => {
                                     overflow: 'hidden',
                                     whiteSpace: 'nowrap',
                                     textOverflow: 'ellipsis',
+                                    fontWeight: 'lighter'
                                   }}>
                                     {transaction[column.id]}
                                   </TableCell>
@@ -149,8 +172,12 @@ const DashTable = () => {
                                   {value}
                                 </TableCell>
                               );
-                            })
-                          }
+                            })}
+                          <TableCell sx={{ pl: 0 }}>
+                              <DeleteOutlineOutlinedIcon className={style.deleteIcon}
+                                                         onClick={() => deleteTransactionFromTable(transaction.id)}
+                                                         sx={{ color: theme => theme.palette.secondary.main }} />
+                          </TableCell>
                         </TableRow>
                       ))}
                   </TableBody>

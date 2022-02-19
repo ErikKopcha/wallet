@@ -27,7 +27,7 @@ const ModalAddTransaction = () => {
 
     const dispatch = useDispatch();
 
-    const isMobile = useMediaQuery({ query: '(max-width: 420px)' });
+    const isMobile = useMediaQuery({ query: '(max-width: 435px)' });
 
     const categories = useSelector(state => state.transactions.categories);
     const { error, status } = useSelector(state => state.transactions);
@@ -106,7 +106,7 @@ const ModalAddTransaction = () => {
         aria-labelledby='modal-modal-title'
         aria-describedby='modal-modal-description'
         sx={{ overflowY: 'scroll', zIndex: 200 }}
-        style={isMobile ? { width: '100%', height: '100%', top: '30px' } : { top: '50px' }}
+        style={isMobile ? { width: '100%', height: '100vh', top: '30px' } : { top: '50px' }}
       >
         <form className={style.box} onSubmit={handleSubmit}>
           {
