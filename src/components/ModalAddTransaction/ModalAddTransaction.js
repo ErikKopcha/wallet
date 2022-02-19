@@ -1,3 +1,14 @@
+import DatePicker from '@mui/lab/DatePicker';
+import ruLocale from 'date-fns/locale/ru';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import { useFormik } from 'formik';
+import { useDispatch, useSelector } from 'react-redux';
+import * as yup from 'yup';
+import { useMediaQuery } from 'react-responsive';
+import { closeModalAddTransaction } from 'redux/global';
+import { postTransaction } from 'redux/transactions';
+import { toast } from 'react-toastify';
 import {
   Modal,
   Typography,
@@ -7,20 +18,10 @@ import {
   TextField,
   InputLabel, MenuItem, Select,
 } from '@mui/material';
-import DatePicker from '@mui/lab/DatePicker';
-import ruLocale from 'date-fns/locale/ru';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import style from './ModalAddTransaction.module.css';
-import StyledSwitch from '../StyledSwitch/StyledSwitch';
-import { useFormik } from 'formik';
-import { useDispatch, useSelector } from 'react-redux';
-import * as yup from 'yup';
-import { useMediaQuery } from 'react-responsive';
-import { closeModalAddTransaction } from '../../features/global';
-import { postTransaction } from '../../features/transactions';
-import { toast } from 'react-toastify';
-import Loader from '../Loader/Loader';
+
+import style from 'components/ModalAddTransaction/ModalAddTransaction.module.css';
+import StyledSwitch from 'components/StyledSwitch/StyledSwitch';
+import Loader from 'components/Loader/Loader';
 
 const ModalAddTransaction = () => {
 
@@ -58,7 +59,7 @@ const ModalAddTransaction = () => {
       initialValues: {
         type: true,
         category: '',
-        amount: '',
+        amount: 0,
         date: new Date(),
         comments: '',
       },
@@ -177,6 +178,7 @@ const ModalAddTransaction = () => {
               <TextField
                 id='amount'
                 name='amount'
+                type='number'
                 placeholder={'0.00'}
                 value={formik.values.amount}
                 onChange={formik.handleChange}

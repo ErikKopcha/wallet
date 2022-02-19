@@ -12,7 +12,7 @@ import { useEffect } from 'react';
 import DashTable from '../../components/DashTable/DashTable';
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary';
 import MobileDahTable from '../../components/DashTable/MobileDashTable/MobileDashTable';
-import { fetchCategories, fetchTransactions } from '../../features/transactions';
+import { fetchCategories, fetchTransactions } from '../../redux/transactions';
 import { useDispatch } from 'react-redux';
 
 const DashboardPage = () => {

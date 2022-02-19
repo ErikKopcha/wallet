@@ -1,13 +1,15 @@
-import Chart from './Chart/Chart.js';
-import styled from './Statistics.module.css';
 import React, { useEffect, useState } from 'react';
 import { Box } from '@mui/material';
 import Table from './Table/Table.js';
-import ButtonControl from './ButtonControl/ButtonControl.js';
-import zeroImage from '../../assets/images/zero.png';
 import { connect } from 'react-redux';
-import Loader from '../Loader/Loader';
 import { useCallback } from 'react';
+
+import Chart from 'components/Statistics/Chart/Chart.js';
+import styled from 'components/Statistics/Statistics.module.css';
+import ButtonControl from './ButtonControl/ButtonControl.js';
+import zeroImage from 'assets/images/zero.png';
+import Loader from 'components/Loader/Loader';
+
 const randomColor = require('randomcolor');
 
 export const getLastTransaction = transactions => {

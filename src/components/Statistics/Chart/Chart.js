@@ -1,7 +1,7 @@
 import { Doughnut } from 'react-chartjs-2';
 import styled from './chart.module.css';
 import { Chart, ArcElement, Tooltip } from 'chart.js';
-import { numberWithSpaces } from '../../../helpers/helpers.js';
+import { numberWithSpaces } from 'helpers/helpers.js';
 Chart.register(ArcElement, Tooltip);
 
 export default function Charts(props) {

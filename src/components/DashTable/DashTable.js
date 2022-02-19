@@ -1,3 +1,6 @@
+import { useSelector } from 'react-redux';
+import uniqid from 'uniqid';
+import { useState } from 'react';
 import {
   TableContainer,
   Table,
@@ -7,53 +10,52 @@ import {
   TableBody,
   TablePagination, Tooltip,
 } from '@mui/material';
-import { useSelector } from 'react-redux';
-import zeroImage from '../../assets/images/zero.png';
-import uniqid from 'uniqid';
-import { useState } from 'react';
-import Loader from '../Loader/Loader';
-import { transactionSortingByDate } from '../../helpers/transactionSorting';
-import { transactionRefactor } from '../../helpers/transactionRefactor';
+
+import zeroImage from 'assets/images/zero.png';
+import Loader from 'components/Loader/Loader';
+import { transactionSortingByDate } from 'helpers/transactionSorting';
+import { transactionRefactor } from 'helpers/transactionRefactor';
+
+export const columns = [
+  {
+    id: 'date',
+    label: 'Date',
+    minWidth: '80px',
+    maxWidth: '150px',
+    fontSize: '16px',
+  },
+  {
+    id: 'type',
+    label: 'Type',
+    minWidth: '50px',
+    maxWidth: '80px',
+    fontSize: '18px',
+  },
+  {
+    id: 'category',
+    label: 'Category',
+    minWidth: '80px',
+    maxWidth: '150px',
+    fontSize: '16px',
+  },
+  {
+    id: 'comment',
+    label: 'Comments',
+    minWidth: '80px',
+    maxWidth: '150px',
+    fontSize: '16px',
+  },
+  {
+    id: 'amount',
+    label: 'Amount',
+    minWidth: '100px',
+    maxWidth: '150px',
+    fontSize: '16px',
+  },
+];
 
 const DashTable = () => {
 
-  let columns = [
-    {
-      id: 'date',
-      label: 'Date',
-      minWidth: '80px',
-      maxWidth: '150px',
-      fontSize: '16px',
-    },
-    {
-      id: 'type',
-      label: 'Type',
-      minWidth: '50px',
-      maxWidth: '80px',
-      fontSize: '18px',
-    },
-    {
-      id: 'category',
-      label: 'Category',
-      minWidth: '80px',
-      maxWidth: '150px',
-      fontSize: '16px',
-    },
-    {
-      id: 'comment',
-      label: 'Comments',
-      minWidth: '80px',
-      maxWidth: '150px',
-      fontSize: '16px',
-    },
-    {
-      id: 'amount',
-      label: 'Amount',
-      minWidth: '100px',
-      maxWidth: '150px',
-      fontSize: '16px',
-    },
-  ];
   const { transactions, status, categories } = useSelector((state) => state.transactions);
   const sortedTransactions = transactionSortingByDate(transactions);
   const editedTransactions = sortedTransactions.map(transaction => transactionRefactor(transaction, categories));

@@ -87,6 +87,14 @@ select {
   }
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
 .container {
   margin: 0 auto;
   padding: 0 85px;

@@ -1,6 +1,7 @@
-import styled from '../Statistics.module.css';
-import { v4 as uuidv4 } from 'uuid';
-import {numberWithSpaces} from '../../../helpers/helpers.js'
+import styled from 'components/Statistics/Statistics.module.css';
+import uniqid from 'uniqid';
+import { numberWithSpaces } from 'helpers/helpers.js';
+
 const Table = props => {
   const {
     categoriesAll: { categoriesSummary, expenseSummary, incomeSummary },
@@ -10,12 +11,13 @@ const Table = props => {
   const renderCategories = () => {
     return categoriesSummary.map(el => {
       return (
-        <li key={uuidv4()} className={styled.tableItem}>
+        <li key={uniqid()} className={styled.tableItem}>
           {' '}
           <div
             className={styled.itemBox}
             style={{ backgroundColor: colors[categoriesSummary.indexOf(el)] }}
-          ></div>{' '}
+          />
+          {' '}
           <p className={styled.itemName}>{el.name}</p>{' '}
           <p className={styled.itemAmount}>{numberWithSpaces(Math.abs(el.total))}</p>
         </li>

@@ -2,51 +2,15 @@ import {
   Stack, Card, CardContent, Box, Typography, Tooltip,
 } from '@mui/material';
 import { useSelector } from 'react-redux';
-import zeroImage from '../../../assets/images/zero.png';
-import Loader from '../../Loader/Loader';
 import uniqid from 'uniqid';
-import { transactionSortingByDate } from '../../../helpers/transactionSorting';
-import { transactionRefactor } from '../../../helpers/transactionRefactor';
+
+import zeroImage from 'assets/images/zero.png';
+import Loader from 'components/Loader/Loader';
+import { transactionSortingByDate } from 'helpers/transactionSorting';
+import { transactionRefactor } from 'helpers/transactionRefactor';
+import columns from 'components/DashTable/DashTable'
 
 const MobileDashTable = () => {
-
-  let columns = [
-    {
-      id: 'date',
-      label: 'Date',
-      minWidth: '80px',
-      maxWidth: '150px',
-      fontSize: '16px',
-    },
-    {
-      id: 'type',
-      label: 'Type',
-      minWidth: '50px',
-      maxWidth: '80px',
-      fontSize: '18px',
-    },
-    {
-      id: 'category',
-      label: 'Category',
-      minWidth: '80px',
-      maxWidth: '150px',
-      fontSize: '16px',
-    },
-    {
-      id: 'comment',
-      label: 'Comments',
-      minWidth: '80px',
-      maxWidth: '150px',
-      fontSize: '16px',
-    },
-    {
-      id: 'amount',
-      label: 'Amount',
-      minWidth: '100px',
-      maxWidth: '150px',
-      fontSize: '16px',
-    },
-  ];
 
   const { transactions, status, categories } = useSelector((state) => state.transactions);
   const sortedTransactions = transactionSortingByDate(transactions);
@@ -60,14 +24,6 @@ const MobileDashTable = () => {
       </div>
     );
   };
-
-
-  // const [page, setPage] = useState(0);
-  // const rowsPerPage = 5;
-  //
-  // const handleChangePage = (event, newPage) => {
-  //   setPage(newPage);
-  // };
 
   return (
     <>

@@ -1,6 +1,7 @@
-import style from './Balance.module.css';
 import { useSelector } from 'react-redux';
-import { numberWithSpaces } from '../../helpers/helpers';
+
+import style from 'components/Balance/Balance.module.css';
+import { numberWithSpaces } from 'helpers/helpers';
 
 const Balance = () => {
   const balance = useSelector((state) => state.user.balance)

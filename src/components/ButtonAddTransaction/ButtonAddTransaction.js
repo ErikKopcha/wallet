@@ -1,7 +1,7 @@
 import { Fab } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { useDispatch } from 'react-redux';
-import { openModalAddTransaction } from '../../features/global';
+import { openModalAddTransaction } from 'redux/global';
 
 function ButtonAddTransaction({ right, bottom }) {
 
