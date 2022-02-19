@@ -1,5 +1,10 @@
 import {
-  Stack, Card, CardContent, Box, Typography, Tooltip,
+  Stack,
+  Card,
+  CardContent,
+  Box,
+  Typography,
+  Tooltip,
 } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import uniqid from 'uniqid';
@@ -53,16 +58,26 @@ const columns = [
 ];
 
 const MobileDashTable = () => {
-
-  const { transactions, status, categories } = useSelector((state) => state.transactions);
+  const { transactions, status, categories } = useSelector(
+    state => state.transactions,
+  );
   const sortedTransactions = transactionSortingByDate(transactions);
   const editedTransactions = sortedTransactions.map(transaction => transactionRefactor(transaction, categories));
   const dispatch = useDispatch();
 
   const noTransaction = () => {
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '20px' }}>
-        <h1 style={{ marginBottom: '20px', textAlign: 'center' }}>Sorry, now you don't have any transaction(</h1>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          marginBottom: '20px',
+        }}
+      >
+        <h1 style={{ marginBottom: '20px', textAlign: 'center' }}>
+          Sorry, now you don't have any transaction(
+        </h1>
         <img src={zeroImage} alt={'noTransactions'} style={{ width: '60vh' }} />
       </div>
     );
