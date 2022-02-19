@@ -93,7 +93,7 @@ const DashTable = () => {
 
   const deleteTransactionFromTable = (transactionId) => {
     dispatch(deleteTransaction(transactionId));
-    dispatch(fetchCurrentUser())
+    dispatch(fetchCurrentUser());
     localStorage.setItem('year', '');
     localStorage.setItem('month', '');
   };
@@ -117,7 +117,7 @@ const DashTable = () => {
                 boxShadow: 'none',
                 '& .MuiTableCell': { borderLeft: 'none', borderRight: 'none' },
               }}
-              aria-label="simple table"
+              aria-label='simple table'
             >
               <TableHead>
                 <TableRow
@@ -160,7 +160,7 @@ const DashTable = () => {
                   .map(transaction => (
                     <TableRow
                       hover
-                      role="checkbox"
+                      role='checkbox'
                       key={uniqid()}
                       sx={{ '& > *': { textAlign: 'center' } }}
                     >
@@ -192,81 +192,82 @@ const DashTable = () => {
                             >
                               {transaction[column.id]}
                             </TableCell>
-                          );
-                        })
+                          </Tooltip>
+                        ) : null
+                      })
                       }
                       <TableCell sx={{ width: '50px', backgroundColor: 'transparent', borderBottom: 'none' }} />
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {editedTransactions
-                      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                      .map((transaction) => (
-                        <TableRow
-                          className={style.tableBodyRow}
-                          hover
-                          role='checkbox'
-                          key={uniqid()}
-                          sx={{ '& > *': { textAlign: 'center' } }}
-                        >
-                          {
-                            columns.map((column) => {
-                              const value = transaction[column.id];
-                              return value.length >= 30 ? (
-                                <Tooltip key={uniqid()}
-                                         title={transaction[column.id]}>
-                                  <TableCell key={uniqid()} style={{
-                                    maxWidth: column.maxWidth,
-                                    minWidth: column.minWidth,
-                                    fontSize: column.fontSize,
-                                    width: '99%',
-                                    display: 'block',
-                                    overflow: 'hidden',
-                                    whiteSpace: 'nowrap',
-                                    textOverflow: 'ellipsis',
-                                    fontWeight: 'lighter'
-                                  }}>
-                                    {transaction[column.id]}
-                                  </TableCell>
-                                </Tooltip>
-                              ) : (
-                                <TableCell key={uniqid()} style={{
-                                  minWidth: column.minWidth,
-                                  maxWidth: column.maxWidth,
-                                  fontSize: column.fontSize,
-                                }}>
-                                  {value}
-                                </TableCell>
-                              );
-                            })}
-                          <TableCell sx={{ pl: 0 }}>
-                              <DeleteOutlineOutlinedIcon className={style.deleteIcon}
-                                                         onClick={() => deleteTransactionFromTable(transaction.id)}
-                                                         sx={{ color: theme => theme.palette.secondary.main }} />
-                          </TableCell>
-                        </TableRow>
-                      ))}
+                {editedTransactions
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((transaction) => (
+                  <TableRow
+                  className={style.tableBodyRow}
+                  hover
+                  role='checkbox'
+                  key={uniqid()}
+                  sx={{'& > *': {textAlign: 'center'}}}
+                  >
+                {
+                  columns.map((column) => {
+                  const value = transaction[column.id];
+                  return value.length >= 30 ? (
+                  <Tooltip key={uniqid()}
+                  title={transaction[column.id]}>
+                  <TableCell key={uniqid()} style={{
+                  maxWidth: column.maxWidth,
+                  minWidth: column.minWidth,
+                  fontSize: column.fontSize,
+                  width: '99%',
+                  display: 'block',
+                  overflow: 'hidden',
+                  whiteSpace: 'nowrap',
+                  textOverflow: 'ellipsis',
+                  fontWeight: 'lighter'
+                }}>
+                {transaction[column.id]}
+                  </TableCell>
+                  </Tooltip>
+                  ) : (
+                  <TableCell key={uniqid()} style={{
+                  minWidth: column.minWidth,
+                  maxWidth: column.maxWidth,
+                  fontSize: column.fontSize,
+                }}>
+                {value}
+                  </TableCell>
+                  );
+                })}
+                  <TableCell sx={{pl: 0}}>
+                  <DeleteOutlineOutlinedIcon className={style.deleteIcon}
+                  onClick={() => deleteTransactionFromTable(transaction.id)}
+                  sx={{color: theme => theme.palette.secondary.main}} />
+                  </TableCell>
+                  </TableRow>
+                  ))}
                   </TableBody>
-                </Table>
-              </TableContainer>
-              {
-                transactions.length > 5 && (
+                  </Table>
+                  </TableContainer>
+                {
+                  transactions.length > 5 && (
                   <TablePagination
-                    rowsPerPageOptions={[]}
-                    rowsPerPage={rowsPerPage}
-                    component='div'
-                    count={transactions.length}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    style={{ display: 'flex', justifyContent: 'space-around' }}
+                  rowsPerPageOptions={[]}
+                  rowsPerPage={rowsPerPage}
+                  component='div'
+                  count={transactions.length}
+                  page={page}
+                  onPageChange={handleChangePage}
+                  style={{display: 'flex', justifyContent: 'space-around'}}
                   />
-                )
-              }
-            </>
-          ) : status === 'resolved' ? noTransaction() : null
-      }
-    </>
-  );
-};
+                  )
+                }
+                  </>
+                  ) : status === 'resolved' ? noTransaction() : null
+                }
+              </>
+              );
+              };
 
-export { DashTable, columns };
+              export {DashTable, columns};
