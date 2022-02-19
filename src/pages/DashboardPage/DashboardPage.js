@@ -18,7 +18,7 @@ import MobileDahTable from 'components/DashTable/MobileDashTable/MobileDashTable
 
 const DashboardPage = () => {
   const isMobile = useMediaQuery({ query: '(max-width: 425px)' });
-  const isTabletOrMobile = useMediaQuery({query: '(max-width: 520px)'});
+  const isTabletOrMobile = useMediaQuery({query: '(max-width: 640px)'});
 
   const dispatch = useDispatch();
 

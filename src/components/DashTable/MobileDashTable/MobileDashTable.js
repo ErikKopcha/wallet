@@ -12,6 +12,7 @@ import { transactionRefactor } from 'helpers/transactionRefactor';
 import { deleteTransaction } from 'redux/transactions';
 import { fetchCurrentUser } from 'redux/user';
 import style from 'components/DashTable/DashTable.module.css';
+import { useState } from 'react';
 
 
 const columns = [
@@ -59,6 +60,12 @@ const MobileDashTable = () => {
   const editedTransactions = sortedTransactions.map(transaction => transactionRefactor(transaction, categories));
   const dispatch = useDispatch();
 
+  const [isDeleteVisible, setDeleteVisible] = useState(false);
+
+  const handleDeleteVisibility = () => {
+    setDeleteVisible(!isDeleteVisible);
+  }
+
   const noTransaction = () => {
     return (
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '20px' }}>
@@ -83,12 +90,11 @@ const MobileDashTable = () => {
             <Stack direction={'column'} sx={{ pb: '25px' }}>
               {
                 editedTransactions.map(transaction => (
-                  <Card key={uniqid()} style={{
+                  <Card key={uniqid()} onClick={handleDeleteVisibility} style={{
                     borderRadius: '10px',
                     borderLeftWidth: '5px',
                     borderLeftStyle: 'solid',
                     borderLeftColor: transaction.type === '+' ? '#24CCA7' : '#FF6596',
-                    paddingRight: '20px',
                   }} sx={{
                     '&:not(:last-of-type)': {
                       marginBottom: '10px',
@@ -96,10 +102,11 @@ const MobileDashTable = () => {
                     '& .MuiCardContent-root:last-child': {
                       pb: 0,
                     },
+                    cursor: 'pointer'
                   }}>
                     <CardContent sx={{ padding: 0 }}>
                       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                        <div style={{width: '95%'}}>
+                        <div style={isDeleteVisible ? {width: '95%'} : {width: '100%'}}>
                           {
                             columns.map(column => (
                               <Box key={uniqid()} sx={{
@@ -140,7 +147,9 @@ const MobileDashTable = () => {
                         </div>
                         <DeleteOutlineOutlinedIcon className={`${style.deleteIcon} ${style.deleteIconMobile}`}
                                                    onClick={() => deleteTransactionFromTable(transaction.id)}
-                                                   sx={{ color: theme => theme.palette.secondary.main, ml: '20px' }} />
+                                                   sx={{ color: theme => theme.palette.secondary.main }}
+                                                   style={isDeleteVisible ? {visibility: 'visible', margin: '0 20px'} : {visibility: 'hidden'}}
+                        />
                       </div>
                     </CardContent>
                   </Card>))
