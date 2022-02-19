@@ -73,6 +73,29 @@ export const postTransaction = createAsyncThunk(
   },
 );
 
+export const deleteTransaction = createAsyncThunk(
+  'transactions/deleteTransaction',
+  async (transactionId, { rejectWithValue, getState, dispatch }) => {
+    const token = getState().session.authToken;
+    const requestOptions = {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      },
+    };
+    try {
+      const response = await fetch(`https://wallet.goit.ua/api/transactions/${transactionId}`, requestOptions);
+      if (!response.ok) {
+        throw new Error('Server error!');
+      } else {
+        dispatch(deleteTransactionFromStore(transactionId));
+      }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
 export const transactionsSlice = createSlice({
   name: 'transactions',
   initialState: { transactions: [], categories: [], status: null, error: null },
@@ -80,6 +103,9 @@ export const transactionsSlice = createSlice({
     addTransaction: (state, action) => {
       state.transactions.push(action.payload);
     },
+    deleteTransactionFromStore: (state, action) => {
+      state.transactions = state.transactions.filter(transaction => transaction.id !== action.payload);
+    }
   },
   extraReducers: {
     [fetchCategories.fulfilled]: (state, action) => {
@@ -114,6 +140,6 @@ export const transactionsSlice = createSlice({
   },
 });
 
-export const { addTransaction } = transactionsSlice.actions;
+export const { addTransaction, deleteTransactionFromStore } = transactionsSlice.actions;
 
 export default transactionsSlice.reducer;

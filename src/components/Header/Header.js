@@ -11,7 +11,7 @@ import ModalLogout from 'components/ModalLogout/ModalLogout';
 const Header = () => {
   const name = useSelector((state) => state.user.username)
 
-  const isMobile = useMediaQuery({ query: '(max-width: 420px)' });
+  const isMobile = useMediaQuery({ query: '(max-width: 435px)' });
 
   const dispatch = useDispatch();
 

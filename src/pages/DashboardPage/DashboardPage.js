@@ -1,23 +1,24 @@
-import style from './DashboardPage.module.css';
-import Header from '../../components/Header/Header';
-import Navigation from '../../components/Navigation/Navigation';
-import Balance from '../../components/Balance/Balance';
-import ButtonAddTransaction from '../../components/ButtonAddTransaction/ButtonAddTransaction';
-import ModalAddTransaction from '../../components/ModalAddTransaction/ModalAddTransaction';
-import Currency from '../../components/Currency/Currency';
-import Statistics from '../../components/Statistics/Statistics.js';
 import { Routes, Route } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 import { useEffect } from 'react';
-import { DashTable } from '../../components/DashTable/DashTable';
-import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary';
-import MobileDahTable from '../../components/DashTable/MobileDashTable/MobileDashTable';
-import { fetchCategories, fetchTransactions } from '../../redux/transactions';
+import { fetchCategories, fetchTransactions } from 'redux/transactions';
 import { useDispatch } from 'react-redux';
+
+import style from './DashboardPage.module.css';
+import Header from 'components/Header/Header';
+import Navigation from 'components/Navigation/Navigation';
+import Balance from 'components/Balance/Balance';
+import ButtonAddTransaction from 'components/ButtonAddTransaction/ButtonAddTransaction';
+import ModalAddTransaction from 'components/ModalAddTransaction/ModalAddTransaction';
+import Currency from 'components/Currency/Currency';
+import Statistics from 'components/Statistics/Statistics.js'
+import DashTable from 'components/DashTable/DashTable';
+import ErrorBoundary from 'components/ErrorBoundary/ErrorBoundary';
+import MobileDahTable from 'components/DashTable/MobileDashTable/MobileDashTable';
 
 const DashboardPage = () => {
   const isMobile = useMediaQuery({ query: '(max-width: 425px)' });
-  const isTabletOrMobile = useMediaQuery({ query: '(max-width: 520px)' });
+  const isTabletOrMobile = useMediaQuery({query: '(max-width: 640px)'});
 
   const dispatch = useDispatch();
 
