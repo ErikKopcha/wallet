@@ -5,7 +5,9 @@ import { useDispatch } from 'react-redux';
 
 const useWalletService = () => {
   const dispatch = useDispatch();
-  const { get, response } = useFetch('https://api.privatbank.ua/p24api/pubinfo');
+  const { get, response } = useFetch(
+    'https://api.privatbank.ua/p24api/pubinfo',
+  );
   const _baseCurrencyId = 5;
 
   /**
@@ -21,7 +23,7 @@ const useWalletService = () => {
       return result;
     } else {
       toast.error(`Failed to load exchange rates.`, {
-        theme: "colored"
+        theme: 'colored',
       });
 
       return [];

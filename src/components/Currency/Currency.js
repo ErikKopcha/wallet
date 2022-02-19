@@ -10,7 +10,7 @@ const {
   setLocalStorageCurrData,
   setDateToLocalStorage,
   getCurrFromStorage,
-  isGetData
+  isGetData,
 } = currencyHelpers();
 
 /**
@@ -20,41 +20,36 @@ const {
  * @param { Number } precision
  * @returns {JSX.Element}
  */
-const getRow = ({
-    ccy = 'UAH',
-    buy = 1,
-    sale = 1,
-    precision = 2,
-  }) => {
+const getRow = ({ ccy = 'UAH', buy = 1, sale = 1, precision = 2 }) => {
   return (
     <tr key={ccy}>
       <td>{ccy}</td>
       <td>{numberWithSpaces(Number(buy).toFixed(precision))}</td>
-      <td className="ta-r">{numberWithSpaces(Number(sale).toFixed(precision))}</td>
+      <td className="ta-r">
+        {numberWithSpaces(Number(sale).toFixed(precision))}
+      </td>
     </tr>
-  )
-}
+  );
+};
 
 /**
  * @param { Array } currData
  * @returns {JSX.Element}
  */
-const Table = ({currData}) => {
+const Table = ({ currData }) => {
   return (
     <table>
       <thead>
-      <tr>
-        <th className="ta-l">Currency</th>
-        <th className="ta-l">Purchase</th>
-        <th className="ta-r">Sale</th>
-      </tr>
+        <tr>
+          <th className="ta-l">Currency</th>
+          <th className="ta-l">Purchase</th>
+          <th className="ta-r">Sale</th>
+        </tr>
       </thead>
-      <tbody>
-      {currData.map(getRow)}
-      </tbody>
+      <tbody>{currData.map(getRow)}</tbody>
     </table>
-  )
-}
+  );
+};
 
 const Currency = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -63,10 +58,10 @@ const Currency = () => {
   const msCheckUpdateData = 10_000;
 
   const currDataDefault = [
-    {ccy: 'EUR', base_ccy: 'UAH', buy: '0', sale: '0'},
-    {ccy: 'RUR', base_ccy: 'UAH', buy: '0', sale: '0'},
-    {ccy: 'USD', base_ccy: 'UAH', buy: '0', sale: '0'},
-    {ccy: 'BTC', base_ccy: 'USD', buy: '0', sale: '0'}
+    { ccy: 'EUR', base_ccy: 'UAH', buy: '0', sale: '0', isDefault: true },
+    { ccy: 'RUR', base_ccy: 'UAH', buy: '0', sale: '0', isDefault: true },
+    { ccy: 'USD', base_ccy: 'UAH', buy: '0', sale: '0', isDefault: true },
+    { ccy: 'BTC', base_ccy: 'USD', buy: '0', sale: '0', isDefault: true },
   ];
 
   let getDataInterval = null;
@@ -77,7 +72,7 @@ const Currency = () => {
    * start function if data loaded
    * @param { Array } currData
    */
-  const onDataLoaded = (currData) => {
+  const onDataLoaded = currData => {
     if (currData && currData.length) {
       setLocalStorageCurrData(currData);
       setCurrData(currData);
@@ -87,11 +82,11 @@ const Currency = () => {
     }
 
     setIsLoading(false);
-  }
+  };
 
   /**
    * start check time to get data currency
-  */
+   */
   const startCheckTime = () => {
     if (getDataInterval) clearInterval(getDataInterval);
 
@@ -107,6 +102,20 @@ const Currency = () => {
     }, msCheckUpdateData);
   };
 
+  const checkDownloadedData = parsed => {
+    try {
+      if (parsed[0]?.isDefault) {
+        localStorage.removeItem('currDate');
+        localStorage.removeItem('currData');
+        getData();
+      } else {
+        onDataLoaded(parsed);
+      }
+    } catch (e) {
+      onDataLoaded(parsed);
+    }
+  };
+
   /**
    * start check
    */
@@ -119,32 +128,35 @@ const Currency = () => {
         getCurrency().then(onDataLoaded);
         setDateToLocalStorage();
       } else {
-        const data = getCurrFromStorage() || "[]";
+        const data = getCurrFromStorage() || '[]';
         const parsed = JSON.parse(data);
 
-        onDataLoaded(parsed);
+        checkDownloadedData(parsed);
       }
 
       startCheckTime();
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+    [],
   );
 
   useEffect(() => {
     getData();
     // eslint-disable-next-line
-  },[]);
+  }, []);
 
-  const isWaiting = isLoading ? <Rings wrapperClass={style.spinner} ariaLabel="loading-indicator" /> : null;
-  const isRender = currData !== null && currData.length ? <Table currData={currData} /> : null;
+  const isWaiting = isLoading ? (
+    <Rings wrapperClass={style.spinner} ariaLabel="loading-indicator" />
+  ) : null;
+  const isRender =
+    currData !== null && currData.length ? <Table currData={currData} /> : null;
 
   return (
     <div className={style.currency}>
       {isWaiting}
       {isRender}
     </div>
-  )
-}
+  );
+};
 
 export default Currency;
