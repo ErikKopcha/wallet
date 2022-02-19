@@ -1,13 +1,18 @@
 import {
   Stack, Card, CardContent, Box, Typography, Tooltip,
 } from '@mui/material';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import uniqid from 'uniqid';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 
 import zeroImage from 'assets/images/zero.png';
 import Loader from 'components/Loader/Loader';
 import { transactionSortingByDate } from 'helpers/transactionSorting';
 import { transactionRefactor } from 'helpers/transactionRefactor';
+import { deleteTransaction } from 'redux/transactions';
+import { fetchCurrentUser } from 'redux/user';
+import style from 'components/DashTable/DashTable.module.css';
+
 
 const columns = [
   {
@@ -52,6 +57,7 @@ const MobileDashTable = () => {
   const { transactions, status, categories } = useSelector((state) => state.transactions);
   const sortedTransactions = transactionSortingByDate(transactions);
   const editedTransactions = sortedTransactions.map(transaction => transactionRefactor(transaction, categories));
+  const dispatch = useDispatch();
 
   const noTransaction = () => {
     return (
@@ -60,6 +66,13 @@ const MobileDashTable = () => {
         <img src={zeroImage} alt={'noTransactions'} style={{ width: '60vh' }} />
       </div>
     );
+  };
+
+  const deleteTransactionFromTable = (transactionId) => {
+    dispatch(deleteTransaction(transactionId));
+    dispatch(fetchCurrentUser());
+    localStorage.setItem('year', '');
+    localStorage.setItem('month', '');
   };
 
   return (
@@ -75,6 +88,7 @@ const MobileDashTable = () => {
                     borderLeftWidth: '5px',
                     borderLeftStyle: 'solid',
                     borderLeftColor: transaction.type === '+' ? '#24CCA7' : '#FF6596',
+                    paddingRight: '20px',
                   }} sx={{
                     '&:not(:last-of-type)': {
                       marginBottom: '10px',
@@ -84,43 +98,50 @@ const MobileDashTable = () => {
                     },
                   }}>
                     <CardContent sx={{ padding: 0 }}>
-                      {
-                        columns.map(column => (
-                          <Box key={uniqid()} sx={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            borderBottom: '1px solid #DCDCDF',
-                            height: '47px',
-                            alignItems: 'center',
-                            paddingX: '20px',
-                          }}>
-                            <Typography key={uniqid()}>
-                              {column.id}
-                            </Typography>
-                            {
-                              transaction[column.id].length >= 30 ? (
-                                <Tooltip key={uniqid()}
-                                         title={transaction[column.id]}>
-                                  <Typography key={uniqid()} sx={{
-                                    maxWidth: '49%',
-                                    width: '50%',
-                                    display: 'block',
-                                    overflow: 'hidden',
-                                    whiteSpace: 'nowrap',
-                                    textOverflow: 'ellipsis',
-                                  }}>
-                                    {transaction[column.id]}
-                                  </Typography>
-                                </Tooltip>
-                              ) : (
-                                <Typography key={uniqid()}
-                                            sx={{ maxWidth: '200px' }}>
-                                  {transaction[column.id]}
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                        <div style={{width: '95%'}}>
+                          {
+                            columns.map(column => (
+                              <Box key={uniqid()} sx={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                borderBottom: '1px solid #DCDCDF',
+                                height: '47px',
+                                alignItems: 'center',
+                                paddingX: '20px',
+                              }}>
+                                <Typography key={uniqid()}>
+                                  {column.id}
                                 </Typography>
-                              )
-                            }
-                          </Box>))
-                      }
+                                {
+                                  transaction[column.id].length >= 30 ? (
+                                    <Tooltip key={uniqid()}
+                                             title={transaction[column.id]}>
+                                      <Typography key={uniqid()} sx={{
+                                        maxWidth: '49%',
+                                        width: '50%',
+                                        display: 'block',
+                                        overflow: 'hidden',
+                                        whiteSpace: 'nowrap',
+                                        textOverflow: 'ellipsis',
+                                      }}>
+                                        {transaction[column.id]}
+                                      </Typography>
+                                    </Tooltip>
+                                  ) : (
+                                    <Typography key={uniqid()}
+                                                sx={{ maxWidth: '200px' }}>
+                                      {transaction[column.id]}
+                                    </Typography>
+                                  )
+                                }
+                              </Box>))
+                          }
+                        </div>
+                        <DeleteOutlineOutlinedIcon className={`${style.deleteIcon} ${style.deleteIconMobile}`}
+                                                   onClick={() => deleteTransactionFromTable(transaction.id)}
+                                                   sx={{ color: theme => theme.palette.secondary.main, ml: '20px' }} />
+                      </div>
                     </CardContent>
                   </Card>))
               }

@@ -18,3 +18,8 @@
     padding: 2px;
     cursor: pointer;
 }
+
+.deleteIconMobile:hover,
+.deleteIconMobile:focus {
+    background-color: #dcdcdc;
+}

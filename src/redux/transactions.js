@@ -88,9 +88,7 @@ export const deleteTransaction = createAsyncThunk(
       if (!response.ok) {
         throw new Error('Server error!');
       } else {
-        //const data = await response.json();
         dispatch(deleteTransactionFromStore(transactionId));
-        //dispatch(updateBalance(amountWithSign));
       }
     } catch (error) {
       return rejectWithValue(error.message);

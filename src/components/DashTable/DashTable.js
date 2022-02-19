@@ -61,7 +61,6 @@ const columns = [
 const DashTable = () => {
 
   const { transactions, status, categories } = useSelector((state) => state.transactions);
-  console.log(transactions)
   const sortedTransactions = transactionSortingByDate(transactions);
   const editedTransactions = sortedTransactions.map(transaction => transactionRefactor(transaction, categories));
   const dispatch = useDispatch();
