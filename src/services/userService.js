@@ -1,7 +1,7 @@
 import useFetch from 'use-http';
-import { authenticationSuccess } from '../features/session';
-import { authorization, registration } from '../features/user';
-import { loadingStarted, loadingFinished} from '../features/global';
+import { authenticationSuccess } from 'redux/session';
+import { authorization, registration } from 'redux/user';
+import { loadingStarted, loadingFinished} from 'redux/global';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';

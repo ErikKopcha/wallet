@@ -2,9 +2,10 @@ import { Link, Route, Routes } from 'react-router-dom';
 import { Button, Modal, Paper, Stack, Typography } from '@mui/material';
 import { useMediaQuery } from 'react-responsive';
 import { useDispatch, useSelector } from 'react-redux';
-import LoginPage from '../../pages/LoginPage/LoginPage';
 import { toast } from 'react-toastify';
-import { closeModalLogout } from '../../features/global';
+import { closeModalLogout } from 'redux/global';
+
+import LoginPage from 'pages/LoginPage/LoginPage';
 
 const ModalLogout = () => {
   const isMobile = useMediaQuery({ query: '(max-width: 420px)' });

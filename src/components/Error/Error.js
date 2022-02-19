@@ -1,4 +1,4 @@
-import errorSrc from '../../assets/images/error.gif';
+import errorSrc from 'assets/images/error.gif';
 
 const Error = () => {
   return (

@@ -1,11 +1,12 @@
-import style from './Header.module.css';
-import logo from '../../assets/icons/wallet-logo.svg';
-import exitIcon from '../../assets/icons/exit.svg';
 import { Link } from "react-router-dom";
-import ModalLogout from '../ModalLogout/ModalLogout';
 import { useDispatch, useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
-import { openModalLogout } from '../../features/global';
+import { openModalLogout } from 'redux/global';
+
+import style from 'components/Header/Header.module.css';
+import logo from 'assets/icons/wallet-logo.svg';
+import exitIcon from 'assets/icons/exit.svg';
+import ModalLogout from 'components/ModalLogout/ModalLogout';
 
 const Header = () => {
   const name = useSelector((state) => state.user.username)

@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+
 import { updateBalance } from './user';
 
 export const fetchCategories = createAsyncThunk(

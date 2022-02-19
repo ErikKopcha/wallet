@@ -1,6 +1,6 @@
 import useFetch from 'use-http';
 import { toast } from 'react-toastify';
-import { loadingStarted, loadingFinished } from '../features/global';
+import { loadingStarted, loadingFinished } from 'redux/global';
 import { useDispatch } from 'react-redux';
 
 const useWalletService = () => {

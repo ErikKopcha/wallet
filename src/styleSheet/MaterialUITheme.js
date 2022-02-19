@@ -1,10 +1,10 @@
 import { createTheme } from '@mui/material/styles';
-import PoppinsBoldWoff2 from '../assets/fonts/Poppins-Bold.woff2';
-import PoppinsBoldWoff from '../assets/fonts/Poppins-Bold.woff';
-import PoppinsRegularWoff2 from '../assets/fonts/Poppins-Regular.woff2';
-import PoppinsRegularWoff from '../assets/fonts/Poppins-Regular.woff';
-import AbelRegularWoff2 from '../assets/fonts/Abel-Regular.woff2';
-import AbelRegularWoff from '../assets/fonts/Abel-Regular.woff';
+import PoppinsBoldWoff2 from 'assets/fonts/Poppins-Bold.woff2';
+import PoppinsBoldWoff from 'assets/fonts/Poppins-Bold.woff';
+import PoppinsRegularWoff2 from 'assets/fonts/Poppins-Regular.woff2';
+import PoppinsRegularWoff from 'assets/fonts/Poppins-Regular.woff';
+import AbelRegularWoff2 from 'assets/fonts/Abel-Regular.woff2';
+import AbelRegularWoff from 'assets/fonts/Abel-Regular.woff';
 
 const theme = createTheme({
   palette: {

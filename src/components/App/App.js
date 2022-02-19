@@ -1,16 +1,17 @@
-import './App.css';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import DashboardPage from '../../pages/DashboardPage/DashboardPage';
-import LoginPage from '../../pages/LoginPage/LoginPage'
-import RegistrationPage from '../../pages/RegistrationPage/RegistrationPage';
 import { ThemeProvider } from '@mui/material/styles';
-import theme from '../../settings/themeSettings';
-import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { TailSpin } from 'react-loader-spinner';
+
+import 'components/App/App.css';
+import DashboardPage from 'pages/DashboardPage/DashboardPage';
+import LoginPage from 'pages/LoginPage/LoginPage'
+import RegistrationPage from 'pages/RegistrationPage/RegistrationPage';
+import theme from 'settings/themeSettings';
+import ProtectedRoute from 'components/ProtectedRoute/ProtectedRoute';
 
 const App = () => {
   const isUserAuthenticated = useSelector((state) => state.session.isAuth);

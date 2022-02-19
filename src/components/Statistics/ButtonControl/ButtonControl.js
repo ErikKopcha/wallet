@@ -1,5 +1,6 @@
 import { Select, InputLabel, FormControl, Box, MenuItem } from '@mui/material';
-import styled from '../Statistics.module.css';
+
+import styled from 'components/Statistics/Statistics.module.css';
 
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';

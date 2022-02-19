@@ -1,9 +1,10 @@
-import style from './Currency.module.css';
-import React, { useState, useEffect, useCallback } from 'react';
-import useWalletService from '../../services/walletService';
+import { useState, useEffect, useCallback } from 'react';
 import { Rings } from 'react-loader-spinner';
-import { numberWithSpaces } from '../../helpers/helpers';
-import currencyHelpers from './helpers';
+
+import style from 'components/Currency/Currency.module.css';
+import useWalletService from 'services/walletService';
+import { numberWithSpaces } from 'helpers/helpers';
+import currencyHelpers from 'components/Currency/helpers';
 
 const {
   setLocalStorageCurrData,

@@ -1,15 +1,16 @@
-import style from './RegistrationForm.module.css';
-import logo from '../../assets/icons/wallet-logo.svg';
 import { Link } from "react-router-dom";
 import React from 'react';
 import { Formik } from 'formik';
 import * as yup from 'yup';
-import useUserService from '../../services/userService';
 import EmailIcon from '@mui/icons-material/Email';
 import LockIcon from '@mui/icons-material/Lock';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import InputAdornment from '@mui/material/InputAdornment';
 import Input from '@mui/material/Input';
+
+import style from 'components/RegistrationForm/RegistrationForm.module.css';
+import logo from 'assets/icons/wallet-logo.svg';
+import useUserService from 'services/userService';
 
 export default function RegistrationForm() {
   const { registerUser } = useUserService();
