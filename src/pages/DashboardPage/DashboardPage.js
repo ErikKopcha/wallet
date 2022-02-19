@@ -26,33 +26,58 @@ const DashboardPage = () => {
     dispatch(fetchCategories());
     dispatch(fetchTransactions());
     // eslint-disable-next-line
-  }, [])
+  }, []);
 
   return (
     <div className={style.dashboardWrap}>
       <Header />
       <div className={`${style.leftHeadContainer} container`}>
         <div className={style.leftContainer}>
-         <div className={style.balanceBlock}>
-           <Navigation />
-           <Balance />
-         </div>
-          { !isMobile && <ErrorBoundary><Currency /></ErrorBoundary> }
+          <div className={style.balanceBlock}>
+            <Navigation />
+            <Balance />
+          </div>
+          {!isMobile && (
+            <ErrorBoundary>
+              <Currency />
+            </ErrorBoundary>
+          )}
         </div>
         <div className={style.rightContainer}>
           <Routes>
-            <Route path="/" element={ isTabletOrMobile ? <MobileDahTable/> : <DashTable/> } />
-            <Route path="diagram" element={ <Statistics/> } />
-            { isMobile && <Route path="currency" element={ <ErrorBoundary><Currency /></ErrorBoundary> } /> }
+            <Route
+              path="/"
+              element={isTabletOrMobile ? <MobileDahTable /> : <DashTable />}
+            />
+            <Route path="diagram" element={<Statistics />} />
+            {isMobile && (
+              <Route
+                path="currency"
+                element={
+                  <ErrorBoundary>
+                    <Currency />
+                  </ErrorBoundary>
+                }
+              />
+            )}
           </Routes>
         </div>
         <Routes>
-          <Route path="/" element={ isTabletOrMobile ? <ButtonAddTransaction right='20px' bottom='20px' /> :  <ButtonAddTransaction right='80px' bottom='60px' />}/>
+          <Route
+            path="/"
+            element={
+              isTabletOrMobile ? (
+                <ButtonAddTransaction right="20px" bottom="20px" />
+              ) : (
+                <ButtonAddTransaction right="80px" bottom="60px" />
+              )
+            }
+          />
         </Routes>
         <ModalAddTransaction />
       </div>
     </div>
   );
-}
+};
 
 export default DashboardPage;
