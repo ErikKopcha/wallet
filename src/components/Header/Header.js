@@ -9,7 +9,7 @@ import exitIcon from 'assets/icons/exit.svg';
 import ModalLogout from 'components/ModalLogout/ModalLogout';
 
 const Header = () => {
-  const name = useSelector((state) => state.user.username)
+  const user = useSelector((state) => state.user)
 
   const isMobile = useMediaQuery({ query: '(max-width: 435px)' });
 
@@ -27,7 +27,14 @@ const Header = () => {
           <span className={style.logoText}>Wallet</span>
         </Link>
         <div className={style.headerInfo}>
-          <p className={style.afterVerticalLine}>{name}</p>
+          <div className={style.dropdown}>
+            <p className={`${style.afterVerticalLine} ${style.dropEl}`}>{user.username}</p>
+            <div className={style.dropdownContent}>
+              <span>Name: <span className={style.contentVar}>{user.username}</span></span>
+              <span>Email: <span className={style.contentVar}>{user.email}</span></span>
+              <span>Balance: <span className={style.contentVar}>$ {user.balance}</span></span>
+            </div>
+          </div>
           <button className={style.btnExit} onClick={handleOpenModalLogout}>
             <img src={exitIcon} alt='logout' />
             <span>Exit</span>
