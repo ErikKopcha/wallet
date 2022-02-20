@@ -1,9 +1,10 @@
 import { Select, InputLabel, FormControl, Box, MenuItem } from '@mui/material';
-
-import styled from 'components/Statistics/Statistics.module.css';
+import styled from '../Statistics.module.css';
 
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
 const monthName = [
   null,
@@ -28,6 +29,8 @@ export default function ButtonControl(props) {
     month,
     year,
     transactions,
+    handleChangeCoin,
+    currentCoin
   } = props;
 
   const addMonth = () => {
@@ -35,7 +38,7 @@ export default function ButtonControl(props) {
       .map(el => {
         const date = new Date(el.transactionDate);
 
-        if (year) {
+        if (year && date.getFullYear()===year) {
           return date.getMonth() + 1;
         }
 
@@ -183,7 +186,29 @@ select:{
             </Select>
           </FormControl>
         </Box>
-      </Box>
+        </Box>
+<Box >
+        <ToggleButtonGroup
+        className={styled.coinButtonBox}
+      value={currentCoin}
+      exclusive
+      onChange={handleChangeCoin}
+      aria-label="text alignment"
+    >
+      <ToggleButton className={styled.coinButton} value="USD" aria-label="left aligned">
+      $
+      </ToggleButton>
+      <ToggleButton className={styled.coinButton} value="UAH" aria-label="centered">
+      ₴
+      </ToggleButton>
+      <ToggleButton className={styled.coinButton} value="EUR" aria-label="right aligned">
+      €
+      </ToggleButton>
+      <ToggleButton className={styled.coinButton} value="BTC" aria-label="justified">
+      ₿
+      </ToggleButton>
+    </ToggleButtonGroup>
+    </Box>
       <Box className={styled.tableHeader}>
         <p className={styled.category}>Category</p>
         <p className={styled.amount}>Amount</p>
