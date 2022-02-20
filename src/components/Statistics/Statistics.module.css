@@ -122,6 +122,16 @@
         font-family: 'Abel', sans-serif;
         font-weight: normal;
     }
+    .coinButtonBox{
+        width: 100%;
+        display: inline-block;
+        margin: 0 auto;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+    .coinButton{
+        min-width: 50px;
+    }
     
     
     @media(min-width:425px){
@@ -145,6 +155,9 @@
         .tableHeader{
           max-width: 380px;
      
+        }
+        .coinButton{
+            min-width: 75px;
         }
     
     }
