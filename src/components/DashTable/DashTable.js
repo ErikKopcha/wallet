@@ -84,8 +84,8 @@ const DashTable = () => {
   const deleteTransactionFromTable = async (transactionId) => {
     await dispatch(deleteTransaction(transactionId));
     dispatch(fetchCurrentUser())
-    localStorage.setItem('year', '');
-    localStorage.setItem('month', '');
+    localStorage.removeItem('year', '');
+    localStorage.removeItem('month', '');
   };
 
   return (
