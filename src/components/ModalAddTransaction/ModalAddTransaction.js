@@ -28,8 +28,6 @@ const ModalAddTransaction = () => {
 
     const dispatch = useDispatch();
 
-    const submitBtnRef = useRef();
-
     const isMobile = useMediaQuery({ query: '(max-width: 435px)' });
 
     const categories = useSelector(state => state.transactions.categories);
@@ -68,8 +66,6 @@ const ModalAddTransaction = () => {
       },
       validationSchema: validationSchema,
       onSubmit: (newTransaction) => {
-        submitBtnRef.current.style.disabled = 'true';
-        submitBtnRef.current.style.backgroundColor = '#797979';
         let categoryIdOfExpense, categoryIdOfIncome;
         newTransaction.type ? categoryIdOfIncome = categories.find(category => category.type === 'INCOME').id : categoryIdOfExpense = categories.find(category => category.name === newTransaction.category).id;
         const transaction = {
@@ -104,6 +100,10 @@ const ModalAddTransaction = () => {
       formik.handleSubmit(e);
     };
 
+    const handleRejectSubmit = (e) => {
+      e.preventDefault();
+    }
+
     return (
       <Modal
         open={isModalOpen}
@@ -111,9 +111,9 @@ const ModalAddTransaction = () => {
         aria-labelledby='modal-modal-title'
         aria-describedby='modal-modal-description'
         sx={{ overflowY: 'scroll', zIndex: 200 }}
-        style={isMobile ? { width: '100%', height: '100vh', top: '30px' } : { top: '50px' }}
+        style={isMobile ? {width: '100%', height: '100vh', top: '30px'} : {top: '50px'}}
       >
-        <form className={style.box} onSubmit={handleSubmit}>
+        <form className={style.box} onSubmit={formik.isSubmitting ? handleRejectSubmit : handleSubmit}>
           {
             status === 'loading' && <Loader width={60} right={'30px'} top={'30px'} />
           }
@@ -223,10 +223,13 @@ const ModalAddTransaction = () => {
           </Grid>
           <Stack sx={{ mt: '50px' }}>
             <Button
-              ref={submitBtnRef}
               type='submit'
               variant='contained'
-              sx={{ color: '#fff', mb: '20px' }}>Add</Button>
+              sx={{ color: '#fff', mb: '20px' }}
+              style={formik.isSubmitting ? {backgroundColor: '#696969'} : null}
+            >
+              Add
+            </Button>
             <Button variant='outlined' onClick={onClose}>Cancel</Button>
           </Stack>
         </form>

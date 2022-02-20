@@ -47,7 +47,7 @@ export const fetchTransactions = createAsyncThunk(
 );
 
 export const postTransaction = createAsyncThunk(
-  'transactions/addTransaction',
+  'transactions/postTransaction',
   async (transaction, { rejectWithValue, getState, dispatch }) => {
     const token = getState().session.authToken;
     const requestOptions = {
