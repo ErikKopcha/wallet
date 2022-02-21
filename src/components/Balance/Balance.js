@@ -7,7 +7,7 @@ const Balance = () => {
   const balance = useSelector(state => state.user.balance);
 
   const balanceInfo = {
-    sum: balance,
+    sum: Number(balance).toFixed(2),
     currCode: `$`,
   };
 
