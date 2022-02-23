@@ -98,6 +98,9 @@
     color: var(--placeholderTextColor);
     margin-left: 10px;
   }
+  .VisibilityIcon{
+    cursor: pointer;
+  }
 
   @media (min-width: 426px) {
     .FormBox {
