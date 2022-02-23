@@ -1,12 +1,15 @@
-import { Link } from "react-router-dom";
+import React from 'react';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Formik } from 'formik';
+
 import * as yup from 'yup';
 import useUserService from 'services/userService';
 import EmailIcon from '@mui/icons-material/Email';
 import LockIcon from '@mui/icons-material/Lock';
 import InputAdornment from '@mui/material/InputAdornment';
 import Input from '@mui/material/Input';
-
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import style from 'components/LoginForm/LoginForm.module.css';
 import logo from 'assets/icons/wallet-logo.svg';
 
@@ -16,10 +19,11 @@ function LoginForm() {
   function handleSubmit(values) {
     const user = {
       email: values.email,
-      password: values.password
-    }
+      password: values.password,
+    };
     loginUser(user);
   }
+
   const validations = yup.object().shape({
     email: yup
       .string()
@@ -31,6 +35,12 @@ function LoginForm() {
       .min(6, '*Password is too short - should be 6 chars minimum')
       .max(12, '*Password is too long - should be 12 chars maximum'),
   });
+
+  const types = ['password', 'text'];
+  const [type, setType] = useState(types[0]);
+
+  const changeInputType = () =>
+    setType(types[(types.indexOf(type) + 1) % types.length]);
 
   return (
     <div>
@@ -71,31 +81,45 @@ function LoginForm() {
                 placeholder="E-mail"
                 startAdornment={
                   <InputAdornment position="start">
-                    <EmailIcon className={style.InputIcon}/>
+                    <EmailIcon className={style.InputIcon} />
                   </InputAdornment>
                 }
               />
-              {touched.email && errors.email && <p className={style.Error}>{errors.email}</p>}
+              {touched.email && errors.email && (
+                <p className={style.Error}>{errors.email}</p>
+              )}
               <Input
                 className={style.LogInInput}
-                type='password'
-                name='password'
+                type={type}
+                name="password"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.password}
-                placeholder='Password'
+                placeholder="Password"
                 startAdornment={
                   <InputAdornment position="start">
-                    <LockIcon className={style.InputIcon}/>
+                    <LockIcon className={style.InputIcon} />
+                  </InputAdornment>
+                }
+                endAdornment={
+                  <InputAdornment position="end">
+                    <VisibilityIcon
+                      className={`${style.InputIcon} ${style.VisibilityIcon}`}
+                      onClick={changeInputType}
+                    />
                   </InputAdornment>
                 }
               />
-              {touched.password && errors.password && <p className={style.Error}>{errors.password}</p>}
+
+              {touched.password && errors.password && (
+                <p className={style.Error}>{errors.password}</p>
+              )}
               <button
                 className={`${style.LogInBtn} ${style.Btn}`}
                 disabled={!isValid && !dirty}
                 onClick={handleSubmit}
-                type='submit'>
+                type="submit"
+              >
                 Log in
               </button>
               <Link className={`${style.RegBtn} ${style.Btn}`} to="/register">
