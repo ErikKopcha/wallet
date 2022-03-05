@@ -1,14 +1,28 @@
 .box {
+  max-width: 540px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  border: none;
+  outline: none;
+  border-radius: 20px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 40px 80px 60px 80px;
+  align-items: center;
+}
+
+@media (max-width: 470px) {
+  .box {
     max-width: 540px;
-    background-color: #fff;
-    display: flex;
-    flex-direction: column;
-    border: none;
-    outline: none;
-    border-radius: 20px;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 40px 80px 60px 80px;
-    align-items: center;
+    width: 100%;
+    padding: 60px 20px 40px 20px;
+  }
+}
+
+@media (max-width: 434px) {
+  .box {
+    height: 100vh;
+  }
 }
